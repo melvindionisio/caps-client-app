@@ -23,7 +23,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   nav: {
-    boxShadow: "0px 0px 5px 1px rgba(0,0,0,.05)",
+    boxShadow: "0px 0px 0px 1px rgba(0,0,0,.1)",
     width: "70%",
     borderRadius: "1rem 1rem 0rem 0rem",
   },
@@ -67,17 +67,26 @@ export default function MainNavigation() {
       index: 2,
     },
   ];
+
+  // const paths = Array.from(navItems.map((item) => item.path));
+
+  const tabChange = (event, newValue) => {
+    if (location.pathname !== newValue) {
+      setValue(newValue);
+    } else {
+      setValue(null);
+    }
+  };
+
   return (
     <Box className={classes.root}>
       <BottomNavigation
         // showLabels
         value={value}
-        onChange={(event, newValue) => {
-          setValue(newValue);
-        }}
+        onChange={tabChange}
         className={classes.nav}
         sx={{
-          background: "rgba(255,255,255,0.3)",
+          background: "white",
           backdropFilter: "blur(.4rem)",
           overflow: "hidden",
           height: "4rem",
@@ -89,16 +98,14 @@ export default function MainNavigation() {
             label={item.label.toUpperCase()}
             value={item.value}
             icon={
-              location.pathname === item.path
-                ? item.icons.active
-                : item.icons.inactive
+              value === item.value ? item.icons.active : item.icons.inactive
             }
             onClick={() => history.push(item.path)}
             className={classes.navbutton}
             sx={
               value === item.value
                 ? {
-                    background: "white",
+                    background: "rgba(30, 136, 229, .09)",
                   }
                 : { background: "transparent" }
             }
