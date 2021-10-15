@@ -6,7 +6,7 @@ import React, { useRef, useEffect, useState } from "react";
 import { useStyles } from "./styles/Map.styles";
 
 mapboxgl.accessToken =
-  "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrcnVxdGkxYzE0ODkydW13ZGozYndob2EifQ.ApUFvHNlmq-ucitzEu62Ng";
+  "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
 
 const Map = () => {
   const classes = useStyles();
@@ -56,7 +56,7 @@ const Map = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       // darkmode
-      // style: 'mapbox://styles/mapbox/navigation-night-v1?optimize=true',
+      // style: "mapbox://styles/mapbox/navigation-night-v1?optimize=true",
       // lightmode
       style: "mapbox://styles/mapbox/streets-v11",
       // style: "mapbox://styles/mapbox/light-v10?optimize=true",
@@ -168,12 +168,16 @@ const Map = () => {
 
   return (
     <Slide in={true} direction="right">
-      <Box className={` ${classes.page}`} maxWidth="md" ref={mapContainer}>
+      <Box className={` ${classes.page}`} maxWidth="xl" ref={mapContainer}>
         <AppBar
           position="sticky"
-          color="secondary"
           className={classes.appbar}
           elevation={3}
+          sx={{
+            width: "80%",
+            background: "rgba(0,0,0,0.4)",
+            backdropFilter: "blur(.4rem)",
+          }}
         >
           <Toolbar disableGutters variant="dense" className={classes.toolbar}>
             <Typography variant="h6" component="h2" className={classes.appName}>

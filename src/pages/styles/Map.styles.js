@@ -28,9 +28,7 @@ export const useStyles = makeStyles({
     background: "rgba(0,0,0,0.4)",
     backdropFilter: "blur(.4rem)",
     color: "white",
-    width: "80%",
     borderRadius: "0% 2rem 2rem 0%",
-    // boxShadow: "0 2px 10px 1px rgba(0,0,0,0.3)",
   },
   appName: {
     fontWeight: "900",

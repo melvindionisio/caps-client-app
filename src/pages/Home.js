@@ -1,20 +1,18 @@
 import React from "react";
-import Container from "@mui/material/Container";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import Typography from "@mui/material/Typography";
+import Navbar from "../components/Navbar";
+import { Container, Slide } from "@mui/material";
 
 const Home = () => {
   return (
-    <div>
-      <Container disableGutters>
-        <AppBar position="sticky" color="primary">
-          <Toolbar>
-            <Typography variant="h6">Home</Typography>
-          </Toolbar>
-        </AppBar>
+    <Slide in={true} direction="left">
+      <Container
+        disableGutters
+        maxWidth="xl"
+        sx={{ height: "100vh", width: "100vw" }}
+      >
+        <Navbar />
       </Container>
-    </div>
+    </Slide>
   );
 };
 
