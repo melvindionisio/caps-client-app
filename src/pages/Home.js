@@ -1,6 +1,18 @@
 import React from "react";
 import Navbar from "../components/Navbar";
-import { Container, Slide } from "@mui/material";
+import {
+  Container,
+  Slide,
+  Box,
+  Card,
+  CardHeader,
+  CardActions,
+  Button,
+  IconButton,
+  Divider,
+} from "@mui/material";
+import MoreIcon from "@mui/icons-material/MoreVert";
+
 // import { Link } from "react-router-dom";
 
 const Home = () => {
@@ -9,9 +21,71 @@ const Home = () => {
       <Container
         disableGutters
         maxWidth="xl"
-        sx={{ height: "100vh", width: "100vw" }}
+        sx={{ height: "100vh", width: "100vw", overflowY: "auto" }}
       >
         <Navbar />
+        <Box p={1} pb={8}>
+          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
+            <CardHeader
+              title="Melvin"
+              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  dolores recusandae corrupti error aliquam tempore, repudiandae
+                  nisi aperiam totam, impedit nihil nulla officia id sed
+                  temporibus porro qui sequi fugiat?"
+              action={
+                <IconButton>
+                  <MoreIcon fontSize="small" />
+                </IconButton>
+              }
+            />
+            <Divider />
+            <CardActions>
+              <Button variant="outlined" size="small">
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
+          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
+            <CardHeader
+              title="Melvin"
+              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  dolores recusandae corrupti error aliquam tempore, repudiandae
+                  nisi aperiam totam, impedit nihil nulla officia id sed
+                  temporibus porro qui sequi fugiat?"
+              action={
+                <IconButton>
+                  <MoreIcon fontSize="small" />
+                </IconButton>
+              }
+            />
+            <Divider />
+            <CardActions>
+              <Button variant="outlined" size="small">
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
+          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
+            <CardHeader
+              title="Melvin"
+              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  dolores recusandae corrupti error aliquam tempore, repudiandae
+                  nisi aperiam totam, impedit nihil nulla officia id sed
+                  temporibus porro qui sequi fugiat?"
+              action={
+                <IconButton>
+                  <MoreIcon fontSize="small" />
+                </IconButton>
+              }
+            />
+            <Divider />
+            <CardActions>
+              <Button variant="outlined" size="small">
+                Learn More
+              </Button>
+            </CardActions>
+          </Card>
+        </Box>
       </Container>
     </Slide>
   );

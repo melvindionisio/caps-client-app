@@ -18,12 +18,13 @@ import Map from "./pages/Map";
 import Help from "./pages/Help";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import Search from "./pages/Search";
 
 import MainNavigation from "./components/../components/MainNavigation";
 
 const useStyles = makeStyles({
   page: {
-    background: grey[100],
+    background: grey[200],
     height: "100vh",
     width: "100vw",
     overflow: "hidden",
@@ -84,6 +85,9 @@ const App = () => {
             </Route>
             <Route path="/register">
               <Register />
+            </Route>
+            <Route path="/search">
+              <Search />
             </Route>
             <Route path="*">
               <Container maxWidth="sm">

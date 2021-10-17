@@ -79,7 +79,14 @@ export default function MainNavigation() {
   };
 
   return (
-    <Box className={classes.root}>
+    <Box
+      className={classes.root}
+      sx={
+        location.pathname === "/search"
+          ? { display: "none" }
+          : { display: "flex" }
+      }
+    >
       <BottomNavigation
         // showLabels
         value={value}
@@ -100,7 +107,9 @@ export default function MainNavigation() {
             icon={
               value === item.value ? item.icons.active : item.icons.inactive
             }
-            onClick={() => history.push(item.path)}
+            onClick={() => {
+              history.push(item.path);
+            }}
             className={classes.navbutton}
             sx={
               value === item.value

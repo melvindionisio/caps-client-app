@@ -16,10 +16,10 @@ const Help = () => {
       <Container
         disableGutters
         maxWidth="xl"
-        sx={{ height: "100vh", width: "100vw", overflowY: "scroll" }}
+        sx={{ height: "100vh", width: "100vw", overflowY: "auto" }}
       >
         <AppBar position="sticky" elevation={1}>
-          <Toolbar dense>
+          <Toolbar>
             <Typography variant="h6">HELP</Typography>
           </Toolbar>
         </AppBar>
@@ -27,31 +27,10 @@ const Help = () => {
           <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
             <CardHeader
               title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius dolores recusandae corrupti error aliquam tempore, repudiandae nisi aperiam totam, impedit nihil nulla officia id sed temporibus porro qui sequi fugiat?"
-            />
-          </Card>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius dolores recusandae corrupti error aliquam tempore, repudiandae nisi aperiam totam, impedit nihil nulla officia id sed temporibus porro qui sequi fugiat?"
-            />
-          </Card>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius dolores recusandae corrupti error aliquam tempore, repudiandae nisi aperiam totam, impedit nihil nulla officia id sed temporibus porro qui sequi fugiat?"
-            />
-          </Card>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius dolores recusandae corrupti error aliquam tempore, repudiandae nisi aperiam totam, impedit nihil nulla officia id sed temporibus porro qui sequi fugiat?"
-            />
-          </Card>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius dolores recusandae corrupti error aliquam tempore, repudiandae nisi aperiam totam, impedit nihil nulla officia id sed temporibus porro qui sequi fugiat?"
+              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  dolores recusandae corrupti error aliquam tempore, repudiandae
+                  nisi aperiam totam, impedit nihil nulla officia id sed
+                  temporibus porro qui sequi fugiat?"
             />
           </Card>
         </Box>
