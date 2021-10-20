@@ -12,8 +12,34 @@ import {
   Divider,
 } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
-
 // import { Link } from "react-router-dom";
+
+const owners = ["Melvin", "Ivan", "Jhelan", "Ranel", "Marl"];
+
+const House = ({ owner }) => {
+  return (
+    <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
+      <CardHeader
+        title={owner}
+        subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
+                  dolores recusandae corrupti error aliquam tempore, repudiandae
+                  nisi aperiam totam, impedit nihil nulla officia id sed
+                  temporibus porro qui sequi fugiat?"
+        action={
+          <IconButton>
+            <MoreIcon fontSize="small" />
+          </IconButton>
+        }
+      />
+      <Divider />
+      <CardActions>
+        <Button variant="outlined" size="small">
+          Learn More
+        </Button>
+      </CardActions>
+    </Card>
+  );
+};
 
 const Home = () => {
   return (
@@ -25,66 +51,9 @@ const Home = () => {
       >
         <Navbar />
         <Box p={1} pb={8}>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  dolores recusandae corrupti error aliquam tempore, repudiandae
-                  nisi aperiam totam, impedit nihil nulla officia id sed
-                  temporibus porro qui sequi fugiat?"
-              action={
-                <IconButton>
-                  <MoreIcon fontSize="small" />
-                </IconButton>
-              }
-            />
-            <Divider />
-            <CardActions>
-              <Button variant="outlined" size="small">
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  dolores recusandae corrupti error aliquam tempore, repudiandae
-                  nisi aperiam totam, impedit nihil nulla officia id sed
-                  temporibus porro qui sequi fugiat?"
-              action={
-                <IconButton>
-                  <MoreIcon fontSize="small" />
-                </IconButton>
-              }
-            />
-            <Divider />
-            <CardActions>
-              <Button variant="outlined" size="small">
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  dolores recusandae corrupti error aliquam tempore, repudiandae
-                  nisi aperiam totam, impedit nihil nulla officia id sed
-                  temporibus porro qui sequi fugiat?"
-              action={
-                <IconButton>
-                  <MoreIcon fontSize="small" />
-                </IconButton>
-              }
-            />
-            <Divider />
-            <CardActions>
-              <Button variant="outlined" size="small">
-                Learn More
-              </Button>
-            </CardActions>
-          </Card>
+          {owners.map((owner) => (
+            <House key={owner} owner={owner} />
+          ))}
         </Box>
       </Container>
     </Slide>

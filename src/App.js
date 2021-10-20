@@ -8,6 +8,7 @@ import {
 } from "react-router-dom";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Hidden from "@mui/material/Hidden";
 
 import { makeStyles } from "@mui/styles";
 import { grey, blue, orange } from "@mui/material/colors";
@@ -97,7 +98,9 @@ const App = () => {
               </Container>
             </Route>
           </Switch>
-          <MainNavigation className={classes.mainNavigation} />
+          <Hidden mdUp>
+            <MainNavigation className={classes.mainNavigation} />
+          </Hidden>
         </Router>
       </Container>
     </ThemeProvider>

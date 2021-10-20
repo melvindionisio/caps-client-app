@@ -3,28 +3,36 @@ import {
   Slide,
   Container,
   TextField,
-  // Typography,
-  // Button,
-  // Card,
-  // CardContent,
-  // CardHeader,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  CardHeader,
   AppBar,
   Toolbar,
   IconButton,
+  ButtonGroup,
 } from "@mui/material";
+import { useEffect, useRef, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
-import { useEffect, useRef } from "react";
 
-// import { Box } from "@mui/system";
+import { Box } from "@mui/system";
 import { useHistory } from "react-router-dom";
 
 const Search = () => {
   const history = useHistory();
   const search = useRef(null);
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  const filterToggle = () => {
+    setFilterOpen(!filterOpen);
+    console.log(filterOpen);
+  };
+
   useEffect(() => {
-    console.log(search.current);
-  });
+    search.current.firstElementChild.firstElementChild.focus();
+  }, []);
   return (
     <Container
       disableGutters
@@ -35,21 +43,38 @@ const Search = () => {
         overflowY: "auto",
       }}
     >
+      {filterOpen && (
+        <Slide in={true} direction={filterOpen ? "down" : "up"}>
+          <Box py={1} unmountOnExit>
+            <Card variant="outlined" sx={{ borderRadius: "0rem" }}>
+              <CardHeader
+                title={
+                  <Typography align="center" sx={{ marginBottom: ".3rem" }}>
+                    Filter Options
+                  </Typography>
+                }
+              />
+              <CardContent>Options here</CardContent>
+            </Card>
+          </Box>
+        </Slide>
+      )}
       <Slide in={true} direction="down">
         <AppBar
           position="sticky"
           color="secondary"
           variant="outlined"
+          elevation={0}
           sx={{ background: "white" }}
         >
           <Toolbar
             sx={{
               display: "flex",
               justifyContent: "space-between",
-              padding: "0rem .3rem",
+              padding: "0.2rem .3rem",
             }}
           >
-            <IconButton onClick={() => history.goBack()}>
+            <IconButton onClick={() => history.goBack()} size="large">
               <ArrowBackIosIcon />
             </IconButton>
             <TextField
@@ -58,29 +83,49 @@ const Search = () => {
               placeholder="Search"
               color="secondary"
               size="small"
-              sx={{ width: "75%" }}
+              sx={{ width: "70%" }}
+              disabled={filterOpen}
             />
-            <IconButton color="secondary">
+            <IconButton
+              color={filterOpen ? "primary" : "secondary"}
+              onClick={filterToggle}
+              size="large"
+            >
               <FilterAltOutlinedIcon />
             </IconButton>
           </Toolbar>
         </AppBar>
       </Slide>
-      {/* <Slide in={true} direction="left">
+
+      <Slide in={true} direction="left">
         <Box p={1}>
-          <Card variant="outlined">
+          <Box
+            sx={{
+              marginBottom: ".5rem",
+              display: "flex",
+              justifyContent: "space-between",
+            }}
+          >
+            <ButtonGroup size="small">
+              <Button disabled>Sort:</Button>
+              <Button>Name</Button>
+              <Button>Popularity</Button>
+              <Button>Vacancy</Button>
+            </ButtonGroup>
+            <ButtonGroup size="small">
+              <Button>Asc</Button>
+              <Button>Desc</Button>
+            </ButtonGroup>
+          </Box>
+          <Card variant="outlined" sx={{ minHeight: "80vh" }}>
             <CardContent>
-              <Typography>Results here</Typography>
-              <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-                <CardHeader
-                  title="Melvin"
-                  action={<Button variant="outlined">View</Button>}
-                />
-              </Card>
+              <Typography variant="subtitle1" sx={{ marginBottom: ".5rem" }}>
+                Results here
+              </Typography>
             </CardContent>
           </Card>
         </Box>
-      </Slide> */}
+      </Slide>
     </Container>
   );
 };

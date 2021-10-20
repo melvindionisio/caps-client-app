@@ -22,10 +22,11 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
   },
-  nav: {
+  bottomNavigation: {
     boxShadow: "0px 0px 0px 1px rgba(0,0,0,.1)",
-    width: "70%",
-    borderRadius: "1rem 1rem 0rem 0rem",
+    width: 270,
+    borderRadius: ".5rem .5rem 0rem 0rem",
+    overflow: "hidden",
   },
 });
 
@@ -91,11 +92,8 @@ export default function MainNavigation() {
         // showLabels
         value={value}
         onChange={tabChange}
-        className={classes.nav}
+        className={classes.bottomNavigation}
         sx={{
-          background: "white",
-          backdropFilter: "blur(.4rem)",
-          overflow: "hidden",
           height: "4rem",
         }}
       >
@@ -111,13 +109,6 @@ export default function MainNavigation() {
               history.push(item.path);
             }}
             className={classes.navbutton}
-            sx={
-              value === item.value
-                ? {
-                    background: "rgba(30, 136, 229, .09)",
-                  }
-                : { background: "transparent" }
-            }
           />
         ))}
       </BottomNavigation>

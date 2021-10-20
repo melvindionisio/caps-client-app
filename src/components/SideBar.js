@@ -74,7 +74,7 @@ const useStyles = makeStyles((theme) => ({
 const clientId =
   "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
 
-export default function SideBar({ handleDrawerToggle, sidebarOpen, anchor }) {
+export default function SideBar({ setSidebarIsOpen, sidebarIsOpen, anchor }) {
   const classes = useStyles();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [name, setName] = useState();
@@ -100,8 +100,8 @@ export default function SideBar({ handleDrawerToggle, sidebarOpen, anchor }) {
       role="presentation"
     >
       <IconButton
-        onClick={handleDrawerToggle}
-        onKeyDown={handleDrawerToggle}
+        onClick={setSidebarIsOpen}
+        onKeyDown={setSidebarIsOpen}
         size="medium"
         className={classes.closeButton}
       >
@@ -185,9 +185,9 @@ export default function SideBar({ handleDrawerToggle, sidebarOpen, anchor }) {
     <div>
       <SwipeableDrawer
         anchor={anchor}
-        open={sidebarOpen}
-        onClose={handleDrawerToggle}
-        onOpen={handleDrawerToggle}
+        open={sidebarIsOpen}
+        onClose={setSidebarIsOpen}
+        onOpen={setSidebarIsOpen}
         ModalProps={{
           keepMounted: true, // Better open performance on mobile.
         }}
