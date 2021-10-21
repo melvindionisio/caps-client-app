@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 
-import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
+// import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
@@ -62,7 +62,7 @@ const Navbar = () => {
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .5rem" }}>
           <IconButton onClick={toggleDrawer(anchor, true)} size="large">
-            <MenuOutlinedIcon />
+            <Avatar>U</Avatar>
           </IconButton>
           <Typography variant="h6">SEARCH 'N STAY</Typography>
           <IconButton onClick={() => history.push("/search")} size="large">
@@ -157,7 +157,10 @@ const Navbar = () => {
               <BookmarksIcon />
             </ListItemIcon> */}
             {/* <ListItemText primary={"Login "} /> */}
-            <Button>Login</Button> or <Button>Register</Button>
+            <Button onClick={() => history.push("/login")}>
+              Login
+            </Button> or{" "}
+            <Button onClick={() => history.push("/register")}>Register</Button>
           </ListItem>
           <Divider />
 

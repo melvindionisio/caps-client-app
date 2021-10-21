@@ -83,7 +83,9 @@ export default function MainNavigation() {
     <Box
       className={classes.root}
       sx={
-        location.pathname === "/search"
+        location.pathname === "/search" ||
+        location.pathname === "/register" ||
+        location.pathname === "/login"
           ? { display: "none" }
           : { display: "flex" }
       }
