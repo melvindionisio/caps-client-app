@@ -19,7 +19,7 @@ const Navigation = ({ children }) => {
   return (
     <>
       <AppBar
-        position="sticky"
+        position="fixed"
         elevation={0}
         variant="outlined"
         color="secondary"
