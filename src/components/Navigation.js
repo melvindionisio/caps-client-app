@@ -25,7 +25,7 @@ const Navigation = ({ children }) => {
         color="secondary"
         sx={{ background: "white" }}
       >
-        <Toolbar className={classes.toolbar}>
+        <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
           <IconButton
             onClick={() => history.goBack()}
             size="large"

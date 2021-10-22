@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Hidden from "@mui/material/Hidden";
 
 import { makeStyles } from "@mui/styles";
-import { grey, blue, orange } from "@mui/material/colors";
+import { blueGrey, blue, orange } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import Home from "./pages/Home";
@@ -25,7 +25,7 @@ import MainNavigation from "./components/../components/MainNavigation";
 
 const useStyles = makeStyles({
   page: {
-    background: grey[200],
+    background: blueGrey[50],
     height: "100vh",
     width: "100vw",
     overflow: "hidden",

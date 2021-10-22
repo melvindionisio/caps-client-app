@@ -60,8 +60,8 @@ const Navbar = () => {
         color="secondary"
         sx={{ background: "white" }}
       >
-        <Toolbar className={classes.toolbar} sx={{ padding: "0rem .5rem" }}>
-          <IconButton onClick={toggleDrawer(anchor, true)} size="large">
+        <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
+          <IconButton onClick={toggleDrawer(anchor, true)} size="small">
             <Avatar>U</Avatar>
           </IconButton>
           <Typography variant="h6">SEARCH 'N STAY</Typography>

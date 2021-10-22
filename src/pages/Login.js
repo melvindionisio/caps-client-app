@@ -6,21 +6,33 @@ import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/system/Box";
-// import { grey } from "@mui/material/colors";
+import Button from "@mui/material/Button";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardHeader from "@mui/material/CardHeader";
 import { useState } from "react";
-import {
-  Button,
-  Card,
-  CardActions,
-  CardContent,
-  CardHeader,
-} from "@mui/material";
+
+import { makeStyles } from "@mui/styles";
+// import { lightBlue } from "@mui/material/colors";
 // import AccountCircle from "@mui/icons-material/AccountCircle";
 
+const useStyles = makeStyles({
+  textfield: {
+    // "& .MuiFilledInput-root": {
+    //   background: lightBlue[50],
+    //   "&:hover": {
+    //     background: lightBlue[100],
+    //   },
+    // },
+  },
+});
+
 const Login = () => {
+  const classes = useStyles();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const [message, setMessage] = useState("You must login first");
+  const [message, setMessage] = useState("Login with your account.");
 
   const login = (e) => {
     e.preventDefault();
@@ -78,13 +90,14 @@ const Login = () => {
               />
               <CardContent>
                 <TextField
-                  // error
                   id="username"
                   label="Username"
                   variant="filled"
-                  size="small"
+                  size="medium"
+                  className={classes.textfield}
                   // helperText="No username exist!"
                   color="primary"
+                  type="email"
                   margin="none"
                   fullWidth
                   value={username}
@@ -96,7 +109,8 @@ const Login = () => {
                   label="Password"
                   type="password"
                   variant="filled"
-                  size="small"
+                  size="medium"
+                  className={classes.textfield}
                   color="primary"
                   margin="dense"
                   fullWidth
