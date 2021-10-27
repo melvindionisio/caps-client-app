@@ -36,7 +36,7 @@ const useStyles = makeStyles({
 const theme = createTheme({
   palette: {
     primary: {
-      main: blue[600],
+      main: blue[500],
     },
     secondary: {
       main: orange[500],

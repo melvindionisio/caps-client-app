@@ -12,7 +12,7 @@ import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
 import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     position: "fixed",
     bottom: 0,
@@ -28,7 +28,8 @@ const useStyles = makeStyles({
     borderRadius: ".5rem .5rem 0rem 0rem",
     overflow: "hidden",
   },
-});
+  bottomNavigationAction: {},
+}));
 
 export default function MainNavigation() {
   const classes = useStyles();
@@ -110,7 +111,7 @@ export default function MainNavigation() {
             onClick={() => {
               history.push(item.path);
             }}
-            className={classes.navbutton}
+            className={classes.bottomNavigationAction}
           />
         ))}
       </BottomNavigation>

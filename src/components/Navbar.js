@@ -162,21 +162,7 @@ const Navbar = () => {
             </Button> or{" "}
             <Button onClick={() => history.push("/register")}>Register</Button>
           </ListItem>
-          <Divider />
 
-          <ListItem>
-            <Button sx={{ width: "100%" }} disableElevation variant="contained">
-              LOGIN WITH GOOGLE
-            </Button>
-          </ListItem>
-          <Typography align="center" variant="subtitle2">
-            OR
-          </Typography>
-          <ListItem>
-            <Button sx={{ width: "100%" }} disableElevation variant="contained">
-              LOGIN WITH FACEBOOK
-            </Button>
-          </ListItem>
           <Divider />
 
           <ListItem button>

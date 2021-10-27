@@ -19,6 +19,7 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
 import { Box } from "@mui/system";
 import { useHistory } from "react-router-dom";
+import CheckOutlined from "@mui/icons-material/CheckOutlined";
 
 const Search = () => {
   const history = useHistory();
@@ -86,12 +87,12 @@ const Search = () => {
               sx={{ width: "70%" }}
               disabled={filterOpen}
             />
-            <IconButton
-              color={filterOpen ? "primary" : "secondary"}
-              onClick={filterToggle}
-              size="large"
-            >
-              <FilterAltOutlinedIcon />
+            <IconButton color="secondary" onClick={filterToggle} size="large">
+              {filterOpen ? (
+                <CheckOutlined fontSize="medium" />
+              ) : (
+                <FilterAltOutlinedIcon />
+              )}
             </IconButton>
           </Toolbar>
         </AppBar>

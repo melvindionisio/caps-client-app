@@ -7,14 +7,20 @@ import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/system/Box";
 import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 import { useState } from "react";
+import GoogleLogin from "react-google-login";
+// import { GoogleLogout } from "react-google-login";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 import { makeStyles } from "@mui/styles";
-// import { lightBlue } from "@mui/material/colors";
+import { amber } from "@mui/material/colors";
 // import AccountCircle from "@mui/icons-material/AccountCircle";
 
 const useStyles = makeStyles({
@@ -45,6 +51,30 @@ const Login = () => {
       setMessage(`${username ?? password} is incorrect!`);
     }
   };
+
+  const clientId =
+    "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
+
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [name, setName] = useState();
+  // const [profilePic, setProfilePic] = useState();
+
+  const responseGoogle = (response) => {
+    // setName(response.profileObj.name);
+    // setIsLoggedIn(true);
+    // setProfilePic(response.profileObj.imageUrl);
+    console.log(response);
+  };
+
+  // const logout = () => {
+  //   setName(null);
+  //   setIsLoggedIn(false);
+  // };
+
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
+
   return (
     <Slide in={true} direction="right">
       <Container
@@ -160,6 +190,85 @@ const Login = () => {
                   Login
                 </Button>
               </CardActions>
+            </Card>
+            <Typography
+              variant="body1"
+              align="center"
+              style={{ marginTop: "1rem" }}
+            >
+              OR
+            </Typography>
+            <Card style={{ marginTop: "1rem" }} variant="outlined">
+              <CardHeader
+                title={
+                  <Typography variant="body1" align="center">
+                    Continue with
+                  </Typography>
+                }
+                style={{ padding: "1rem", paddingBottom: "0rem" }}
+              />
+              <CardContent
+                style={{
+                  display: "flex",
+                  justifyContent: "space-evenly",
+                  padding: ".5rem",
+                  paddingBottom: "1rem",
+                }}
+              >
+                <GoogleLogin
+                  clientId={clientId}
+                  render={(renderProps) => (
+                    <Box
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <IconButton
+                        size="large"
+                        style={{ color: amber[400] }}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <GoogleIcon fontSize="large" />
+                      </IconButton>
+                      <Typography>Google</Typography>
+                    </Box>
+                  )}
+                  onSuccess={responseGoogle}
+                  onFailure={responseGoogle}
+                  cookiePolicy={"single_host_origin"}
+                  isSignedIn={true}
+                />
+                <FacebookLogin
+                  appId="1088597931155576"
+                  autoLoad={true}
+                  fields="name,email,picture"
+                  callback={responseFacebook}
+                  render={(renderProps) => (
+                    <Box
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <IconButton
+                        color="primary"
+                        size="large"
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <FacebookIcon fontSize="large" />
+                      </IconButton>
+                      <Typography as="label">Facebook</Typography>
+                    </Box>
+                  )}
+                />
+              </CardContent>
             </Card>
           </form>
         </Box>
