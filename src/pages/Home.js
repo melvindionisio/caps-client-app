@@ -10,6 +10,7 @@ import {
   Button,
   IconButton,
   Divider,
+  Grid,
 } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
 // import { Link } from "react-router-dom";
@@ -18,7 +19,7 @@ const owners = ["Melvin", "Ivan", "Jhelan", "Ranel", "Marl"];
 
 const House = ({ owner }) => {
   return (
-    <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
+    <Card variant="outlined">
       <CardHeader
         title={owner}
         subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
@@ -50,10 +51,14 @@ const Home = () => {
         sx={{ height: "100vh", width: "100vw", overflowY: "auto" }}
       >
         <Navbar />
-        <Box p={1} pb={8}>
-          {owners.map((owner) => (
-            <House key={owner} owner={owner} />
-          ))}
+        <Box p={1} pb={8} style={{ maxWidth: "85rem", margin: "0 auto" }}>
+          <Grid container spacing={1}>
+            {owners.map((owner) => (
+              <Grid item lg={4} md={6} sm={6} key={owner}>
+                <House owner={owner} />
+              </Grid>
+            ))}
+          </Grid>
         </Box>
       </Container>
     </Slide>

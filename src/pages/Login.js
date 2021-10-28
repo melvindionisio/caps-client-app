@@ -12,7 +12,7 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import GoogleLogin from "react-google-login";
 // import { GoogleLogout } from "react-google-login";
 import GoogleIcon from "@mui/icons-material/Google";
@@ -39,6 +39,8 @@ const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("Login with your account.");
+  const [isError, setIsError] = useState(false);
+  const input = useRef(null);
 
   const login = (e) => {
     e.preventDefault();
@@ -47,8 +49,11 @@ const Login = () => {
       console.log(`Username: ${username} Password: ${password}`);
     } else if (username === "" && password === "") {
       setMessage("Please enter values!");
+      setIsError(true);
+      input.current.lastElementChild.firstElementChild.focus();
     } else {
       setMessage(`${username ?? password} is incorrect!`);
+      setIsError(true);
     }
   };
 
@@ -101,6 +106,7 @@ const Login = () => {
             left: "50%",
             transform: "translate(-50%, -50%)",
             width: "80%",
+            maxWidth: "40rem",
           }}
         >
           <form sx={{ display: "flex" }}>
@@ -127,11 +133,13 @@ const Login = () => {
                   className={classes.textfield}
                   // helperText="No username exist!"
                   color="primary"
+                  error={isError}
                   type="email"
                   margin="none"
                   fullWidth
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  ref={input}
                 />
 
                 <TextField
@@ -142,6 +150,7 @@ const Login = () => {
                   size="medium"
                   className={classes.textfield}
                   color="primary"
+                  error={isError}
                   margin="dense"
                   fullWidth
                   value={password}
@@ -229,8 +238,8 @@ const Login = () => {
                       <IconButton
                         size="large"
                         style={{ color: amber[400] }}
-                        onClick={renderProps.onClick}
-                        disabled={renderProps.disabled}
+                        // onClick={renderProps.onClick}
+                        // disabled={renderProps.disabled}
                       >
                         <GoogleIcon fontSize="large" />
                       </IconButton>
@@ -244,7 +253,7 @@ const Login = () => {
                 />
                 <FacebookLogin
                   appId="1088597931155576"
-                  autoLoad={true}
+                  // autoLoad={true}
                   fields="name,email,picture"
                   callback={responseFacebook}
                   render={(renderProps) => (
@@ -259,8 +268,8 @@ const Login = () => {
                       <IconButton
                         color="primary"
                         size="large"
-                        onClick={renderProps.onClick}
-                        disabled={renderProps.disabled}
+                        // onClick={renderProps.onClick}
+                        // disabled={renderProps.disabled}
                       >
                         <FacebookIcon fontSize="large" />
                       </IconButton>

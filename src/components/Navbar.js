@@ -20,6 +20,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import { Button, Card, CardActions, CardHeader } from "@mui/material";
 import { Box } from "@mui/system";
+import logo from "../sns-logo.png";
 
 const useStyles = makeStyles({
   toolbar: {
@@ -64,7 +65,9 @@ const Navbar = () => {
           <IconButton onClick={toggleDrawer(anchor, true)} size="small">
             <Avatar>U</Avatar>
           </IconButton>
-          <Typography variant="h6">SEARCH 'N STAY</Typography>
+          {/* <Typography variant="h6">SEARCH 'N STAY</Typography>
+           */}
+          <Avatar src={logo} style={{ height: "2rem", width: "2rem" }}></Avatar>
           <IconButton onClick={() => history.push("/search")} size="large">
             <SearchOutlinedIcon />
           </IconButton>
@@ -74,24 +77,21 @@ const Navbar = () => {
       <MobileMenu toggleDrawer={toggleDrawer} state={state} anchor={anchor}>
         <List sx={{ paddingTop: "0rem" }}>
           <ListItem
-            button
             sx={{
-              display: "grid",
-              justifyContent: "center",
+              display: "flex",
+              justifyContent: "space-between",
             }}
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
           >
-            <ListItemIcon
-              sx={{
-                display: "grid",
-                justifyContent: "center",
-              }}
+            <Typography></Typography>
+
+            <IconButton
+              onClick={toggleDrawer(anchor, false)}
+              onKeyDown={toggleDrawer(anchor, false)}
             >
-              <IconButton>
-                <CancelIcon />
-              </IconButton>
-            </ListItemIcon>
+              <CancelIcon />
+            </IconButton>
           </ListItem>
           <ListItem>
             <Card sx={{ width: "100%" }} variant="outlined">
