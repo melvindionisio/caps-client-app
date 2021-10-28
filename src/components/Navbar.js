@@ -4,6 +4,7 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
+import Hidden from "@mui/material/Hidden";
 
 // import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { makeStyles } from "@mui/styles";
@@ -62,9 +63,11 @@ const Navbar = () => {
         sx={{ background: "white" }}
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
-          <IconButton onClick={toggleDrawer(anchor, true)} size="small">
-            <Avatar>U</Avatar>
-          </IconButton>
+          <Hidden mdUp>
+            <IconButton onClick={toggleDrawer(anchor, true)} size="small">
+              <Avatar>U</Avatar>
+            </IconButton>
+          </Hidden>
           {/* <Typography variant="h6">SEARCH 'N STAY</Typography>
            */}
           <Avatar src={logo} style={{ height: "2rem", width: "2rem" }}></Avatar>

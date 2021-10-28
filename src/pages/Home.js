@@ -1,4 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
+import SwipeableViews from "react-swipeable-views";
+import { useStyles } from "./styles/Home.styles";
 import Navbar from "../components/Navbar";
 import {
   Container,
@@ -11,6 +14,9 @@ import {
   IconButton,
   Divider,
   Grid,
+  Hidden,
+  Drawer,
+  Typography,
 } from "@mui/material";
 import MoreIcon from "@mui/icons-material/MoreVert";
 // import { Link } from "react-router-dom";
@@ -42,23 +48,72 @@ const House = ({ owner }) => {
   );
 };
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`full-width-tabpanel-${index}`}
+      aria-labelledby={`full-width-tab-${index}`}
+      {...other}
+    >
+      {value === index && <Box>{children}</Box>}
+    </div>
+  );
+}
+
+TabPanel.propTypes = {
+  children: PropTypes.node,
+  index: PropTypes.any.isRequired,
+  value: PropTypes.any.isRequired,
+};
+
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
+
 const Home = () => {
+  const classes = useStyles();
   return (
     <Slide in={true} direction="left">
       <Container
         disableGutters
         maxWidth="xl"
-        sx={{ height: "100vh", width: "100vw", overflowY: "auto" }}
+        sx={{
+          display: "flex",
+          height: "100vh",
+          width: "100vw",
+          overflowY: "auto",
+        }}
+        className={classes.homeContainer}
       >
-        <Navbar />
-        <Box p={1} pb={8} style={{ maxWidth: "85rem", margin: "0 auto" }}>
-          <Grid container spacing={1}>
-            {owners.map((owner) => (
-              <Grid item lg={4} md={6} sm={6} key={owner}>
-                <House owner={owner} />
-              </Grid>
-            ))}
-          </Grid>
+        <Hidden mdDown>
+          <Drawer
+            variant="permanent"
+            anchor="left"
+            className={classes.permanentDrawer}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <Typography>Sidebar</Typography>
+          </Drawer>
+        </Hidden>
+        <Box className={classes.root}>
+          <Navbar />
+          <Box p={1} pb={8} style={{ maxWidth: "85rem", margin: "0 auto" }}>
+            <Grid container spacing={1}>
+              {owners.map((owner) => (
+                <Grid item lg={4} md={6} sm={6} key={owner}>
+                  <House owner={owner} />
+                </Grid>
+              ))}
+            </Grid>
+          </Box>
         </Box>
       </Container>
     </Slide>
