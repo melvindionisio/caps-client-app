@@ -84,7 +84,7 @@ const Navbar = () => {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
           >
-            <Typography></Typography>
+            <Typography>SEARCH 'N STAY</Typography>
 
             <IconButton
               onClick={toggleDrawer(anchor, false)}
