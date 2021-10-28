@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import SwipeableViews from "react-swipeable-views";
+// import SwipeableViews from "react-swipeable-views";
 import { useStyles } from "./styles/Home.styles";
 import Navbar from "../components/Navbar";
 import {
@@ -21,7 +21,17 @@ import {
 import MoreIcon from "@mui/icons-material/MoreVert";
 // import { Link } from "react-router-dom";
 
-const owners = ["Melvin", "Ivan", "Jhelan", "Ranel", "Marl"];
+const owners = [
+  "Melvin",
+  "Ivan",
+  "Jhelan",
+  "Ranel",
+  "Marl",
+  "Rafael",
+  "Angelo",
+  "Ivan",
+  "Sahir",
+];
 
 const House = ({ owner }) => {
   return (
@@ -69,12 +79,12 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-function a11yProps(index) {
-  return {
-    id: `full-width-tab-${index}`,
-    "aria-controls": `full-width-tabpanel-${index}`,
-  };
-}
+// function a11yProps(index) {
+//   return {
+//     id: `full-width-tab-${index}`,
+//     "aria-controls": `full-width-tabpanel-${index}`,
+//   };
+// }
 
 const Home = () => {
   const classes = useStyles();
@@ -96,6 +106,7 @@ const Home = () => {
             variant="permanent"
             anchor="left"
             className={classes.permanentDrawer}
+            style={{ zIndex: "10" }}
             classes={{
               paper: classes.drawerPaper,
             }}
@@ -105,7 +116,7 @@ const Home = () => {
         </Hidden>
         <Box className={classes.root}>
           <Navbar />
-          <Box p={1} pb={8} style={{ maxWidth: "85rem", margin: "0 auto" }}>
+          <Box p={1} pb={8} style={{ maxWidth: "75rem", margin: "0 auto" }}>
             <Grid container spacing={1}>
               {owners.map((owner) => (
                 <Grid item lg={4} md={6} sm={6} key={owner}>

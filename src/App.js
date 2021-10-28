@@ -22,8 +22,9 @@ import Register from "./pages/Register";
 import Search from "./pages/Search";
 
 import MainNavigation from "./components/../components/MainNavigation";
+import DeskMainNav from "./components/DeskMainNav";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   page: {
     background: blueGrey[50],
     height: "100vh",
@@ -31,7 +32,7 @@ const useStyles = makeStyles({
     overflow: "hidden",
     position: "relative",
   },
-});
+}));
 
 const theme = createTheme({
   palette: {
@@ -98,6 +99,9 @@ const App = () => {
               </Container>
             </Route>
           </Switch>
+          <Hidden mdDown>
+            <DeskMainNav />
+          </Hidden>
           <Hidden mdUp>
             <MainNavigation className={classes.mainNavigation} />
           </Hidden>
