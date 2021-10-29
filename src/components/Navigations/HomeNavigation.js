@@ -10,7 +10,7 @@ import Hidden from "@mui/material/Hidden";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
-import MobileMenu from "../components/MobileMenu";
+import MobileMenu from "../MobileMenu";
 
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -21,7 +21,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import { Button, Card, CardActions, CardHeader } from "@mui/material";
 import { Box } from "@mui/system";
-import logo from "../sns-logo.png";
+import logo from "../../sns-logo.png";
 
 const useStyles = makeStyles({
   toolbar: {
@@ -30,7 +30,7 @@ const useStyles = makeStyles({
   },
 });
 
-const Navbar = () => {
+const HomeNavigation = () => {
   const classes = useStyles();
   const history = useHistory();
   const anchor = "left";
@@ -180,4 +180,4 @@ const Navbar = () => {
   );
 };
 
-export default Navbar;
+export default HomeNavigation;

@@ -12,7 +12,7 @@ const useStyles = makeStyles({
     // justifyContent: "space-between",
   },
 });
-const Navigation = ({ children }) => {
+const ReusableNavigation = ({ children }) => {
   const history = useHistory();
   const classes = useStyles();
 
@@ -40,4 +40,4 @@ const Navigation = ({ children }) => {
   );
 };
 
-export default Navigation;
+export default ReusableNavigation;

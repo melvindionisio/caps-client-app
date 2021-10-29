@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,8 +20,8 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 
-import MainNavigation from "./components/../components/MainNavigation";
-import DeskMainNav from "./components/DeskMainNav";
+import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
+import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -100,10 +99,10 @@ const App = () => {
             </Route>
           </Switch>
           <Hidden mdDown>
-            <DeskMainNav />
+            <DeskPageNavigation />
           </Hidden>
           <Hidden mdUp>
-            <MainNavigation className={classes.mainNavigation} />
+            <MobilePageNavigation className={classes.mainNavigation} />
           </Hidden>
         </Router>
       </Container>

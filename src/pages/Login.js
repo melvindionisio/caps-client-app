@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Navigation from "../components/Navigation";
+import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
@@ -12,11 +12,12 @@ import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
-import { useState, useRef } from "react";
-import GoogleLogin from "react-google-login";
-// import { GoogleLogout } from "react-google-login";
+
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+
+import GoogleLogin from "react-google-login";
+// import { GoogleLogout } from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 import { makeStyles } from "@mui/styles";
@@ -93,11 +94,11 @@ const Login = () => {
           position: "relative",
         }}
       >
-        <Navigation>
+        <ReusableNavigation>
           <Typography variant="body1" align="center">
             Login
           </Typography>
-        </Navigation>
+        </ReusableNavigation>
         <Box
           p={2}
           sx={{
@@ -251,6 +252,7 @@ const Login = () => {
                   cookiePolicy={"single_host_origin"}
                   isSignedIn={true}
                 />
+
                 <FacebookLogin
                   appId="1088597931155576"
                   // autoLoad={true}

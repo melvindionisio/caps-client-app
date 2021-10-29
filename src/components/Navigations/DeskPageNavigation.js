@@ -2,7 +2,7 @@ import React from "react";
 import { Avatar, ButtonGroup, IconButton } from "@mui/material";
 import { useHistory } from "react-router-dom";
 
-const DeskMainNav = () => {
+const DeskPageNavigation = () => {
   const history = useHistory();
   return (
     <ButtonGroup
@@ -26,4 +26,4 @@ const DeskMainNav = () => {
   );
 };
 
-export default DeskMainNav;
+export default DeskPageNavigation;

@@ -31,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
   bottomNavigationAction: {},
 }));
 
-export default function MainNavigation() {
+export default function MobilePageNavigation() {
   const classes = useStyles();
   const history = useHistory();
   const location = useLocation();

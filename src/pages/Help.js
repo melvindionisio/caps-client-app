@@ -1,13 +1,12 @@
 import React from "react";
-import {
-  Card,
-  CardHeader,
-  Container,
-  Slide,
-  AppBar,
-  Typography,
-  Toolbar,
-} from "@mui/material";
+
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import Container from "@mui/material/Container";
+import Slide from "@mui/material/Slide";
+import AppBar from "@mui/material/AppBar";
+import Typography from "@mui/material/Typography";
+import Toolbar from "@mui/material/Toolbar";
 import { Box } from "@mui/system";
 
 const Help = () => {

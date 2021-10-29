@@ -1,7 +1,7 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Navigation from "../components/Navigation";
+import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import Slide from "@mui/material/Slide";
 
 const Register = () => {
@@ -16,11 +16,11 @@ const Register = () => {
           overflowY: "auto",
         }}
       >
-        <Navigation>
+        <ReusableNavigation>
           <Typography variant="body1" align="center">
             Register
           </Typography>
-        </Navigation>
+        </ReusableNavigation>
       </Container>
     </Slide>
   );

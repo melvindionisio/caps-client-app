@@ -1,24 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
 // import SwipeableViews from "react-swipeable-views";
-import { useStyles } from "./styles/Home.styles";
-import Navbar from "../components/Navbar";
-import {
-  Container,
-  Slide,
-  Box,
-  Card,
-  CardHeader,
-  CardActions,
-  Button,
-  IconButton,
-  Divider,
-  Grid,
-  Hidden,
-  Drawer,
-  Typography,
-} from "@mui/material";
+
+import Container from "@mui/material/Container";
+import Slide from "@mui/material/Slide";
+import Box from "@mui/material/Box";
+import Card from "@mui/material/Card";
+import CardHeader from "@mui/material/CardHeader";
+import CardActions from "@mui/material/CardActions";
+import Button from "@mui/material/Button";
+import IconButton from "@mui/material/IconButton";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
+import Hidden from "@mui/material/Hidden";
+import Drawer from "@mui/material/Drawer";
+import Typography from "@mui/material/Typography";
+
 import MoreIcon from "@mui/icons-material/MoreVert";
+
+import { useStyles } from "./styles/Home.styles";
+import HomeNavigation from "../components/Navigations/HomeNavigation";
 // import { Link } from "react-router-dom";
 
 const owners = [
@@ -115,7 +116,7 @@ const Home = () => {
           </Drawer>
         </Hidden>
         <Box className={classes.root}>
-          <Navbar />
+          <HomeNavigation />
           <Box p={1} pb={8} style={{ maxWidth: "75rem", margin: "0 auto" }}>
             <Grid container spacing={1}>
               {owners.map((owner) => (
