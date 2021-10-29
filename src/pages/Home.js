@@ -1,6 +1,9 @@
 import React from "react";
 import PropTypes from "prop-types";
-// import SwipeableViews from "react-swipeable-views";
+import SwipeableViews from "react-swipeable-views";
+
+import Tabs from "@mui/material/Tabs";
+import Tab from "@mui/material/Tab";
 
 import Container from "@mui/material/Container";
 import Slide from "@mui/material/Slide";
@@ -12,14 +15,20 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import Hidden from "@mui/material/Hidden";
-import Drawer from "@mui/material/Drawer";
-import Typography from "@mui/material/Typography";
+// import Hidden from "@mui/material/Hidden";
+// import Drawer from "@mui/material/Drawer";
+// import Typography from "@mui/material/Typography";
+import AppBar from "@mui/material/AppBar";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import SingleBedIcon from "@mui/icons-material/SingleBed";
 
+import { useTheme } from "@mui/styles";
+import { useState } from "react";
 import { useStyles } from "./styles/Home.styles";
 import HomeNavigation from "../components/Navigations/HomeNavigation";
+// import useFetch from "../hooks/useFetch";
 // import { Link } from "react-router-dom";
 
 const owners = [
@@ -80,15 +89,49 @@ TabPanel.propTypes = {
   value: PropTypes.any.isRequired,
 };
 
-// function a11yProps(index) {
-//   return {
-//     id: `full-width-tab-${index}`,
-//     "aria-controls": `full-width-tabpanel-${index}`,
-//   };
-// }
+function a11yProps(index) {
+  return {
+    id: `full-width-tab-${index}`,
+    "aria-controls": `full-width-tabpanel-${index}`,
+  };
+}
 
 const Home = () => {
   const classes = useStyles();
+
+  const theme = useTheme();
+  const [value, setValue] = useState(0);
+  // const [open, setOpen] = useState(false);
+  // const boardingHouses = bHouse;
+  // const {
+  //   data: boardingHouses,
+  //   isPending,
+  //   error,
+  // } = useFetch(
+  //   "https://my-json-server.typicode.com/melvindionisio/bhfinder-api/boardingHouse"
+  // );
+
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleChangeIndex = (index) => {
+    setValue(index);
+  };
+
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
+
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
+  // const [sidebarOpen, setSidebarOpen] = useState(false);
+  // const handleDrawerToggle = () => {
+  //   setSidebarOpen(!sidebarOpen);
+  // };
+
   return (
     <Slide in={true} direction="left">
       <Container
@@ -98,11 +141,10 @@ const Home = () => {
           display: "flex",
           height: "100vh",
           width: "100vw",
-          overflowY: "auto",
         }}
         className={classes.homeContainer}
       >
-        <Hidden mdDown>
+        {/* <Hidden mdDown>
           <Drawer
             variant="permanent"
             anchor="left"
@@ -114,9 +156,56 @@ const Home = () => {
           >
             <Typography>Sidebar</Typography>
           </Drawer>
-        </Hidden>
+        </Hidden> */}
         <Box className={classes.root}>
           <HomeNavigation />
+          <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
+            <Tabs
+              className={classes.tabs}
+              value={value}
+              onChange={handleChange}
+              indicatorColor="secondary"
+              textColor="secondary"
+              variant="fullWidth"
+              aria-label="full width tabs example"
+            >
+              <Tab icon={<SingleBedIcon />} label="ROOMS" {...a11yProps(0)} />
+              <Tab
+                icon={<ApartmentIcon />}
+                label="BOARDING HOUSES"
+                {...a11yProps(1)}
+              />
+            </Tabs>
+          </AppBar>
+
+          <SwipeableViews
+            axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+            index={value}
+            onChangeIndex={handleChangeIndex}
+          >
+            <TabPanel value={value} index={0} dir={theme.direction}>
+              <Box className={classes.page}>{/* Room List */}</Box>
+            </TabPanel>
+            <TabPanel value={value} index={1} dir={theme.direction}>
+              <Box className={classes.page}>
+                <Box
+                  p={1}
+                  pb={8}
+                  style={{ maxWidth: "75rem", margin: "0 auto" }}
+                >
+                  <Grid container spacing={1}>
+                    {owners.map((owner) => (
+                      <Grid item lg={4} md={6} sm={6} key={owner}>
+                        <House owner={owner} />
+                      </Grid>
+                    ))}
+                  </Grid>
+                </Box>
+              </Box>
+            </TabPanel>
+          </SwipeableViews>
+
+          {/*           
           <Box p={1} pb={8} style={{ maxWidth: "75rem", margin: "0 auto" }}>
             <Grid container spacing={1}>
               {owners.map((owner) => (
@@ -125,7 +214,7 @@ const Home = () => {
                 </Grid>
               ))}
             </Grid>
-          </Box>
+          </Box> */}
         </Box>
       </Container>
     </Slide>

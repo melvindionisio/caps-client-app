@@ -3,6 +3,7 @@ import { makeStyles } from "@mui/styles";
 export const useStyles = makeStyles({
   page: {
     height: "100vh",
+    width: "100%",
     overflow: "hidden",
     position: "relative",
   },

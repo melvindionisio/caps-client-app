@@ -8,6 +8,8 @@ import {
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Hidden from "@mui/material/Hidden";
+import Drawer from "@mui/material/Drawer";
+// import Box from "@mui/material/Box";
 
 import { makeStyles } from "@mui/styles";
 import { blueGrey, blue, orange } from "@mui/material/colors";
@@ -31,12 +33,19 @@ const useStyles = makeStyles((theme) => ({
     overflow: "hidden",
     position: "relative",
   },
+  permanentDrawer: {
+    width: 250,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: 250,
+  },
 }));
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: blue[500],
+      main: blue[700],
     },
     secondary: {
       main: orange[500],
@@ -66,7 +75,30 @@ const App = () => {
   const classes = useStyles();
   return (
     <ThemeProvider theme={theme}>
-      <Container disableGutters className={classes.page} maxWidth="xl">
+      <Container
+        disableGutters
+        className={classes.page}
+        sx={{
+          display: "flex",
+          height: "100vh",
+          width: "100vw",
+        }}
+        maxWidth="xl"
+      >
+        <Hidden mdDown>
+          <Drawer
+            variant="permanent"
+            anchor="left"
+            className={classes.permanentDrawer}
+            style={{ zIndex: "10" }}
+            classes={{
+              paper: classes.drawerPaper,
+            }}
+          >
+            <Typography>PROFILE</Typography>
+          </Drawer>
+        </Hidden>
+        {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
         <Router>
           <Switch>
             <Route exact path="/">
@@ -105,6 +137,7 @@ const App = () => {
             <MobilePageNavigation className={classes.mainNavigation} />
           </Hidden>
         </Router>
+        {/* </Box> */}
       </Container>
     </ThemeProvider>
   );
