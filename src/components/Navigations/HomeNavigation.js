@@ -21,16 +21,17 @@ import CancelIcon from "@mui/icons-material/Cancel";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import { Button, Card, CardActions, CardHeader } from "@mui/material";
 import { Box } from "@mui/system";
+
 import logo from "../../sns-logo.png";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
   },
-});
+}));
 
-const HomeNavigation = () => {
+const HomeNavigation = ({ children }) => {
   const classes = useStyles();
   const history = useHistory();
   const anchor = "left";
@@ -60,7 +61,7 @@ const HomeNavigation = () => {
         elevation={0}
         variant="outlined"
         color="secondary"
-        sx={{ background: "white" }}
+        sx={{ background: "#fff" }}
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
           <Hidden mdUp>
@@ -68,9 +69,30 @@ const HomeNavigation = () => {
               <Avatar>U</Avatar>
             </IconButton>
           </Hidden>
-          {/* <Typography variant="h6">SEARCH 'N STAY</Typography>
-           */}
-          <Avatar src={logo} style={{ height: "2rem", width: "2rem" }}></Avatar>
+
+          <Box style={{ display: "flex", alignItems: "center" }}>
+            <Avatar
+              src={logo}
+              style={{ height: "2rem", width: "2rem" }}
+            ></Avatar>
+            <Hidden lgDown>
+              <Typography
+                variant="body1"
+                as="h1"
+                style={{
+                  marginLeft: ".2rem",
+                  fontFamily: "Quicksand",
+                  fontWeight: "bold",
+                }}
+              >
+                SEARCH 'N STAY
+              </Typography>
+            </Hidden>
+          </Box>
+          {/* tabs navigation */}
+          <Hidden mdDown>
+            <Box style={{ width: "25rem" }}>{children}</Box>
+          </Hidden>
           <IconButton onClick={() => history.push("/search")} size="large">
             <SearchOutlinedIcon />
           </IconButton>

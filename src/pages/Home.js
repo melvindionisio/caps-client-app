@@ -2,8 +2,11 @@ import React from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
+import ApartmentIcon from "@mui/icons-material/Apartment";
+import SingleBedIcon from "@mui/icons-material/SingleBed";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
+import Typography from "@mui/material/Typography";
 
 import Container from "@mui/material/Container";
 import Slide from "@mui/material/Slide";
@@ -15,14 +18,12 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-// import Hidden from "@mui/material/Hidden";
+import Hidden from "@mui/material/Hidden";
 // import Drawer from "@mui/material/Drawer";
 // import Typography from "@mui/material/Typography";
 import AppBar from "@mui/material/AppBar";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
-import ApartmentIcon from "@mui/icons-material/Apartment";
-import SingleBedIcon from "@mui/icons-material/SingleBed";
 
 import { useTheme } from "@mui/styles";
 import { useState } from "react";
@@ -119,18 +120,32 @@ const Home = () => {
     setValue(index);
   };
 
-  // const handleClickOpen = () => {
-  //   setOpen(true);
-  // };
-
-  // const handleClose = () => {
-  //   setOpen(false);
-  // };
-
-  // const [sidebarOpen, setSidebarOpen] = useState(false);
-  // const handleDrawerToggle = () => {
-  //   setSidebarOpen(!sidebarOpen);
-  // };
+  function NavigationTabs() {
+    return (
+      <>
+        <Tabs
+          className={classes.tabs}
+          value={value}
+          onChange={handleChange}
+          indicatorColor="secondary"
+          textColor="secondary"
+          variant="fullWidth"
+          aria-label="full width tabs"
+        >
+          <Tab
+            icon={<SingleBedIcon />}
+            label={<Typography variant="subtitle2">ROOMS</Typography>}
+            {...a11yProps(0)}
+          />
+          <Tab
+            icon={<ApartmentIcon />}
+            label={<Typography variant="subtitle2">BOARDING HOUSE</Typography>}
+            {...a11yProps(1)}
+          />
+        </Tabs>
+      </>
+    );
+  }
 
   return (
     <Slide in={true} direction="left">
@@ -158,25 +173,14 @@ const Home = () => {
           </Drawer>
         </Hidden> */}
         <Box className={classes.root}>
-          <HomeNavigation />
-          <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
-            <Tabs
-              className={classes.tabs}
-              value={value}
-              onChange={handleChange}
-              indicatorColor="secondary"
-              textColor="secondary"
-              variant="fullWidth"
-              aria-label="full width tabs example"
-            >
-              <Tab icon={<SingleBedIcon />} label="ROOMS" {...a11yProps(0)} />
-              <Tab
-                icon={<ApartmentIcon />}
-                label="BOARDING HOUSES"
-                {...a11yProps(1)}
-              />
-            </Tabs>
-          </AppBar>
+          <HomeNavigation>
+            <NavigationTabs />
+          </HomeNavigation>
+          <Hidden mdUp>
+            <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
+              <NavigationTabs />
+            </AppBar>
+          </Hidden>
 
           <SwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -184,7 +188,16 @@ const Home = () => {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <Box className={classes.page}>{/* Room List */}</Box>
+              <Box
+                className={classes.page}
+                p={1}
+                pb={8}
+                style={{ maxWidth: "75rem", margin: "0 auto" }}
+              >
+                <Card variant="outlined">
+                  <CardHeader title={<Typography>Room List</Typography>} />
+                </Card>
+              </Box>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
               <Box className={classes.page}>
@@ -204,17 +217,6 @@ const Home = () => {
               </Box>
             </TabPanel>
           </SwipeableViews>
-
-          {/*           
-          <Box p={1} pb={8} style={{ maxWidth: "75rem", margin: "0 auto" }}>
-            <Grid container spacing={1}>
-              {owners.map((owner) => (
-                <Grid item lg={4} md={6} sm={6} key={owner}>
-                  <House owner={owner} />
-                </Grid>
-              ))}
-            </Grid>
-          </Box> */}
         </Box>
       </Container>
     </Slide>

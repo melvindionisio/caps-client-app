@@ -25,14 +25,7 @@ import { amber } from "@mui/material/colors";
 // import AccountCircle from "@mui/icons-material/AccountCircle";
 
 const useStyles = makeStyles({
-  textfield: {
-    // "& .MuiFilledInput-root": {
-    //   background: lightBlue[50],
-    //   "&:hover": {
-    //     background: lightBlue[100],
-    //   },
-    // },
-  },
+  textfield: {},
 });
 
 const Login = () => {
@@ -193,8 +186,7 @@ const Login = () => {
                   variant="contained"
                   size="large"
                   type="submit"
-                  sx={{ marginTop: ".3rem", borderRadius: 0 }}
-                  fullWidth
+                  sx={{ marginTop: ".3rem", borderRadius: 0, width: "100%" }}
                   onClick={login}
                 >
                   Login
