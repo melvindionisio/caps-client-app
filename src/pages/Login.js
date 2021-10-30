@@ -14,16 +14,15 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 
 import GoogleIcon from "@mui/icons-material/Google";
-// import FacebookIcon from "@mui/icons-material/Facebook";
+import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleLogin from "react-google-login";
-// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 import { makeStyles } from "@mui/styles";
 import { amber } from "@mui/material/colors";
-// import AccountCircle from "@mui/icons-material/AccountCircle";
-
 import { LoginContext } from "../contexts/LoginContext";
 import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   textfield: {},
@@ -36,9 +35,7 @@ const Login = () => {
   const [message, setMessage] = useState("Login with your account.");
   const [isError, setIsError] = useState(false);
   const input = useRef(null);
-
-  const { setIsLoggedIn, setUserName, setProfilePic, clientId } =
-    useContext(LoginContext);
+  const history = useHistory();
 
   const login = (e) => {
     e.preventDefault();
@@ -55,16 +52,20 @@ const Login = () => {
     }
   };
 
+  const { setIsLoggedIn, setUserName, setProfilePic, clientId } =
+    useContext(LoginContext);
+
   const responseGoogle = (response) => {
     setUserName(response.profileObj.name);
     setIsLoggedIn(true);
     setProfilePic(response.profileObj.imageUrl);
     console.log(response);
+    history.push("/home");
   };
 
-  // const responseFacebook = (response) => {
-  //   console.log(response);
-  // };
+  const responseFacebook = (response) => {
+    console.log(response);
+  };
 
   return (
     <Slide in={true} direction="right">
@@ -75,7 +76,6 @@ const Login = () => {
           height: "100vh",
           width: "100vw",
           overflowY: "auto",
-          // background: grey[900],
           position: "relative",
         }}
       >
@@ -193,8 +193,8 @@ const Login = () => {
                       <IconButton
                         size="large"
                         style={{ color: amber[400] }}
-                        // onClick={renderProps.onClick}
-                        // disabled={renderProps.disabled}
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
                       >
                         <GoogleIcon fontSize="large" />
                       </IconButton>
@@ -207,7 +207,7 @@ const Login = () => {
                   isSignedIn={true}
                 />
 
-                {/* <FacebookLogin
+                <FacebookLogin
                   appId="1088597931155576"
                   // autoLoad={true}
                   fields="name,email,picture"
@@ -232,7 +232,7 @@ const Login = () => {
                       <Typography as="label">Facebook</Typography>
                     </Box>
                   )}
-                /> */}
+                />
               </CardContent>
             </Card>
           </form>

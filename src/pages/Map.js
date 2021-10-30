@@ -2,14 +2,16 @@ import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-load
 import { Typography, AppBar, Toolbar, Avatar } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import { useStyles } from "./styles/Map.styles";
+import { LoginContext } from "../contexts/LoginContext";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
 
 const Map = () => {
   const classes = useStyles();
+  const { profilePic } = useContext(LoginContext);
 
   const controls = new mapboxgl.NavigationControl();
   const mapContainer = useRef(null);
@@ -183,9 +185,7 @@ const Map = () => {
             <Typography variant="h6" component="h2" className={classes.appName}>
               Search 'n Stay
             </Typography>
-            <Avatar className={classes.avatar} size="small">
-              M
-            </Avatar>
+            <Avatar className={classes.avatar} size="small" src={profilePic} />
           </Toolbar>
           <Box></Box>
         </AppBar>

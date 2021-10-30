@@ -33,15 +33,14 @@ import HomeNavigation from "../components/Navigations/HomeNavigation";
 // import { Link } from "react-router-dom";
 
 const owners = [
-  "Melvin",
-  "Ivan",
-  "Jhelan",
-  "Ranel",
-  "Marl",
-  "Rafael",
-  "Angelo",
-  "Ivan",
-  "Sahir",
+  "House-1",
+  "House-2",
+  "House-3",
+  "House-4",
+  "House-5",
+  "House-6",
+  "House-7",
+  "House-8",
 ];
 
 const House = ({ owner }) => {
@@ -159,19 +158,6 @@ const Home = () => {
         }}
         className={classes.homeContainer}
       >
-        {/* <Hidden mdDown>
-          <Drawer
-            variant="permanent"
-            anchor="left"
-            className={classes.permanentDrawer}
-            style={{ zIndex: "10" }}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            <Typography>Sidebar</Typography>
-          </Drawer>
-        </Hidden> */}
         <Box className={classes.root}>
           <HomeNavigation>
             <NavigationTabs />

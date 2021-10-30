@@ -70,8 +70,7 @@ const HomeNavigation = ({ children }) => {
   const logout = () => {
     setUserName(null);
     setIsLoggedIn(false);
-    console.log(userName);
-    console.log("Logged out");
+    console.log(isLoggedIn);
   };
 
   return (
@@ -85,8 +84,14 @@ const HomeNavigation = ({ children }) => {
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
           <Hidden mdUp>
-            <IconButton onClick={toggleDrawer(anchor, true)} size="small">
-              <Avatar>U</Avatar>
+            <IconButton onClick={toggleDrawer(anchor, true)} size="medium">
+              <Avatar
+                style={{
+                  outline: "2px solid rgba(25, 118, 210, 0.5)",
+                  outlineOffset: "2px",
+                }}
+                src={profilePic}
+              />
             </IconButton>
           </Hidden>
 
@@ -129,7 +134,9 @@ const HomeNavigation = ({ children }) => {
             onClick={toggleDrawer(anchor, false)}
             onKeyDown={toggleDrawer(anchor, false)}
           >
-            <Typography>SEARCH 'N STAY</Typography>
+            <Typography variant="body1" style={{ fontFamily: "Quicksand" }}>
+              SEARCH 'N STAY
+            </Typography>
 
             <IconButton
               onClick={toggleDrawer(anchor, false)}
@@ -139,16 +146,6 @@ const HomeNavigation = ({ children }) => {
             </IconButton>
           </ListItem>
           {isLoggedIn ? (
-            <>
-              <Divider />
-              <ListItem sx={{ dislay: "flex", justifyContent: "center" }}>
-                <Button onClick={() => history.push("/login")}>Login</Button> or{" "}
-                <Button onClick={() => history.push("/register")}>
-                  Register
-                </Button>
-              </ListItem>
-            </>
-          ) : (
             <>
               <ListItem>
                 <Card sx={{ width: "100%" }} variant="outlined">
@@ -186,7 +183,7 @@ const HomeNavigation = ({ children }) => {
                       padding: "0rem",
                     }}
                   >
-                    <Button
+                    {/* <Button
                       sx={{ width: "50%", borderRadius: "0rem" }}
                       size="small"
                       disableElevation
@@ -194,13 +191,13 @@ const HomeNavigation = ({ children }) => {
                     >
                       Edit
                     </Button>
-                    <Divider orientation="vertical" flexItem />
+                    <Divider orientation="vertical" flexItem /> */}
                     <GoogleLogout
                       clientId={clientId}
                       onLogoutSuccess={logout}
                       render={(renderProps) => (
                         <Button
-                          sx={{ width: "50%", borderRadius: "0rem" }}
+                          sx={{ width: "100%", borderRadius: "0rem" }}
                           size="small"
                           disableElevation
                           color="secondary"
@@ -222,6 +219,16 @@ const HomeNavigation = ({ children }) => {
                   <BookmarksIcon />
                 </ListItemIcon>
                 <ListItemText primary={"BOOKMARKS"} />
+              </ListItem>
+            </>
+          ) : (
+            <>
+              <Divider />
+              <ListItem sx={{ dislay: "flex", justifyContent: "center" }}>
+                <Button onClick={() => history.push("/login")}>Login</Button> or{" "}
+                <Button onClick={() => history.push("/register")}>
+                  Register
+                </Button>
               </ListItem>
             </>
           )}
