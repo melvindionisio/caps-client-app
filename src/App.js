@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,6 +24,8 @@ import Search from "./pages/Search";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
+
+import { LoginContext } from "./contexts/LoginContext";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -73,72 +75,90 @@ const theme = createTheme({
 
 const App = () => {
   const classes = useStyles();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userName, setUserName] = useState();
+  const [profilePic, setProfilePic] = useState();
+  const clientId =
+    "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
+
   return (
     <ThemeProvider theme={theme}>
-      <Container
-        disableGutters
-        className={classes.page}
-        sx={{
-          display: "flex",
-          height: "100vh",
-          width: "100vw",
+      <LoginContext.Provider
+        value={{
+          clientId,
+          isLoggedIn,
+          setIsLoggedIn,
+          userName,
+          setUserName,
+          profilePic,
+          setProfilePic,
         }}
-        maxWidth="xl"
       >
-        <Hidden mdDown>
-          <Drawer
-            variant="permanent"
-            anchor="left"
-            className={classes.permanentDrawer}
-            style={{ zIndex: "10" }}
-            classes={{
-              paper: classes.drawerPaper,
-            }}
-          >
-            <Typography>PROFILE</Typography>
-          </Drawer>
-        </Hidden>
-        {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
-        <Router>
-          <Switch>
-            <Route exact path="/">
-              <Redirect to="/home" />
-            </Route>
-            <Route path="/home">
-              <Home />
-            </Route>
-            <Route path="/map">
-              <Map />
-            </Route>
-            <Route path="/help">
-              <Help />
-            </Route>
-            <Route path="/login">
-              <Login />
-            </Route>
-            <Route path="/register">
-              <Register />
-            </Route>
-            <Route path="/search">
-              <Search />
-            </Route>
-            <Route path="*">
-              <Container maxWidth="sm">
-                <Typography variant="h6" align="center">
-                  Error 404 page not found.
-                </Typography>
-              </Container>
-            </Route>
-          </Switch>
+        <Container
+          disableGutters
+          className={classes.page}
+          sx={{
+            display: "flex",
+            height: "100vh",
+            width: "100vw",
+          }}
+          maxWidth="xl"
+        >
           <Hidden mdDown>
-            <DeskPageNavigation />
+            <Drawer
+              variant="permanent"
+              anchor="left"
+              className={classes.permanentDrawer}
+              style={{ zIndex: "10" }}
+              classes={{
+                paper: classes.drawerPaper,
+              }}
+            >
+              <Typography>PROFILE</Typography>
+            </Drawer>
           </Hidden>
-          <Hidden mdUp>
-            <MobilePageNavigation className={classes.mainNavigation} />
-          </Hidden>
-        </Router>
-        {/* </Box> */}
-      </Container>
+          {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
+          <Router>
+            <Switch>
+              <Route exact path="/">
+                <Redirect to="/home" />
+              </Route>
+              <Route path="/home">
+                <Home />
+              </Route>
+              <Route path="/map">
+                <Map />
+              </Route>
+              <Route path="/help">
+                <Help />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route path="/register">
+                <Register />
+              </Route>
+              <Route path="/search">
+                <Search />
+              </Route>
+              <Route path="*">
+                <Container maxWidth="sm">
+                  <Typography variant="h6" align="center">
+                    Error 404 page not found.
+                  </Typography>
+                </Container>
+              </Route>
+            </Switch>
+            <Hidden mdDown>
+              <DeskPageNavigation />
+            </Hidden>
+            <Hidden mdUp>
+              <MobilePageNavigation className={classes.mainNavigation} />
+            </Hidden>
+          </Router>
+          {/* </Box> */}
+        </Container>
+      </LoginContext.Provider>
     </ThemeProvider>
   );
 };

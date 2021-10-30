@@ -24,6 +24,10 @@ import { Box } from "@mui/system";
 
 import logo from "../../sns-logo.png";
 
+import { GoogleLogout } from "react-google-login";
+import { LoginContext } from "../../contexts/LoginContext";
+import { useContext } from "react";
+
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
@@ -52,6 +56,22 @@ const HomeNavigation = ({ children }) => {
     }
 
     setState({ ...state, [anchor]: open });
+  };
+
+  const {
+    clientId,
+    isLoggedIn,
+    userName,
+    profilePic,
+    setUserName,
+    setIsLoggedIn,
+  } = useContext(LoginContext);
+
+  const logout = () => {
+    setUserName(null);
+    setIsLoggedIn(false);
+    console.log(userName);
+    console.log("Logged out");
   };
 
   return (
@@ -118,84 +138,93 @@ const HomeNavigation = ({ children }) => {
               <CancelIcon />
             </IconButton>
           </ListItem>
-          <ListItem>
-            <Card sx={{ width: "100%" }} variant="outlined">
-              <CardHeader
-                title={
-                  <Box
+          {isLoggedIn ? (
+            <>
+              <Divider />
+              <ListItem sx={{ dislay: "flex", justifyContent: "center" }}>
+                <Button onClick={() => history.push("/login")}>Login</Button> or{" "}
+                <Button onClick={() => history.push("/register")}>
+                  Register
+                </Button>
+              </ListItem>
+            </>
+          ) : (
+            <>
+              <ListItem>
+                <Card sx={{ width: "100%" }} variant="outlined">
+                  <CardHeader
+                    title={
+                      <Box
+                        sx={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          width: "100%",
+                        }}
+                      >
+                        <Avatar
+                          sx={{
+                            height: "4rem",
+                            width: "4rem",
+                            background: "#lightgrey",
+                          }}
+                          src={profilePic}
+                        />
+                      </Box>
+                    }
+                    subheader={
+                      <Typography variant="subtitle1" align="center">
+                        {userName ?? "UserName"}
+                      </Typography>
+                    }
+                  />
+                  <Divider />
+                  <CardActions
                     sx={{
                       display: "flex",
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "100%",
+                      justifyContent: "space-between",
+                      padding: "0rem",
                     }}
                   >
-                    <Avatar
-                      sx={{
-                        height: "4rem",
-                        width: "4rem",
-                        background: "#lightgrey",
-                      }}
+                    <Button
+                      sx={{ width: "50%", borderRadius: "0rem" }}
+                      size="small"
+                      disableElevation
+                      variant="text"
                     >
-                      P
-                    </Avatar>
-                  </Box>
-                }
-                subheader={
-                  <Typography variant="subtitle1" align="center">
-                    Profile Name
-                  </Typography>
-                }
-              />
+                      Edit
+                    </Button>
+                    <Divider orientation="vertical" flexItem />
+                    <GoogleLogout
+                      clientId={clientId}
+                      onLogoutSuccess={logout}
+                      render={(renderProps) => (
+                        <Button
+                          sx={{ width: "50%", borderRadius: "0rem" }}
+                          size="small"
+                          disableElevation
+                          color="secondary"
+                          variant="text"
+                          onClick={renderProps.onClick}
+                          disabled={renderProps.disabled}
+                        >
+                          Logout
+                        </Button>
+                      )}
+                    ></GoogleLogout>
+                  </CardActions>
+                </Card>
+              </ListItem>
               <Divider />
-              <CardActions
-                sx={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  padding: "0rem",
-                }}
-              >
-                <Button
-                  sx={{ width: "50%", borderRadius: "0rem" }}
-                  size="small"
-                  disableElevation
-                  variant="text"
-                >
-                  Edit
-                </Button>
-                <Divider orientation="vertical" flexItem />
-                <Button
-                  sx={{ width: "50%", borderRadius: "0rem" }}
-                  size="small"
-                  disableElevation
-                  color="secondary"
-                  variant="text"
-                >
-                  Logout
-                </Button>
-              </CardActions>
-            </Card>
-          </ListItem>
-          <Divider />
-          <ListItem sx={{ dislay: "flex", justifyContent: "center" }}>
-            {/* <ListItemIcon>
-              <BookmarksIcon />
-            </ListItemIcon> */}
-            {/* <ListItemText primary={"Login "} /> */}
-            <Button onClick={() => history.push("/login")}>
-              Login
-            </Button> or{" "}
-            <Button onClick={() => history.push("/register")}>Register</Button>
-          </ListItem>
 
-          <Divider />
-
-          <ListItem button>
-            <ListItemIcon>
-              <BookmarksIcon />
-            </ListItemIcon>
-            <ListItemText primary={"BOOKMARKS"} />
-          </ListItem>
+              <ListItem button>
+                <ListItemIcon>
+                  <BookmarksIcon />
+                </ListItemIcon>
+                <ListItemText primary={"BOOKMARKS"} />
+              </ListItem>
+            </>
+          )}
         </List>
       </MobileMenu>
     </>

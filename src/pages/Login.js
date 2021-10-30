@@ -14,15 +14,16 @@ import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
 
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
-
+// import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleLogin from "react-google-login";
-// import { GoogleLogout } from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
+// import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 import { makeStyles } from "@mui/styles";
 import { amber } from "@mui/material/colors";
 // import AccountCircle from "@mui/icons-material/AccountCircle";
+
+import { LoginContext } from "../contexts/LoginContext";
+import { useContext } from "react";
 
 const useStyles = makeStyles({
   textfield: {},
@@ -35,6 +36,9 @@ const Login = () => {
   const [message, setMessage] = useState("Login with your account.");
   const [isError, setIsError] = useState(false);
   const input = useRef(null);
+
+  const { setIsLoggedIn, setUserName, setProfilePic, clientId } =
+    useContext(LoginContext);
 
   const login = (e) => {
     e.preventDefault();
@@ -51,28 +55,16 @@ const Login = () => {
     }
   };
 
-  const clientId =
-    "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
-
-  // const [isLoggedIn, setIsLoggedIn] = useState(false);
-  // const [name, setName] = useState();
-  // const [profilePic, setProfilePic] = useState();
-
   const responseGoogle = (response) => {
-    // setName(response.profileObj.name);
-    // setIsLoggedIn(true);
-    // setProfilePic(response.profileObj.imageUrl);
+    setUserName(response.profileObj.name);
+    setIsLoggedIn(true);
+    setProfilePic(response.profileObj.imageUrl);
     console.log(response);
   };
 
-  // const logout = () => {
-  //   setName(null);
-  //   setIsLoggedIn(false);
+  // const responseFacebook = (response) => {
+  //   console.log(response);
   // };
-
-  const responseFacebook = (response) => {
-    console.log(response);
-  };
 
   return (
     <Slide in={true} direction="right">
@@ -150,36 +142,6 @@ const Login = () => {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
-                {/*             
-                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                  <AccountCircle
-                    sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                  />
-                  <TextField
-                    id="username"
-                    label="Username"
-                    variant="standard"
-                    margin="none"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    fullWidth
-                  />
-                </Box>
-                <Box sx={{ display: "flex", alignItems: "flex-end" }}>
-                  <AccountCircle
-                    sx={{ color: "action.active", mr: 1, my: 0.5 }}
-                  />
-                  <TextField
-                    id="password"
-                    label="Password"
-                    variant="standard"
-                    margin="dense"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    fullWidth
-                  />
-                </Box> */}
               </CardContent>
               <CardActions sx={{ padding: 0 }}>
                 <Button
@@ -245,7 +207,7 @@ const Login = () => {
                   isSignedIn={true}
                 />
 
-                <FacebookLogin
+                {/* <FacebookLogin
                   appId="1088597931155576"
                   // autoLoad={true}
                   fields="name,email,picture"
@@ -270,7 +232,7 @@ const Login = () => {
                       <Typography as="label">Facebook</Typography>
                     </Box>
                   )}
-                />
+                /> */}
               </CardContent>
             </Card>
           </form>
