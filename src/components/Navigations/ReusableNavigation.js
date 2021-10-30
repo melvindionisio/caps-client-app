@@ -19,7 +19,7 @@ const ReusableNavigation = ({ children }) => {
   return (
     <>
       <AppBar
-        position="fixed"
+        position="sticky"
         elevation={0}
         variant="outlined"
         color="secondary"

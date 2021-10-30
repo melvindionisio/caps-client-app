@@ -73,10 +73,8 @@ const Login = () => {
         disableGutters
         maxWidth="xl"
         sx={{
-          height: "100vh",
           width: "100vw",
           overflowY: "auto",
-          position: "relative",
         }}
       >
         <ReusableNavigation>
@@ -87,12 +85,9 @@ const Login = () => {
         <Box
           p={2}
           sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
             width: "80%",
             maxWidth: "40rem",
+            margin: "0 auto",
           }}
         >
           <form sx={{ display: "flex" }}>

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -24,7 +24,7 @@ import Search from "./pages/Search";
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
-import { LoginContext } from "./contexts/LoginContext";
+import LoginContextProvider from "./contexts/LoginContext";
 
 const useStyles = makeStyles((theme) => ({
   page: {
@@ -74,25 +74,10 @@ const theme = createTheme({
 
 const App = () => {
   const classes = useStyles();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userName, setUserName] = useState();
-  const [profilePic, setProfilePic] = useState();
-  const clientId =
-    "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
 
   return (
     <ThemeProvider theme={theme}>
-      <LoginContext.Provider
-        value={{
-          clientId,
-          isLoggedIn,
-          setIsLoggedIn,
-          userName,
-          setUserName,
-          profilePic,
-          setProfilePic,
-        }}
-      >
+      <LoginContextProvider>
         <Container
           disableGutters
           className={classes.page}
@@ -157,7 +142,7 @@ const App = () => {
           </Router>
           {/* </Box> */}
         </Container>
-      </LoginContext.Provider>
+      </LoginContextProvider>
     </ThemeProvider>
   );
 };

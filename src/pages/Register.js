@@ -1,5 +1,6 @@
 import React from "react";
 import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import Slide from "@mui/material/Slide";
@@ -11,7 +12,6 @@ const Register = () => {
         disableGutters
         maxWidth="xl"
         sx={{
-          height: "100vh",
           width: "100vw",
           overflowY: "auto",
         }}
@@ -21,6 +21,16 @@ const Register = () => {
             Register
           </Typography>
         </ReusableNavigation>
+        <Box
+          p={2}
+          sx={{
+            width: "80%",
+            maxWidth: "40rem",
+            margin: "0 auto",
+          }}
+        >
+          <Typography align="center">Registration Form here!</Typography>
+        </Box>
       </Container>
     </Slide>
   );

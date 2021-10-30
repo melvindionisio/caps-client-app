@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const HomeNavigation = ({ children }) => {
+const HomeNavigation = ({ children, NavigationTabs }) => {
   const classes = useStyles();
   const history = useHistory();
   const anchor = "left";
@@ -116,12 +116,19 @@ const HomeNavigation = ({ children }) => {
           </Box>
           {/* tabs navigation */}
           <Hidden mdDown>
-            <Box style={{ width: "25rem" }}>{children}</Box>
+            <Box style={{ minWidth: "23rem", margin: "0 auto" }}>
+              {children}
+            </Box>
           </Hidden>
           <IconButton onClick={() => history.push("/search")} size="large">
             <SearchOutlinedIcon />
           </IconButton>
         </Toolbar>
+        <Hidden mdUp>
+          <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
+            <NavigationTabs />
+          </AppBar>
+        </Hidden>
       </AppBar>
 
       <MobileMenu toggleDrawer={toggleDrawer} state={state} anchor={anchor}>

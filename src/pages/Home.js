@@ -18,10 +18,10 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-import Hidden from "@mui/material/Hidden";
 // import Drawer from "@mui/material/Drawer";
 // import Typography from "@mui/material/Typography";
-import AppBar from "@mui/material/AppBar";
+// import Hidden from "@mui/material/Hidden";
+// import AppBar from "@mui/material/AppBar";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
 
@@ -97,10 +97,6 @@ function a11yProps(index) {
 }
 
 const Home = () => {
-  const classes = useStyles();
-
-  const theme = useTheme();
-  const [value, setValue] = useState(0);
   // const [open, setOpen] = useState(false);
   // const boardingHouses = bHouse;
   // const {
@@ -110,6 +106,10 @@ const Home = () => {
   // } = useFetch(
   //   "https://my-json-server.typicode.com/melvindionisio/bhfinder-api/boardingHouse"
   // );
+
+  const classes = useStyles();
+  const theme = useTheme();
+  const [value, setValue] = useState(0);
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -121,28 +121,26 @@ const Home = () => {
 
   function NavigationTabs() {
     return (
-      <>
-        <Tabs
-          className={classes.tabs}
-          value={value}
-          onChange={handleChange}
-          indicatorColor="secondary"
-          textColor="secondary"
-          variant="fullWidth"
-          aria-label="full width tabs"
-        >
-          <Tab
-            icon={<SingleBedIcon />}
-            label={<Typography variant="subtitle2">ROOMS</Typography>}
-            {...a11yProps(0)}
-          />
-          <Tab
-            icon={<ApartmentIcon />}
-            label={<Typography variant="subtitle2">BOARDING HOUSE</Typography>}
-            {...a11yProps(1)}
-          />
-        </Tabs>
-      </>
+      <Tabs
+        className={classes.tabs}
+        value={value}
+        onChange={handleChange}
+        indicatorColor="secondary"
+        textColor="secondary"
+        variant="fullWidth"
+        aria-label="full width tabs"
+      >
+        <Tab
+          icon={<SingleBedIcon />}
+          label={<Typography variant="subtitle2">ROOMS</Typography>}
+          {...a11yProps(0)}
+        />
+        <Tab
+          icon={<ApartmentIcon />}
+          label={<Typography variant="subtitle2">BOARDING HOUSE</Typography>}
+          {...a11yProps(1)}
+        />
+      </Tabs>
     );
   }
 
@@ -159,14 +157,14 @@ const Home = () => {
         className={classes.homeContainer}
       >
         <Box className={classes.root}>
-          <HomeNavigation>
+          <HomeNavigation NavigationTabs={NavigationTabs}>
             <NavigationTabs />
           </HomeNavigation>
-          <Hidden mdUp>
+          {/* <Hidden mdUp>
             <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
               <NavigationTabs />
             </AppBar>
-          </Hidden>
+          </Hidden> */}
 
           <SwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
