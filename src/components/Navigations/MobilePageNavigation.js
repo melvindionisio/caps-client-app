@@ -102,6 +102,7 @@ export default function MobilePageNavigation() {
       >
         {navItems.map((item) => (
           <BottomNavigationAction
+            style={{ fontFamily: "Quicksand" }}
             key={item.index}
             label={item.label.toUpperCase()}
             value={item.value}
