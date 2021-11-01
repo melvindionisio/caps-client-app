@@ -26,23 +26,6 @@ import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
 import LoginContextProvider from "./contexts/LoginContext";
 
-const useStyles = makeStyles((theme) => ({
-  page: {
-    background: blueGrey[50],
-    height: "100vh",
-    width: "100vw",
-    overflow: "hidden",
-    position: "relative",
-  },
-  permanentDrawer: {
-    width: 250,
-    flexShrink: 0,
-  },
-  drawerPaper: {
-    width: 250,
-  },
-}));
-
 const theme = createTheme({
   palette: {
     primary: {
@@ -72,6 +55,29 @@ const theme = createTheme({
   spacing: 8,
 });
 
+const useStyles = makeStyles((theme) => ({
+  page: {
+    background: blueGrey[50],
+    height: "100vh",
+    width: "100vw",
+    overflow: "hidden",
+    position: "relative",
+  },
+  permanentDrawer: {
+    width: 270,
+    flexShrink: 0,
+  },
+  drawerPaper: {
+    width: 270,
+  },
+
+  // [theme.breakpoints.up("md")]: {
+  //   backgroundColor: theme.palette.background.md
+  // },
+  // [theme.breakpoints.down("sm")]: {
+  //   backgroundColor: theme.palette.background.sm
+  // },
+}));
 const App = () => {
   const classes = useStyles();
 
@@ -98,9 +104,18 @@ const App = () => {
                 paper: classes.drawerPaper,
               }}
             >
-              <Typography>PROFILE</Typography>
+              <Typography>BookMarks</Typography>
+              <Hidden lgDown>
+                <Typography>LG</Typography>
+              </Hidden>
+              <Hidden lgUp>
+                <Typography>MD</Typography>
+              </Hidden>
             </Drawer>
           </Hidden>
+          {/* <Hidden lgDown>
+            <Typography>Hello</Typography>
+          </Hidden> */}
           {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
           <Router>
             <Switch>

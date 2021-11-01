@@ -130,14 +130,10 @@ const Home = () => {
         variant="fullWidth"
         aria-label="full width tabs"
       >
-        <Tab
-          icon={<SingleBedIcon />}
-          label={<Typography variant="subtitle2">ROOMS</Typography>}
-          {...a11yProps(0)}
-        />
+        <Tab icon={<SingleBedIcon />} label="ROOMS" {...a11yProps(0)} />
         <Tab
           icon={<ApartmentIcon />}
-          label={<Typography variant="subtitle2">BOARDING HOUSE</Typography>}
+          label="BOARDING HOUSE"
           {...a11yProps(1)}
         />
       </Tabs>

@@ -1,40 +1,293 @@
 import React from "react";
+import {
+  Box,
+  Typography,
+  AppBar,
+  TextField,
+  Button,
+  Divider,
+  Fade,
+  Slide,
+  // Grid,
+  Container,
+} from "@mui/material";
+import HelpOutlinedIcon from "@mui/icons-material/HelpOutline";
+import { useEffect, useRef } from "react";
+import { makeStyles } from "@mui/styles";
+import { blue, pink } from "@mui/material/colors";
 
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import Container from "@mui/material/Container";
-import Slide from "@mui/material/Slide";
-import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
-import Toolbar from "@mui/material/Toolbar";
-import { Box } from "@mui/system";
+const useStyles = makeStyles({
+  rootContainer: {
+    position: "relative",
+  },
+  help: {
+    color: blue[600],
+    fontSize: 60,
+    padding: "1.5rem 0rem 0rem 1.5rem",
+  },
+
+  paper: {
+    marginTop: "1rem",
+    padding: ".5rem",
+    marginBottom: "1rem",
+  },
+  steps: {
+    margin: "1rem 0rem .5rem 0rem",
+    background: pink[400],
+  },
+
+  stepPicture: {
+    borderRadius: "1rem",
+  },
+
+  btnContainer: {
+    display: "flex",
+    justifyContent: "flex-end",
+  },
+});
 
 const Help = () => {
+  const classes = useStyles();
+  const top = useRef(null);
+
+  useEffect(() => {
+    top.current.scrollIntoView();
+  });
+
   return (
-    <Slide in={true} direction="up">
+    <Fade in={true} ref={top}>
       <Container
         disableGutters
         maxWidth="xl"
-        sx={{ height: "100vh", width: "100vw", overflowY: "auto" }}
+        sx={{
+          width: "100vw",
+          overflowY: "auto",
+        }}
       >
-        <AppBar position="sticky" elevation={1}>
-          <Toolbar>
-            <Typography variant="h6">HELP</Typography>
-          </Toolbar>
-        </AppBar>
-        <Box p={2} pb={8}>
-          <Card variant="outlined" sx={{ marginBottom: ".5rem" }}>
-            <CardHeader
-              title="Melvin"
-              subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  dolores recusandae corrupti error aliquam tempore, repudiandae
-                  nisi aperiam totam, impedit nihil nulla officia id sed
-                  temporibus porro qui sequi fugiat?"
-            />
-          </Card>
-        </Box>
+        <Slide in={true} direction="left">
+          <Box sx={{ background: "white" }}>
+            <HelpOutlinedIcon className={classes.help} fontSize="large" />
+          </Box>
+        </Slide>
+        <Slide in={true} direction="left">
+          <AppBar
+            position="sticky"
+            elevation={0}
+            sx={{
+              background: "white",
+              padding: ".7rem 2rem",
+              borderBottom: "1px solid rgba(0,0,0,0.2)",
+            }}
+          >
+            <Typography variant="h4" color="primary">
+              Help Center
+            </Typography>
+          </AppBar>
+        </Slide>
+        <Slide in={true} direction="up">
+          <Box style={{ paddingBottom: "5rem" }}>
+            <Box style={{ padding: "1.5rem " }}>
+              <Typography gutterBottom variant="body2">
+                If you encountered any problem, here are some guides to maximize
+                the use of this project. Feel free to browse below.
+              </Typography>
+              {/* <Grid container spacing={2}>
+              <Grid item md={4}>
+                <Paper variant="outlined" className={classes.paper}>
+                  <Typography gutterBottom variant="h5">
+                    How to install the app?
+                  </Typography>
+                  <Typography gutterBottom variant="body2">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                    soluta libero adipisci eligendi, sunt similique blanditiis
+                    dolores! Illo deserunt quisquam veniam possimus quia?
+                    Eveniet.
+                  </Typography>
+
+                  <Box p={1}>
+                    <Avatar className={classes.steps}>1</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi, sunt similique blanditiis
+                      dolores! Illo deserunt quisquam veniam possimus quia?
+                      Eveniet.
+                    </Typography>
+
+                    <Avatar className={classes.steps}>2</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi, sunt similique blanditiis
+                      dolores! Illo deserunt quisquam veniam possimus quia?
+                      Eveniet.
+                    </Typography>
+
+                    <Avatar className={classes.steps}>3</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+              <Grid item md={4}>
+                <Paper variant="outlined" className={classes.paper}>
+                  <Typography gutterBottom variant="h5">
+                    How to bookmark a room or a dorm/boarding house??
+                  </Typography>
+                  <Typography gutterBottom variant="body2">
+                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                    soluta libero adipisci eligendi, sunt similique blanditiis
+                    dolores! Illo deserunt quisquam veniam possimus quia?
+                    Eveniet.
+                  </Typography>
+                  <Box p={1}>
+                    <Avatar className={classes.steps}>1</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi, sunt similique blanditiis
+                      dolores! Illo deserunt quisquam veniam possimus quia?
+                      Eveniet.
+                    </Typography>
+
+                    <Avatar className={classes.steps}>2</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi, sunt similique blanditiis
+                      dolores! Illo deserunt quisquam veniam possimus quia?
+                      Eveniet.
+                    </Typography>
+
+                    <Avatar className={classes.steps}>3</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+              <Grid item md={4}>
+                <Paper variant="outlined" className={classes.paper}>
+                  <Typography gutterBottom variant="h5">
+                    How to activated real-time locator?
+                  </Typography>
+                  <Box p={1}>
+                    <Avatar className={classes.steps}>1</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi, sunt similique blanditiis
+                      dolores! Illo deserunt quisquam veniam possimus quia?
+                      Eveniet.
+                    </Typography>
+
+                    <Avatar className={classes.steps}>2</Avatar>
+                    <Typography variant="h6" color="primary">
+                      Step
+                    </Typography>
+                    <Typography gutterBottom variant="body2">
+                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
+                      soluta libero adipisci eligendi, sunt similique blanditiis
+                      dolores! Illo deserunt quisquam veniam possimus quia?
+                      Eveniet.
+                    </Typography>
+                  </Box>
+                </Paper>
+              </Grid>
+            </Grid> */}
+            </Box>
+            <Divider />
+            <form
+              style={{
+                background: "#fff",
+                paddingTop: 0,
+                padding: "1.5rem",
+              }}
+              action="https://formsubmit.co/melvinnudo.dionisio021@gmail.com"
+              method="POST"
+            >
+              <Typography variant="body1">
+                Want to know more? Questions? Suggestions?
+              </Typography>
+              <Typography gutterBottom variant="h5">
+                Send us a message!
+              </Typography>
+              <TextField
+                name="email"
+                sx={{ mt: 1 }}
+                fullWidth
+                variant="filled"
+                label="Email"
+              />
+              <TextField
+                name="message"
+                sx={{ mt: 2 }}
+                multiline
+                rows={4}
+                fullWidth
+                variant="filled"
+                label="Message"
+              />
+              <Box pt={1} className={classes.btnContainer}>
+                <Button
+                  type="submit"
+                  variant="contained"
+                  color="primary"
+                  className={classes.field}
+                >
+                  SEND
+                </Button>
+              </Box>
+            </form>
+          </Box>
+        </Slide>
+        <Typography
+          variant="caption"
+          align="center"
+          sx={{
+            color: "#555",
+            textAlign: "center",
+            marginBottom: ".5rem",
+            display: "block",
+          }}
+        >
+          Made with{" "}
+          <span role="img" aria-label="heart">
+            ❤️
+          </span>{" "}
+          by Lavezares Boys
+        </Typography>
       </Container>
-    </Slide>
+    </Fade>
   );
 };
 

@@ -4,15 +4,15 @@ import {
   Container,
   TextField,
   Typography,
-  Button,
   Card,
   CardContent,
   CardHeader,
   AppBar,
   Toolbar,
   IconButton,
-  ButtonGroup,
 } from "@mui/material";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useEffect, useRef, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
@@ -25,15 +25,20 @@ const Search = () => {
   const history = useHistory();
   const search = useRef(null);
   const [filterOpen, setFilterOpen] = useState(false);
+  const [sort, setSort] = useState("name");
 
   const filterToggle = () => {
     setFilterOpen(!filterOpen);
     console.log(filterOpen);
   };
+  const handleSort = (event, newSort) => {
+    setSort(newSort);
+  };
 
   useEffect(() => {
     search.current.firstElementChild.firstElementChild.focus();
   }, []);
+
   return (
     <Container
       disableGutters
@@ -66,7 +71,9 @@ const Search = () => {
           color="secondary"
           variant="outlined"
           elevation={0}
-          sx={{ background: "white" }}
+          sx={{
+            background: "#fff",
+          }}
         >
           <Toolbar
             sx={{
@@ -84,7 +91,7 @@ const Search = () => {
               placeholder="Search"
               color="secondary"
               size="small"
-              sx={{ width: "70%" }}
+              sx={{ width: "70%", maxWidth: "50rem" }}
               disabled={filterOpen}
             />
             <IconButton color="secondary" onClick={filterToggle} size="large">
@@ -107,16 +114,24 @@ const Search = () => {
               justifyContent: "space-between",
             }}
           >
-            <ButtonGroup size="small">
-              <Button disabled>Sort:</Button>
-              <Button>Name</Button>
-              <Button>Popularity</Button>
-              <Button>Vacancy</Button>
-            </ButtonGroup>
-            <ButtonGroup size="small">
-              <Button>Asc</Button>
-              <Button>Desc</Button>
-            </ButtonGroup>
+            <ToggleButtonGroup
+              value={sort}
+              exclusive
+              onChange={handleSort}
+              aria-label="sort"
+              color="primary"
+            >
+              <ToggleButton disabled>Sort:</ToggleButton>
+              <ToggleButton value="name" aria-label="sort by name">
+                Name
+              </ToggleButton>
+              <ToggleButton value="popularity" aria-label="sort by popularity">
+                Popularity
+              </ToggleButton>
+              <ToggleButton value="vacancy" aria-label="sort by vacancy">
+                Vacancy
+              </ToggleButton>
+            </ToggleButtonGroup>
           </Box>
           <Card variant="outlined" sx={{ minHeight: "80vh" }}>
             <CardContent>

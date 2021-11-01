@@ -5,13 +5,13 @@ import Typography from "@mui/material/Typography";
 import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Hidden from "@mui/material/Hidden";
-
+import Snackbar from "@mui/material/Snackbar";
+// import Alert from "@mui/material/Alert";
 // import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MobileMenu from "../MobileMenu";
-
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
 import ListItem from "@mui/material/ListItem";
@@ -19,19 +19,29 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import CancelIcon from "@mui/icons-material/Cancel";
 import BookmarksIcon from "@mui/icons-material/Bookmarks";
-import { Button, Card, CardActions, CardHeader } from "@mui/material";
+import {
+  Button,
+  Card,
+  CardActions,
+  CardHeader,
+  Tooltip,
+  Zoom,
+} from "@mui/material";
 import { Box } from "@mui/system";
-
 import logo from "../../sns-logo.png";
 
 import { GoogleLogout } from "react-google-login";
 import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
+import AccountMenu from "../AccountMenu";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
     justifyContent: "space-between",
+    // [theme.breakpoints.down("lg")]: {
+    //   background: "red",
+    // },
   },
 }));
 
@@ -61,17 +71,29 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
   const {
     clientId,
     isLoggedIn,
-    userName,
-    profilePic,
-    setUserName,
     setIsLoggedIn,
+    currentUser,
+    setCurrentUser,
+    isSuccess,
+    setIsSuccess,
   } = useContext(LoginContext);
 
-  const logout = () => {
-    setUserName(null);
+  const googleLogout = () => {
     setIsLoggedIn(false);
+    setCurrentUser({
+      googleId: null,
+      email: null,
+      name: null,
+      picture: null,
+    });
     console.log(isLoggedIn);
   };
+
+  const handleClose = () => {
+    setIsSuccess(false);
+  };
+  const vertical = "bottom";
+  const horizontal = "right";
 
   return (
     <>
@@ -79,18 +101,17 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
         position="sticky"
         elevation={0}
         variant="outlined"
-        color="secondary"
         sx={{ background: "#fff" }}
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
           <Hidden mdUp>
-            <IconButton onClick={toggleDrawer(anchor, true)} size="medium">
+            <IconButton onClick={toggleDrawer(anchor, true)} size="small">
               <Avatar
                 style={{
-                  outline: "2px solid rgba(25, 118, 210, 0.5)",
+                  outline: "1px solid rgba(25, 118, 210, 0.5)",
                   outlineOffset: "2px",
                 }}
-                src={profilePic}
+                src={currentUser.picture}
               />
             </IconButton>
           </Hidden>
@@ -102,12 +123,27 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
             ></Avatar>
             <Hidden lgDown>
               <Typography
-                variant="body1"
-                as="h1"
+                variant="h6"
+                component="h1"
                 style={{
                   marginLeft: ".2rem",
                   fontFamily: "Quicksand",
                   fontWeight: "bold",
+                  color: "#333",
+                }}
+              >
+                SEARCH 'N STAY
+              </Typography>
+            </Hidden>
+            <Hidden mdUp>
+              <Typography
+                variant="body1"
+                component="h1"
+                style={{
+                  marginLeft: ".2rem",
+                  fontFamily: "Quicksand",
+                  fontWeight: "bold",
+                  color: "#333",
                 }}
               >
                 SEARCH 'N STAY
@@ -120,9 +156,16 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               {children}
             </Box>
           </Hidden>
-          <IconButton onClick={() => history.push("/search")} size="large">
-            <SearchOutlinedIcon />
-          </IconButton>
+          <Box>
+            <Tooltip title="Search" TransitionComponent={Zoom} enterDelay={800}>
+              <IconButton onClick={() => history.push("/search")} size="large">
+                <SearchOutlinedIcon />
+              </IconButton>
+            </Tooltip>
+            <Hidden mdDown>
+              <AccountMenu currentUser={currentUser} />
+            </Hidden>
+          </Box>
         </Toolbar>
         <Hidden mdUp>
           <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
@@ -172,13 +215,13 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                             width: "4rem",
                             background: "#lightgrey",
                           }}
-                          src={profilePic}
+                          src={currentUser.picture}
                         />
                       </Box>
                     }
                     subheader={
                       <Typography variant="subtitle1" align="center">
-                        {userName ?? "UserName"}
+                        {currentUser.name ?? "UserName"}
                       </Typography>
                     }
                   />
@@ -201,7 +244,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                     <Divider orientation="vertical" flexItem /> */}
                     <GoogleLogout
                       clientId={clientId}
-                      onLogoutSuccess={logout}
+                      onLogoutSuccess={googleLogout}
                       render={(renderProps) => (
                         <Button
                           sx={{ width: "100%", borderRadius: "0rem" }}
@@ -241,6 +284,19 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
           )}
         </List>
       </MobileMenu>
+      <Hidden mdDown>
+        <Snackbar
+          open={isSuccess}
+          autoHideDuration={2000}
+          onClose={handleClose}
+          message="Login Successfuly!"
+          anchorOrigin={{ vertical, horizontal }}
+          key={vertical + horizontal}
+          sx={{ width: "50%" }}
+        >
+          {/* <Alert onClose={handleClose}>Login Successfully!</Alert> */}
+        </Snackbar>
+      </Hidden>
     </>
   );
 };

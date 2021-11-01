@@ -52,15 +52,20 @@ const Login = () => {
     }
   };
 
-  const { setIsLoggedIn, setUserName, setProfilePic, clientId } =
+  const { setIsLoggedIn, clientId, setCurrentUser, setIsSuccess } =
     useContext(LoginContext);
 
   const responseGoogle = (response) => {
-    setUserName(response.profileObj.name);
     setIsLoggedIn(true);
-    setProfilePic(response.profileObj.imageUrl);
+    setCurrentUser({
+      googleId: response.profileObj.googleId,
+      email: response.profileObj.email,
+      name: response.profileObj.name,
+      picture: response.profileObj.imageUrl,
+    });
     console.log(response);
     history.push("/home");
+    setIsSuccess(true);
   };
 
   const responseFacebook = (response) => {

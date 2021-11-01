@@ -3,15 +3,13 @@ import { Typography, AppBar, Toolbar, Avatar } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState, useContext } from "react";
-import { useStyles } from "./styles/Map.styles";
 import { LoginContext } from "../contexts/LoginContext";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
 
 const Map = () => {
-  const classes = useStyles();
-  const { profilePic } = useContext(LoginContext);
+  const { currentUser } = useContext(LoginContext);
 
   const controls = new mapboxgl.NavigationControl();
   const mapContainer = useRef(null);
@@ -170,26 +168,67 @@ const Map = () => {
 
   return (
     <Slide in={true} direction="right">
-      <Box className={` ${classes.page}`} maxWidth="xl" ref={mapContainer}>
+      <Box
+        sx={{
+          height: "100vh",
+          width: "100%",
+          overflow: "hidden",
+          position: "relative",
+        }}
+        maxWidth="xl"
+        ref={mapContainer}
+      >
         <AppBar
           position="sticky"
-          className={classes.appbar}
-          elevation={3}
+          elevation={0}
           sx={{
             width: "80%",
-            background: "rgba(0,0,0,0.4)",
+            background: "rgb(255,255,255)",
             backdropFilter: "blur(.4rem)",
+            padding: ".5rem 1rem ",
+            color: "#555",
+            borderRadius: "0% 2rem 2rem 0%",
+            border: "1px solid lightgrey",
           }}
         >
-          <Toolbar disableGutters variant="dense" className={classes.toolbar}>
-            <Typography variant="h6" component="h2" className={classes.appName}>
+          <Toolbar
+            disableGutters
+            variant="dense"
+            sx={{ display: "flex", justifyContent: "space-between" }}
+          >
+            <Typography
+              sx={{
+                fontFamily: "Quicksand",
+                textTransform: "uppercase",
+                color: "#333",
+              }}
+              variant="h6"
+              component="h2"
+            >
               Search 'n Stay
             </Typography>
-            <Avatar className={classes.avatar} size="small" src={profilePic} />
+            <Avatar
+              sx={{ height: "2.5rem", width: "2.5rem" }}
+              size="small"
+              src={currentUser.picture}
+            />
           </Toolbar>
           <Box></Box>
         </AppBar>
-        <Box className={classes.float}>
+        <Box
+          sx={{
+            backgroundColor: "rgba(255,255,255, 0.6)",
+            backdropFilter: "blur(1.5rem)",
+            color: "#444",
+            padding: ".6rem",
+            zIndex: "1",
+            position: "absolute",
+            top: "4.5rem",
+            left: ".5rem",
+            borderRadius: ".5rem",
+            width: "50%",
+          }}
+        >
           <Typography variant="caption">
             Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
           </Typography>
