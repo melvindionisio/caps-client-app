@@ -188,7 +188,7 @@ const Home = () => {
                 >
                   <Grid container spacing={1}>
                     {owners.map((owner) => (
-                      <Grid item lg={4} md={6} sm={6} key={owner}>
+                      <Grid item lg={6} md={4} sm={6} key={owner}>
                         <House owner={owner} />
                       </Grid>
                     ))}

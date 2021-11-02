@@ -11,10 +11,16 @@ import Tooltip from "@mui/material/Tooltip";
 // import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Login } from "@mui/icons-material";
-import { useContext } from "react";
-import { LoginContext } from "../contexts/LoginContext";
 import { GoogleLogout } from "react-google-login";
 import { useHistory } from "react-router-dom";
+
+import GoogleLogin from "react-google-login";
+import GoogleIcon from "@mui/icons-material/Google";
+import FacebookIcon from "@mui/icons-material/Facebook";
+import { useContext } from "react";
+import { LoginContext } from "../contexts/LoginContext";
+
+import { amber } from "@mui/material/colors";
 
 export default function AccountMenu({ currentUser }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -23,29 +29,12 @@ export default function AccountMenu({ currentUser }) {
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
-  //   const handleClose = () => {
-  //     setAnchorEl(null);
-  //   };
-
-  const {
-    clientId,
-    isLoggedIn,
-    setIsLoggedIn,
-    // isSuccess,
-    // setIsSuccess,
-    setCurrentUser,
-  } = useContext(LoginContext);
-
-  const googleLogout = () => {
-    setIsLoggedIn(false);
-    setCurrentUser({
-      googleId: null,
-      email: null,
-      name: null,
-      picture: null,
-    });
-    console.log(isLoggedIn);
+  const handleClose = () => {
+    setAnchorEl(null);
   };
+
+  const { clientId, isLoggedIn, handleGoogleLogin, handleGoogleLogout } =
+    useContext(LoginContext);
 
   return (
     <React.Fragment>
@@ -54,6 +43,7 @@ export default function AccountMenu({ currentUser }) {
           <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
         </IconButton>
       </Tooltip> */}
+
       <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={800}>
         <IconButton onClick={handleClick} size="small" sx={{ ml: 1 }}>
           <Avatar
@@ -68,8 +58,7 @@ export default function AccountMenu({ currentUser }) {
       <Menu
         anchorEl={anchorEl}
         open={open}
-        // onClose={handleClose}
-        // onClick={handleClose}
+        onClose={handleClose}
         PaperProps={{
           elevation: 0,
           sx: {
@@ -108,7 +97,7 @@ export default function AccountMenu({ currentUser }) {
             <Divider />
             <GoogleLogout
               clientId={clientId}
-              onLogoutSuccess={googleLogout}
+              onLogoutSuccess={handleGoogleLogout}
               render={(renderProps) => (
                 <MenuItem
                   onClick={renderProps.onClick}
@@ -123,12 +112,43 @@ export default function AccountMenu({ currentUser }) {
             ></GoogleLogout>
           </>
         ) : (
-          <MenuItem onClick={() => history.push("/login")}>
-            <ListItemIcon>
-              <Login fontSize="small" />
-            </ListItemIcon>
-            Login
-          </MenuItem>
+          <React.Fragment>
+            <MenuItem onClick={() => history.push("/login")}>
+              <ListItemIcon>
+                <Login fontSize="small" />
+              </ListItemIcon>
+              Login
+            </MenuItem>
+
+            <GoogleLogin
+              clientId={clientId}
+              render={(renderProps) => (
+                <MenuItem
+                  onClick={renderProps.onClick}
+                  disabled={renderProps.disabled}
+                >
+                  <ListItemIcon>
+                    <GoogleIcon
+                      fontSize="small"
+                      style={{ color: amber[500] }}
+                    />
+                  </ListItemIcon>
+                  Continue with Google
+                </MenuItem>
+              )}
+              onSuccess={handleGoogleLogin}
+              onFailure={() => console.log("Gmail login failed.")}
+              cookiePolicy={"single_host_origin"}
+              isSignedIn={true}
+            />
+
+            <MenuItem>
+              <ListItemIcon>
+                <FacebookIcon fontSize="small" color="primary" />
+              </ListItemIcon>
+              Continue with Facebook
+            </MenuItem>
+          </React.Fragment>
         )}
       </Menu>
     </React.Fragment>

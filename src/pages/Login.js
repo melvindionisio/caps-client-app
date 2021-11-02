@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
@@ -22,7 +22,7 @@ import { makeStyles } from "@mui/styles";
 import { amber } from "@mui/material/colors";
 import { LoginContext } from "../contexts/LoginContext";
 import { useContext } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router";
 
 const useStyles = makeStyles({
   textfield: {},
@@ -34,28 +34,39 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("Login with your account.");
   const [isError, setIsError] = useState(false);
+  const [errorLevel, setErrorLevel] = useState("info");
   const input = useRef(null);
   const history = useHistory();
 
   const login = (e) => {
     e.preventDefault();
+
+    const loginInfo = {
+      username: "",
+      password: "",
+    };
+
     // validate first
     if (username !== "" && password !== "") {
+      loginInfo.username = username;
+      loginInfo.passsword = password;
+
       console.log(`Username: ${username} Password: ${password}`);
-    } else if (username === "" && password === "") {
-      setMessage("Please enter values!");
-      setIsError(true);
-      input.current.lastElementChild.firstElementChild.focus();
     } else {
-      setMessage(`${username ?? password} is incorrect!`);
+      setMessage("Please complete all fields.");
       setIsError(true);
+      setErrorLevel("warning");
+      input.current.lastElementChild.firstElementChild.focus();
     }
   };
 
-  const { setIsLoggedIn, clientId, setCurrentUser, setIsSuccess } =
-    useContext(LoginContext);
+  useEffect(() => {
+    setIsError(false);
+  }, [username, password]);
 
-  const responseGoogle = (response) => {
+  const { clientId, setIsLoggedIn, setCurrentUser, setIsSuccess } =
+    useContext(LoginContext);
+  const loginGoogle = (response) => {
     setIsLoggedIn(true);
     setCurrentUser({
       googleId: response.profileObj.googleId,
@@ -67,7 +78,6 @@ const Login = () => {
     history.push("/home");
     setIsSuccess(true);
   };
-
   const responseFacebook = (response) => {
     console.log(response);
   };
@@ -104,7 +114,7 @@ const Login = () => {
                       e.target.parentElement.parentElement.parentElement.parentElement.style.display =
                         "none";
                     }}
-                    severity="info"
+                    severity={errorLevel}
                   >
                     {message}
                   </Alert>
@@ -123,6 +133,7 @@ const Login = () => {
                   type="email"
                   margin="none"
                   fullWidth
+                  required
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   ref={input}
@@ -139,6 +150,7 @@ const Login = () => {
                   error={isError}
                   margin="dense"
                   fullWidth
+                  required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
@@ -201,8 +213,8 @@ const Login = () => {
                       <Typography>Google</Typography>
                     </Box>
                   )}
-                  onSuccess={responseGoogle}
-                  onFailure={responseGoogle}
+                  onSuccess={loginGoogle}
+                  onFailure={() => console.log("Gmail login failed.")}
                   cookiePolicy={"single_host_origin"}
                   isSignedIn={true}
                 />

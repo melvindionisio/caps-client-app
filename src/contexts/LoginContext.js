@@ -15,6 +15,28 @@ function LoginContextProvider(props) {
   const clientId =
     "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
 
+  const handleGoogleLogout = () => {
+    setIsLoggedIn(false);
+    setCurrentUser({
+      googleId: null,
+      email: null,
+      name: null,
+      picture: null,
+    });
+    console.log(isLoggedIn);
+  };
+
+  const handleGoogleLogin = (response) => {
+    setIsLoggedIn(true);
+    setCurrentUser({
+      googleId: response.profileObj.googleId,
+      email: response.profileObj.email,
+      name: response.profileObj.name,
+      picture: response.profileObj.imageUrl,
+    });
+    console.log(response);
+    setIsSuccess(true);
+  };
   const value = {
     clientId,
     isLoggedIn,
@@ -23,6 +45,8 @@ function LoginContextProvider(props) {
     setCurrentUser,
     isSuccess,
     setIsSuccess,
+    handleGoogleLogin,
+    handleGoogleLogout,
   };
 
   return (

@@ -233,21 +233,22 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                       padding: "0rem",
                     }}
                   >
-                    {/* <Button
+                    <Button
                       sx={{ width: "50%", borderRadius: "0rem" }}
                       size="small"
                       disableElevation
                       variant="text"
+                      onClick={() => history.push("/profile")}
                     >
-                      Edit
+                      Profile
                     </Button>
-                    <Divider orientation="vertical" flexItem /> */}
+                    <Divider orientation="vertical" flexItem />
                     <GoogleLogout
                       clientId={clientId}
                       onLogoutSuccess={googleLogout}
                       render={(renderProps) => (
                         <Button
-                          sx={{ width: "100%", borderRadius: "0rem" }}
+                          sx={{ width: "50%", borderRadius: "0rem" }}
                           size="small"
                           disableElevation
                           color="secondary"

@@ -20,6 +20,7 @@ import Help from "./pages/Help";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
+import Profile from "./pages/Profile";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
@@ -64,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   permanentDrawer: {
-    width: 270,
+    width: 600,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: 270,
+    width: 600,
   },
 
   // [theme.breakpoints.up("md")]: {
@@ -94,7 +95,7 @@ const App = () => {
           }}
           maxWidth="xl"
         >
-          <Hidden mdDown>
+          <Hidden lgDown>
             <Drawer
               variant="permanent"
               anchor="left"
@@ -104,18 +105,17 @@ const App = () => {
                 paper: classes.drawerPaper,
               }}
             >
-              <Typography>BookMarks</Typography>
+              {/* <Typography>BookMarks</Typography>
               <Hidden lgDown>
                 <Typography>LG</Typography>
               </Hidden>
               <Hidden lgUp>
                 <Typography>MD</Typography>
-              </Hidden>
+              </Hidden> */}
+              <Map />
             </Drawer>
           </Hidden>
-          {/* <Hidden lgDown>
-            <Typography>Hello</Typography>
-          </Hidden> */}
+
           {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
           <Router>
             <Switch>
@@ -140,6 +140,9 @@ const App = () => {
               <Route path="/search">
                 <Search />
               </Route>
+              <Route path="/profile">
+                <Profile />
+              </Route>
               <Route path="*">
                 <Container maxWidth="sm">
                   <Typography variant="h6" align="center">
@@ -156,6 +159,9 @@ const App = () => {
             </Hidden>
           </Router>
           {/* </Box> */}
+          {/* <Hidden xlDown>
+            <Map />
+          </Hidden> */}
         </Container>
       </LoginContextProvider>
     </ThemeProvider>

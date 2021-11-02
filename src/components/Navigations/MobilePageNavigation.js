@@ -86,7 +86,8 @@ export default function MobilePageNavigation() {
       sx={
         location.pathname === "/search" ||
         location.pathname === "/register" ||
-        location.pathname === "/login"
+        location.pathname === "/login" ||
+        location.pathname === "/profile"
           ? { display: "none" }
           : { display: "flex" }
       }

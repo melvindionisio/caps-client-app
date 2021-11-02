@@ -19,9 +19,13 @@ export const useStyles = makeStyles((theme) => ({
   },
   tabs: {
     borderBottom: "1px solid rgba(0,0,0,0.2)",
-    // "&.Mui-selected": {
-    //   background: "red",
+    // "& .Mui-selected": {
+    //   background: grey[100],
     // },
+    "& .MuiTabs-indicator": {
+      height: 3,
+      borderRadius: 2,
+    },
   },
   toolbar: {
     display: "flex",
