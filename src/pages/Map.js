@@ -1,9 +1,10 @@
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-import { Typography, AppBar, Toolbar, Avatar } from "@mui/material";
+import { Typography, AppBar, Toolbar, Hidden } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
+import AccountMenu from "../components/AccountMenu";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
@@ -207,11 +208,14 @@ const Map = () => {
             >
               Search 'n Stay
             </Typography>
-            <Avatar
+            {/* <Avatar
               sx={{ height: "2.5rem", width: "2.5rem" }}
               size="small"
               src={currentUser.picture}
-            />
+            /> */}
+            <Hidden mdUp>
+              <AccountMenu currentUser={currentUser} />
+            </Hidden>
           </Toolbar>
           <Box></Box>
         </AppBar>

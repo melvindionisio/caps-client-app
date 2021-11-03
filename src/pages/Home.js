@@ -20,7 +20,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 // import Drawer from "@mui/material/Drawer";
 // import Typography from "@mui/material/Typography";
-// import Hidden from "@mui/material/Hidden";
+import Hidden from "@mui/material/Hidden";
 // import AppBar from "@mui/material/AppBar";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -29,6 +29,7 @@ import { useTheme } from "@mui/styles";
 import { useState } from "react";
 import { useStyles } from "./styles/Home.styles";
 import HomeNavigation from "../components/Navigations/HomeNavigation";
+import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
 // import useFetch from "../hooks/useFetch";
 // import { Link } from "react-router-dom";
 
@@ -153,6 +154,9 @@ const Home = () => {
         className={classes.homeContainer}
       >
         <Box className={classes.root}>
+          <Hidden mdDown>
+            <DeskPageNavigation />
+          </Hidden>
           <HomeNavigation NavigationTabs={NavigationTabs}>
             <NavigationTabs />
           </HomeNavigation>
@@ -172,6 +176,7 @@ const Home = () => {
                 className={classes.page}
                 p={1}
                 pb={8}
+                px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
                 <Card variant="outlined">
@@ -184,6 +189,7 @@ const Home = () => {
                 <Box
                   p={1}
                   pb={8}
+                  px={2}
                   style={{ maxWidth: "75rem", margin: "0 auto" }}
                 >
                   <Grid container spacing={1}>

@@ -13,7 +13,6 @@ import Drawer from "@mui/material/Drawer";
 import { makeStyles } from "@mui/styles";
 import { blueGrey, blue, orange } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-
 import Home from "./pages/Home";
 import Map from "./pages/Map";
 import Help from "./pages/Help";
@@ -21,9 +20,10 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
+import Bookmarks from "./pages/Bookmarks";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
-import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
+// import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
 import LoginContextProvider from "./contexts/LoginContext";
 
@@ -33,7 +33,7 @@ const theme = createTheme({
       main: blue[700],
     },
     secondary: {
-      main: orange[600],
+      main: orange[700],
     },
   },
   typography: {
@@ -95,29 +95,28 @@ const App = () => {
           }}
           maxWidth="xl"
         >
-          <Hidden lgDown>
-            <Drawer
-              variant="permanent"
-              anchor="left"
-              className={classes.permanentDrawer}
-              style={{ zIndex: "10" }}
-              classes={{
-                paper: classes.drawerPaper,
-              }}
-            >
-              {/* <Typography>BookMarks</Typography>
+          {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
+          <Router>
+            <Hidden lgDown>
+              <Drawer
+                variant="permanent"
+                anchor="left"
+                className={classes.permanentDrawer}
+                style={{ zIndex: "10" }}
+                classes={{
+                  paper: classes.drawerPaper,
+                }}
+              >
+                {/* <Typography>BookMarks</Typography>
               <Hidden lgDown>
                 <Typography>LG</Typography>
               </Hidden>
               <Hidden lgUp>
                 <Typography>MD</Typography>
               </Hidden> */}
-              <Map />
-            </Drawer>
-          </Hidden>
-
-          {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
-          <Router>
+                <Map />
+              </Drawer>
+            </Hidden>
             <Switch>
               <Route exact path="/">
                 <Redirect to="/home" />
@@ -143,6 +142,9 @@ const App = () => {
               <Route path="/profile">
                 <Profile />
               </Route>
+              <Route path="/bookmarks">
+                <Bookmarks />
+              </Route>
               <Route path="*">
                 <Container maxWidth="sm">
                   <Typography variant="h6" align="center">
@@ -151,9 +153,6 @@ const App = () => {
                 </Container>
               </Route>
             </Switch>
-            <Hidden mdDown>
-              <DeskPageNavigation />
-            </Hidden>
             <Hidden mdUp>
               <MobilePageNavigation className={classes.mainNavigation} />
             </Hidden>

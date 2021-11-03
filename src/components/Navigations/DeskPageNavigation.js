@@ -13,9 +13,9 @@ const DeskPageNavigation = () => {
         zIndex: "500",
       }}
     >
-      <IconButton onClick={() => history.push("/map")}>
+      {/* <IconButton onClick={() => history.push("/map")}>
         <Avatar style={{ height: "3rem", width: "3rem" }}>A</Avatar>
-      </IconButton>
+      </IconButton> */}
       <IconButton onClick={() => history.push("/home")}>
         <Avatar style={{ height: "3rem", width: "3rem" }}>B</Avatar>
       </IconButton>

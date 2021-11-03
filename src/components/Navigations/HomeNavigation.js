@@ -10,7 +10,6 @@ import Snackbar from "@mui/material/Snackbar";
 // import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
-import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import MobileMenu from "../MobileMenu";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -22,14 +21,20 @@ import BookmarksIcon from "@mui/icons-material/Bookmarks";
 import {
   Button,
   Card,
-  CardActions,
+  CardActionArea,
   CardHeader,
+  ListItemButton,
   Tooltip,
   Zoom,
 } from "@mui/material";
 import { Box } from "@mui/system";
 import logo from "../../sns-logo.png";
 
+import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
+import Logout from "@mui/icons-material/Logout";
+import PersonIcon from "@mui/icons-material/Person";
+
+import { blue } from "@mui/material/colors";
 import { GoogleLogout } from "react-google-login";
 import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
@@ -121,7 +126,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               src={logo}
               style={{ height: "2rem", width: "2rem" }}
             ></Avatar>
-            <Hidden lgDown>
+            {/* <Hidden lgDown>
               <Typography
                 variant="h6"
                 component="h1"
@@ -134,7 +139,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               >
                 SEARCH 'N STAY
               </Typography>
-            </Hidden>
+            </Hidden> */}
             <Hidden mdUp>
               <Typography
                 variant="body1"
@@ -157,7 +162,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
             </Box>
           </Hidden>
           <Box>
-            <Tooltip title="Search" TransitionComponent={Zoom} enterDelay={800}>
+            <Tooltip title="Search" TransitionComponent={Zoom} enterDelay={600}>
               <IconButton onClick={() => history.push("/search")} size="large">
                 <SearchOutlinedIcon />
               </IconButton>
@@ -198,79 +203,104 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
           {isLoggedIn ? (
             <>
               <ListItem>
-                <Card sx={{ width: "100%" }} variant="outlined">
-                  <CardHeader
-                    title={
-                      <Box
-                        sx={{
-                          display: "flex",
-                          justifyContent: "center",
-                          alignItems: "center",
-                          width: "100%",
-                        }}
-                      >
-                        <Avatar
+                <Card
+                  sx={{ width: "100%", background: blue[500] }}
+                  variant="outlined"
+                >
+                  <CardActionArea onClick={() => history.push("/profile")}>
+                    <CardHeader
+                      title={
+                        <Box
                           sx={{
-                            height: "4rem",
-                            width: "4rem",
-                            background: "#lightgrey",
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                            width: "100%",
                           }}
-                          src={currentUser.picture}
-                        />
-                      </Box>
-                    }
-                    subheader={
-                      <Typography variant="subtitle1" align="center">
-                        {currentUser.name ?? "UserName"}
-                      </Typography>
-                    }
-                  />
-                  <Divider />
-                  <CardActions
-                    sx={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      padding: "0rem",
-                    }}
-                  >
-                    <Button
-                      sx={{ width: "50%", borderRadius: "0rem" }}
-                      size="small"
-                      disableElevation
-                      variant="text"
-                      onClick={() => history.push("/profile")}
-                    >
-                      Profile
-                    </Button>
-                    <Divider orientation="vertical" flexItem />
-                    <GoogleLogout
-                      clientId={clientId}
-                      onLogoutSuccess={googleLogout}
-                      render={(renderProps) => (
-                        <Button
-                          sx={{ width: "50%", borderRadius: "0rem" }}
-                          size="small"
-                          disableElevation
-                          color="secondary"
-                          variant="text"
-                          onClick={renderProps.onClick}
-                          disabled={renderProps.disabled}
                         >
-                          Logout
-                        </Button>
-                      )}
-                    ></GoogleLogout>
-                  </CardActions>
+                          <Avatar
+                            sx={{
+                              height: "4rem",
+                              width: "4rem",
+                              background: "#lightgrey",
+                              border: "3px solid white",
+                            }}
+                            src={currentUser.picture}
+                          />
+                        </Box>
+                      }
+                      subheader={
+                        <Typography
+                          variant="subtitle1"
+                          sx={{ color: "white" }}
+                          align="center"
+                        >
+                          {currentUser.name ?? "UserName"}
+                        </Typography>
+                      }
+                    />
+                  </CardActionArea>
                 </Card>
               </ListItem>
               <Divider />
-
-              <ListItem button>
-                <ListItemIcon>
-                  <BookmarksIcon />
-                </ListItemIcon>
-                <ListItemText primary={"BOOKMARKS"} />
+              <ListItem
+                disablePadding
+                button
+                onClick={() => history.push("/profile")}
+              >
+                <ListItemButton>
+                  <ListItemIcon>
+                    <PersonIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"PROFILE"}
+                    secondary="Visit your profile."
+                  />
+                </ListItemButton>
               </ListItem>
+              <ListItem
+                disablePadding
+                button
+                onClick={() => history.push("/bookmarks")}
+              >
+                <ListItemButton divider>
+                  <ListItemIcon>
+                    <BookmarksIcon />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={"BOOKMARKS"}
+                    secondary="See all your saves."
+                  />
+                </ListItemButton>
+              </ListItem>
+
+              <GoogleLogout
+                clientId={clientId}
+                onLogoutSuccess={googleLogout}
+                render={(renderProps) => (
+                  <ListItem
+                  // disablePadding
+                  // button
+                  >
+                    {/* <ListItemButton > */}
+                    {/* <ListItemIcon>
+                        <Logout />
+                      </ListItemIcon>
+                      <ListItemText primary={"LOGOUT"} /> */}
+                    <Button
+                      variant="contained"
+                      startIcon={<Logout />}
+                      color="warning"
+                      size="large"
+                      onClick={renderProps.onClick}
+                      disabled={renderProps.disabled}
+                    >
+                      Logout
+                    </Button>
+                    {/* </ListItemButton> */}
+                  </ListItem>
+                )}
+              ></GoogleLogout>
             </>
           ) : (
             <>

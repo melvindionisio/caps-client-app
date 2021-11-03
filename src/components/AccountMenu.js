@@ -44,7 +44,7 @@ export default function AccountMenu({ currentUser }) {
         </IconButton>
       </Tooltip> */}
 
-      <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={800}>
+      <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={600}>
         <IconButton onClick={handleClick} size="small" sx={{ ml: 1 }}>
           <Avatar
             style={{
@@ -91,7 +91,7 @@ export default function AccountMenu({ currentUser }) {
       >
         {isLoggedIn ? (
           <>
-            <MenuItem>
+            <MenuItem onClick={() => history.push("/profile")}>
               <Avatar /> My account
             </MenuItem>
             <Divider />
