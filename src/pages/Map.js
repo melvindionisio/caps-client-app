@@ -213,7 +213,7 @@ const Map = () => {
               size="small"
               src={currentUser.picture}
             /> */}
-            <Hidden mdUp>
+            <Hidden lgUp>
               <AccountMenu currentUser={currentUser} />
             </Hidden>
           </Toolbar>

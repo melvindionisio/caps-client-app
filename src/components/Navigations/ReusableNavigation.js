@@ -23,13 +23,13 @@ const ReusableNavigation = ({ children }) => {
         elevation={0}
         variant="outlined"
         color="secondary"
-        sx={{ background: "white" }}
+        sx={{ bgcolor: "background.default" }}
       >
-        <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
+        <Toolbar className={classes.toolbar} sx={{ px: " .3rem" }}>
           <IconButton
             onClick={() => history.goBack()}
             size="large"
-            sx={{ marginRight: ".5rem" }}
+            sx={{ mr: ".5rem" }}
           >
             <ArrowBackIosIcon />
           </IconButton>

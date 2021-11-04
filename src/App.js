@@ -8,8 +8,7 @@ import {
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Hidden from "@mui/material/Hidden";
-import Drawer from "@mui/material/Drawer";
-
+import { Drawer } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { blueGrey, blue, orange } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -23,12 +22,13 @@ import Profile from "./pages/Profile";
 import Bookmarks from "./pages/Bookmarks";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
-// import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
+import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
 import LoginContextProvider from "./contexts/LoginContext";
 
 const theme = createTheme({
   palette: {
+    // mode: "dark",
     primary: {
       main: blue[700],
     },
@@ -65,11 +65,11 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   permanentDrawer: {
-    width: 600,
+    width: 400,
     flexShrink: 0,
   },
   drawerPaper: {
-    width: 600,
+    width: 400,
   },
 
   // [theme.breakpoints.up("md")]: {
@@ -92,6 +92,7 @@ const App = () => {
             display: "flex",
             height: "100vh",
             width: "100vw",
+            // bgColor: "background.default",
           }}
           maxWidth="xl"
         >
@@ -114,7 +115,8 @@ const App = () => {
               <Hidden lgUp>
                 <Typography>MD</Typography>
               </Hidden> */}
-                <Map />
+
+                {/* <Map /> */}
               </Drawer>
             </Hidden>
             <Switch>
@@ -153,8 +155,11 @@ const App = () => {
                 </Container>
               </Route>
             </Switch>
-            <Hidden mdUp>
+            <Hidden lgUp>
               <MobilePageNavigation className={classes.mainNavigation} />
+            </Hidden>
+            <Hidden lgDown>
+              <DeskPageNavigation />
             </Hidden>
           </Router>
           {/* </Box> */}

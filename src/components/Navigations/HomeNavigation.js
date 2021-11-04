@@ -106,7 +106,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
         position="sticky"
         elevation={0}
         variant="outlined"
-        sx={{ background: "#fff" }}
+        sx={{ bgcolor: "background.default" }}
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
           <Hidden mdUp>
@@ -200,49 +200,70 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               <CancelIcon />
             </IconButton>
           </ListItem>
+          <Divider />
+
           {isLoggedIn ? (
             <>
               <ListItem>
                 <Card
                   sx={{ width: "100%", background: blue[500] }}
-                  variant="outlined"
+                  // variant="outlined"
+                  elevation={3}
                 >
                   <CardActionArea onClick={() => history.push("/profile")}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "100%",
+                        flexDirection: "column",
+                        pt: 3,
+                      }}
+                    >
+                      <Avatar
+                        sx={{
+                          height: "4rem",
+                          width: "4rem",
+                          background: "#lightgrey",
+                          border: "3px solid",
+                          borderColor: "background.default",
+                        }}
+                        src={currentUser.picture}
+                      />
+                    </Box>
                     <CardHeader
+                      sx={{ m: 0, p: 0, pb: 2 }}
                       title={
-                        <Box
-                          sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            alignItems: "center",
-                            width: "100%",
-                          }}
-                        >
-                          <Avatar
-                            sx={{
-                              height: "4rem",
-                              width: "4rem",
-                              background: "#lightgrey",
-                              border: "3px solid white",
-                            }}
-                            src={currentUser.picture}
-                          />
-                        </Box>
-                      }
-                      subheader={
                         <Typography
                           variant="subtitle1"
-                          sx={{ color: "white" }}
+                          sx={{
+                            color: "white",
+                            textTransform: "uppercase",
+                            fontWeight: "bold",
+                          }}
                           align="center"
                         >
                           {currentUser.name ?? "UserName"}
+                        </Typography>
+                      }
+                      subheader={
+                        <Typography
+                          variant="subtitle2"
+                          sx={{
+                            color: "white",
+                            display: "block",
+                            fontWeight: "light",
+                          }}
+                          align="center"
+                        >
+                          {currentUser.email ?? "email"}
                         </Typography>
                       }
                     />
                   </CardActionArea>
                 </Card>
               </ListItem>
-              <Divider />
               <ListItem
                 disablePadding
                 button
@@ -253,7 +274,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                     <PersonIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={"PROFILE"}
+                    primary={"My Account"}
                     secondary="Visit your profile."
                   />
                 </ListItemButton>
@@ -292,6 +313,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                       startIcon={<Logout />}
                       color="warning"
                       size="large"
+                      fullWidth
                       onClick={renderProps.onClick}
                       disabled={renderProps.disabled}
                     >

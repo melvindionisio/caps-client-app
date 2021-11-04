@@ -20,7 +20,7 @@ import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 // import Drawer from "@mui/material/Drawer";
 // import Typography from "@mui/material/Typography";
-import Hidden from "@mui/material/Hidden";
+// import Hidden from "@mui/material/Hidden";
 // import AppBar from "@mui/material/AppBar";
 
 import MoreIcon from "@mui/icons-material/MoreVert";
@@ -29,7 +29,7 @@ import { useTheme } from "@mui/styles";
 import { useState } from "react";
 import { useStyles } from "./styles/Home.styles";
 import HomeNavigation from "../components/Navigations/HomeNavigation";
-import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
+// import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
 // import useFetch from "../hooks/useFetch";
 // import { Link } from "react-router-dom";
 
@@ -154,9 +154,6 @@ const Home = () => {
         className={classes.homeContainer}
       >
         <Box className={classes.root}>
-          <Hidden mdDown>
-            <DeskPageNavigation />
-          </Hidden>
           <HomeNavigation NavigationTabs={NavigationTabs}>
             <NavigationTabs />
           </HomeNavigation>
@@ -179,9 +176,13 @@ const Home = () => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                <Card variant="outlined">
-                  <CardHeader title={<Typography>Room List</Typography>} />
-                </Card>
+                <Grid container spacing={1}>
+                  <Grid item lg={4} md={6} sm={6} xs={12}>
+                    <Card variant="outlined">
+                      <CardHeader title={<Typography>Room List</Typography>} />
+                    </Card>
+                  </Grid>
+                </Grid>
               </Box>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
@@ -194,7 +195,7 @@ const Home = () => {
                 >
                   <Grid container spacing={1}>
                     {owners.map((owner) => (
-                      <Grid item lg={6} md={4} sm={6} key={owner}>
+                      <Grid item lg={6} md={4} sm={6} xs={12} key={owner}>
                         <House owner={owner} />
                       </Grid>
                     ))}
