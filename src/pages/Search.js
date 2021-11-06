@@ -13,7 +13,7 @@ import {
 } from "@mui/material";
 import ToggleButton from "@mui/material/ToggleButton";
 import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 
@@ -35,9 +35,9 @@ const Search = () => {
     setSort(newSort);
   };
 
-  useEffect(() => {
-    search.current.firstElementChild.firstElementChild.focus();
-  }, []);
+  // useEffect(() => {
+  //   search.current.firstElementChild.firstElementChild.focus();
+  // }, []);
 
   return (
     <Container
@@ -93,6 +93,7 @@ const Search = () => {
               size="small"
               sx={{ width: "70%", maxWidth: "50rem" }}
               disabled={filterOpen}
+              autoFocus
             />
             <IconButton color="secondary" onClick={filterToggle} size="large">
               {filterOpen ? (
