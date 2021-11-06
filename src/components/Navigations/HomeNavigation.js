@@ -34,7 +34,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Logout from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { blue } from "@mui/material/colors";
+import { blue, cyan, lightBlue } from "@mui/material/colors";
 import { GoogleLogout } from "react-google-login";
 import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
@@ -206,7 +206,10 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
             <>
               <ListItem>
                 <Card
-                  sx={{ width: "100%", background: blue[500] }}
+                  sx={{
+                    width: "100%",
+                    background: `linear-gradient(to bottom right, ${cyan[300]}, ${lightBlue[400]}, ${blue[500]})`,
+                  }}
                   // variant="outlined"
                   elevation={3}
                 >

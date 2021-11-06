@@ -33,7 +33,7 @@ const theme = createTheme({
       main: blue[700],
     },
     secondary: {
-      main: orange[700],
+      main: orange[600],
     },
   },
   typography: {
