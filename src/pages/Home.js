@@ -6,7 +6,6 @@ import ApartmentIcon from "@mui/icons-material/Apartment";
 import SingleBedIcon from "@mui/icons-material/SingleBed";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-import Typography from "@mui/material/Typography";
 
 import Container from "@mui/material/Container";
 import Slide from "@mui/material/Slide";
@@ -18,19 +17,15 @@ import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
-// import Drawer from "@mui/material/Drawer";
-// import Typography from "@mui/material/Typography";
-// import Hidden from "@mui/material/Hidden";
-// import AppBar from "@mui/material/AppBar";
-
 import MoreIcon from "@mui/icons-material/MoreVert";
 
 import { useTheme } from "@mui/styles";
 import { useState } from "react";
 import { useStyles } from "./styles/Home.styles";
 import HomeNavigation from "../components/Navigations/HomeNavigation";
+import RoomLists from "../components/lists/RoomLists";
 // import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
-// import useFetch from "../hooks/useFetch";
+import useFetch from "../hooks/useFetch";
 // import { Link } from "react-router-dom";
 
 const owners = [
@@ -98,15 +93,13 @@ function a11yProps(index) {
 }
 
 const Home = () => {
-  // const [open, setOpen] = useState(false);
-  // const boardingHouses = bHouse;
-  // const {
-  //   data: boardingHouses,
-  //   isPending,
-  //   error,
-  // } = useFetch(
-  //   "https://my-json-server.typicode.com/melvindionisio/bhfinder-api/boardingHouse"
-  // );
+  const {
+    data: boardingHouse,
+    // isPending,
+    // error,
+  } = useFetch(
+    "https://my-json-server.typicode.com/melvindionisio/bhfinder-api/boardingHouse"
+  );
 
   const classes = useStyles();
   const theme = useTheme();
@@ -126,8 +119,8 @@ const Home = () => {
         className={classes.tabs}
         value={value}
         onChange={handleChange}
-        indicatorColor="secondary"
-        textColor="secondary"
+        indicatorColor="primary"
+        textColor="primary"
         variant="fullWidth"
         aria-label="full width tabs"
       >
@@ -176,13 +169,7 @@ const Home = () => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                <Grid container spacing={1}>
-                  <Grid item lg={4} md={6} sm={6} xs={12}>
-                    <Card variant="outlined">
-                      <CardHeader title={<Typography>Room List</Typography>} />
-                    </Card>
-                  </Grid>
-                </Grid>
+                {boardingHouse && <RoomLists rooms={boardingHouse[0].room} />}
               </Box>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>

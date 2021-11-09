@@ -6,8 +6,6 @@ import IconButton from "@mui/material/IconButton";
 import Avatar from "@mui/material/Avatar";
 import Hidden from "@mui/material/Hidden";
 import Snackbar from "@mui/material/Snackbar";
-// import Alert from "@mui/material/Alert";
-// import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
 import { makeStyles } from "@mui/styles";
 import { useHistory } from "react-router-dom";
 import MobileMenu from "../MobileMenu";
