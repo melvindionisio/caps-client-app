@@ -169,7 +169,7 @@ const Home = () => {
                 px={2}
                 style={{ maxWidth: "75rem", margin: "0 auto" }}
               >
-                {boardingHouse && <RoomLists rooms={boardingHouse[0].room} />}
+                {boardingHouse && <RoomLists boardingHouses={boardingHouse} />}
               </Box>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>

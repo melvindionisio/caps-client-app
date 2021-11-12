@@ -35,7 +35,7 @@ const RoomCard = ({ room }) => {
       }}
     >
       <Box sx={{ display: "flex", height: "inherit" }}>
-        <Box sx={{ width: 160, height: "inherit", overflow: "hidden" }}>
+        <Box sx={{ width: "45%", overflow: "hidden" }}>
           <CardMedia
             image={room.imagesPath}
             component="img"
@@ -43,7 +43,7 @@ const RoomCard = ({ room }) => {
             title={room.roomName}
             sx={{
               height: "100%",
-              width: 160,
+              width: "100%",
               ":hover": {
                 transform: " scale(1.2)",
               },
@@ -70,7 +70,7 @@ const RoomCard = ({ room }) => {
             sx={{ p: 1, pb: 0 }}
           />
           <CardContent
-            sx={{ paddingBottom: 0, paddingTop: 0, flexGrow: 2 }}
+            sx={{ p: 1, pt: 1, flexGrow: 2 }}
           >{`${room.occupiedBed}/${room.totalBed}`}</CardContent>
           <CardActions
             sx={{
