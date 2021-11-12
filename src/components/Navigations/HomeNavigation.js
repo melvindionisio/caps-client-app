@@ -102,8 +102,8 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
     <>
       <AppBar
         position="sticky"
-        elevation={0}
-        variant="outlined"
+        elevation={1}
+        // variant="outlined"
         sx={{ bgcolor: "background.default" }}
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>

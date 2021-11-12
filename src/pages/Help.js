@@ -16,6 +16,8 @@ import { useEffect, useRef } from "react";
 import { makeStyles } from "@mui/styles";
 import { blue, pink } from "@mui/material/colors";
 
+import HelpList from "../components/lists/HelpList";
+
 const useStyles = makeStyles({
   rootContainer: {
     position: "relative",
@@ -91,139 +93,8 @@ const Help = () => {
                 If you encountered any problem, here are some guides to maximize
                 the use of this project. Feel free to browse below.
               </Typography>
-              {/* <Grid container spacing={2}>
-              <Grid item md={4}>
-                <Paper variant="outlined" className={classes.paper}>
-                  <Typography gutterBottom variant="h5">
-                    How to install the app?
-                  </Typography>
-                  <Typography gutterBottom variant="body2">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                    soluta libero adipisci eligendi, sunt similique blanditiis
-                    dolores! Illo deserunt quisquam veniam possimus quia?
-                    Eveniet.
-                  </Typography>
 
-                  <Box p={1}>
-                    <Avatar className={classes.steps}>1</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi, sunt similique blanditiis
-                      dolores! Illo deserunt quisquam veniam possimus quia?
-                      Eveniet.
-                    </Typography>
-
-                    <Avatar className={classes.steps}>2</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi, sunt similique blanditiis
-                      dolores! Illo deserunt quisquam veniam possimus quia?
-                      Eveniet.
-                    </Typography>
-
-                    <Avatar className={classes.steps}>3</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi.
-                    </Typography>
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item md={4}>
-                <Paper variant="outlined" className={classes.paper}>
-                  <Typography gutterBottom variant="h5">
-                    How to bookmark a room or a dorm/boarding house??
-                  </Typography>
-                  <Typography gutterBottom variant="body2">
-                    Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                    At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                    soluta libero adipisci eligendi, sunt similique blanditiis
-                    dolores! Illo deserunt quisquam veniam possimus quia?
-                    Eveniet.
-                  </Typography>
-                  <Box p={1}>
-                    <Avatar className={classes.steps}>1</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi, sunt similique blanditiis
-                      dolores! Illo deserunt quisquam veniam possimus quia?
-                      Eveniet.
-                    </Typography>
-
-                    <Avatar className={classes.steps}>2</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi, sunt similique blanditiis
-                      dolores! Illo deserunt quisquam veniam possimus quia?
-                      Eveniet.
-                    </Typography>
-
-                    <Avatar className={classes.steps}>3</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi.
-                    </Typography>
-                  </Box>
-                </Paper>
-              </Grid>
-              <Grid item md={4}>
-                <Paper variant="outlined" className={classes.paper}>
-                  <Typography gutterBottom variant="h5">
-                    How to activated real-time locator?
-                  </Typography>
-                  <Box p={1}>
-                    <Avatar className={classes.steps}>1</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi, sunt similique blanditiis
-                      dolores! Illo deserunt quisquam veniam possimus quia?
-                      Eveniet.
-                    </Typography>
-
-                    <Avatar className={classes.steps}>2</Avatar>
-                    <Typography variant="h6" color="primary">
-                      Step
-                    </Typography>
-                    <Typography gutterBottom variant="body2">
-                      Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                      At, aspernatur! Voluptatem nostrum laboriosam esse velit,
-                      soluta libero adipisci eligendi, sunt similique blanditiis
-                      dolores! Illo deserunt quisquam veniam possimus quia?
-                      Eveniet.
-                    </Typography>
-                  </Box>
-                </Paper>
-              </Grid>
-            </Grid> */}
+              <HelpList />
             </Box>
             <Divider />
             <form

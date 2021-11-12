@@ -57,7 +57,12 @@ const DeskPageNavigation = () => {
       sx={{ "& > :not(style)": { mr: 1.5 } }}
     >
       {navItems.map((page) => (
-        <Tooltip title={page.label} TransitionComponent={Zoom} enterDelay={700}>
+        <Tooltip
+          title={page.label}
+          key={page.index}
+          TransitionComponent={Zoom}
+          enterDelay={700}
+        >
           <Fab
             onClick={() => history.push(page.path)}
             color={location.pathname === page.path ? "primary" : "default"}

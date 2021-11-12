@@ -4,6 +4,7 @@ import Menu from "@mui/material/Menu";
 import Zoom from "@mui/material/Zoom";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
+import ListItemText from "@mui/material/ListItemText";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import Tooltip from "@mui/material/Tooltip";
@@ -16,10 +17,12 @@ import { useHistory } from "react-router-dom";
 import GoogleLogin from "react-google-login";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+
 import { useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 
-import { amber } from "@mui/material/colors";
+import { amber, grey } from "@mui/material/colors";
 
 export default function AccountMenu({ currentUser }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -89,9 +92,16 @@ export default function AccountMenu({ currentUser }) {
         anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
       >
         {isLoggedIn ? (
-          <>
+          <div>
             <MenuItem onClick={() => history.push("/profile")}>
-              <Avatar /> My Account
+              <ListItemIcon>
+                <Avatar />
+              </ListItemIcon>
+              <ListItemText>{currentUser.name}</ListItemText>
+              <ArrowForwardIosIcon
+                sx={{ marginLeft: 1, color: grey[500] }}
+                fontSize="small"
+              />
             </MenuItem>
             <Divider />
             <GoogleLogout
@@ -109,7 +119,7 @@ export default function AccountMenu({ currentUser }) {
                 </MenuItem>
               )}
             ></GoogleLogout>
-          </>
+          </div>
         ) : (
           <React.Fragment>
             <MenuItem onClick={() => history.push("/login")}>

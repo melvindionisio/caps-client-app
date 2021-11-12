@@ -1,42 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Box from "@mui/material/Box";
-import { IconButton, CardContent, Typography } from "@mui/material";
-import { grey, pink } from "@mui/material/colors";
+import { IconButton, CardContent, Typography, Button } from "@mui/material";
+import { grey, pink, amber } from "@mui/material/colors";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
 const RoomCard = ({ room }) => {
+  const [isLiked, setIsLiked] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+
   return (
     <Card
       variant="outlined"
+      // elevation={2}
       sx={{
-        ":hover": {
-          boxShadow: "0px 1px 4px rgba(0,0,0,0.2)",
-        },
+        // ":hover": {
+        //   boxShadow: "0px 5px 10px rgba(0,0,0,0.3)",
+        //   // transform: " scale(1.01)",
+        // },
         // ":active": {
         //   transform: " scale(.99)",
         // },
         transition: "150ms ease",
+        overflow: "hidden",
+        borderRadius: 2,
+        padding: 0,
       }}
     >
-      <Box sx={{ display: "flex" }}>
-        <CardMedia
-          image={room.imagesPath}
-          component="img"
-          alt="room-picture"
-          title={room.roomName}
-          sx={{ width: 160 }}
-        />
+      <Box sx={{ display: "flex", height: "inherit" }}>
+        <Box sx={{ width: 160, height: "inherit", overflow: "hidden" }}>
+          <CardMedia
+            image={room.imagesPath}
+            component="img"
+            alt="room-picture"
+            title={room.roomName}
+            sx={{
+              height: "100%",
+              width: 160,
+              ":hover": {
+                transform: " scale(1.2)",
+              },
+              transition: "150ms ease",
+            }}
+          />
+        </Box>
         <Box
           sx={{
             alignSelft: "flex-start",
             p: 1,
             flexGrow: 2,
+            display: "flex",
+            flexDirection: "column",
           }}
         >
           <CardHeader
@@ -48,47 +69,84 @@ const RoomCard = ({ room }) => {
             subheader={<Typography variant="body2">{room.bhname}</Typography>}
             sx={{ p: 1, pb: 0 }}
           />
-          <CardContent>{`${room.occupiedBed}/${room.totalBed}`}</CardContent>
+          <CardContent
+            sx={{ paddingBottom: 0, paddingTop: 0, flexGrow: 2 }}
+          >{`${room.occupiedBed}/${room.totalBed}`}</CardContent>
           <CardActions
             sx={{
               p: 0,
               m: 0,
               pt: ".2rem",
               pl: 1,
+              pr: 1,
               display: "flex",
               ">*": {
                 mr: 1,
               },
-              justifyContent: "start",
+              justifyContent: "end",
+              alignSelf: "flex-end",
             }}
           >
-            <IconButton
+            {isLiked ? (
+              <IconButton
+                size="medium"
+                sx={{
+                  background: grey[100],
+                  color: amber[500],
+                }}
+                onClick={() => setIsLiked(!isLiked)}
+              >
+                <ThumbUpIcon fontSize="small" />
+              </IconButton>
+            ) : (
+              <IconButton
+                size="medium"
+                sx={{
+                  background: grey[100],
+                  color: grey[500],
+                }}
+                onClick={() => setIsLiked(!isLiked)}
+              >
+                <ThumbUpOffAltIcon fontSize="small" />
+              </IconButton>
+            )}
+
+            {isBookmarked ? (
+              <IconButton
+                size="medium"
+                sx={{
+                  background: grey[100],
+                  color: pink[500],
+                }}
+                onClick={() => setIsBookmarked(!isBookmarked)}
+              >
+                <BookmarkAddedIcon fontSize="small" />
+              </IconButton>
+            ) : (
+              <IconButton
+                size="medium"
+                sx={{
+                  background: grey[100],
+                  color: grey[500],
+                }}
+                onClick={() => setIsBookmarked(!isBookmarked)}
+              >
+                <BookmarkAddIcon fontSize="small" />
+              </IconButton>
+            )}
+
+            <Button
               size="medium"
+              color="primary"
+              disableElevation
+              variant="text"
               sx={{
                 background: grey[100],
-                color: pink[500],
               }}
+              endIcon={<ArrowForwardIosIcon fontSize="small" />}
             >
-              <ThumbUpIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="medium"
-              sx={{
-                background: grey[100],
-                color: pink[500],
-              }}
-            >
-              <BookmarkAddIcon fontSize="small" />
-            </IconButton>
-            <IconButton
-              size="medium"
-              sx={{
-                background: grey[100],
-                color: pink[500],
-              }}
-            >
-              <ArrowForwardIosIcon fontSize="small" />
-            </IconButton>
+              Visit
+            </Button>
           </CardActions>
         </Box>
       </Box>
