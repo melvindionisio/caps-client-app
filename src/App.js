@@ -65,11 +65,12 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   permanentDrawer: {
-    width: 400,
+    width: 500,
     flexShrink: 0,
+    boxShadow: "3px 0px 5px rgba(0,0,0,0.2)",
   },
   drawerPaper: {
-    width: 400,
+    width: 500,
   },
 
   // [theme.breakpoints.up("md")]: {
@@ -116,7 +117,7 @@ const App = () => {
                 <Typography>MD</Typography>
               </Hidden> */}
 
-                {/* <Map /> */}
+                <Map />
               </Drawer>
             </Hidden>
             <Switch>

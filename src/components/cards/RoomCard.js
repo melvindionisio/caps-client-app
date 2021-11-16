@@ -11,18 +11,19 @@ import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import ThumbUpIcon from "@mui/icons-material/ThumbUp";
 import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import { useHistory } from "react-router-dom";
 
 const RoomCard = ({ room }) => {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
-
+  const history = useHistory();
   return (
     <Card
       variant="outlined"
       // elevation={2}
       sx={{
         // ":hover": {
-        //   boxShadow: "0px 5px 10px rgba(0,0,0,0.3)",
+        //   // boxShadow: "0px 5px 10px rgba(0,0,0,0.3)",
         //   // transform: " scale(1.01)",
         // },
         // ":active": {
@@ -30,8 +31,9 @@ const RoomCard = ({ room }) => {
         // },
         transition: "150ms ease",
         overflow: "hidden",
-        borderRadius: 2,
+        borderRadius: 1,
         padding: 0,
+        height: 170,
       }}
     >
       <Box sx={{ display: "flex", height: "inherit" }}>
@@ -144,6 +146,16 @@ const RoomCard = ({ room }) => {
                 background: grey[100],
               }}
               endIcon={<ArrowForwardIosIcon fontSize="small" />}
+              onClick={() =>
+                history.push(
+                  `/boarding-houses/${room.bhname
+                    .replace(/\s+/g, "-")
+                    .replace(/'/g, "")
+                    .toLowerCase()}/${room.roomName
+                    .replace(/\s+/g, "")
+                    .toLowerCase()}`
+                )
+              }
             >
               Visit
             </Button>

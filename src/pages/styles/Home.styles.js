@@ -23,8 +23,8 @@ export const useStyles = makeStyles((theme) => ({
     //   background: grey[100],
     // },
     "& .MuiTabs-indicator": {
-      height: 3,
-      borderRadius: 2,
+      height: 4,
+      borderRadius: "1.5rem 1.5rem 0 0 ",
     },
   },
   toolbar: {

@@ -16,6 +16,8 @@ import CardActions from "@mui/material/CardActions";
 import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Divider from "@mui/material/Divider";
+import Tooltip from "@mui/material/Tooltip";
+import Zoom from "@mui/material/Zoom";
 import Grid from "@mui/material/Grid";
 import MoreIcon from "@mui/icons-material/MoreVert";
 
@@ -27,6 +29,8 @@ import RoomLists from "../components/lists/RoomLists";
 // import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
 import useFetch from "../hooks/useFetch";
 // import { Link } from "react-router-dom";
+
+import { Typography, CircularProgress } from "@mui/material";
 
 const owners = [
   "House-1",
@@ -95,8 +99,8 @@ function a11yProps(index) {
 const Home = () => {
   const {
     data: boardingHouse,
-    // isPending,
-    // error,
+    isPending,
+    error,
   } = useFetch(
     "https://my-json-server.typicode.com/melvindionisio/bhfinder-api/boardingHouse"
   );
@@ -124,12 +128,20 @@ const Home = () => {
         variant="fullWidth"
         aria-label="full width tabs"
       >
-        <Tab icon={<SingleBedIcon />} label="ROOMS" {...a11yProps(0)} />
-        <Tab
-          icon={<ApartmentIcon />}
-          label="BOARDING HOUSE"
-          {...a11yProps(1)}
-        />
+        <Tooltip title="Rooms" TransitionComponent={Zoom} enterDelay={900}>
+          <Tab icon={<SingleBedIcon />} label="ROOMS" {...a11yProps(0)} />
+        </Tooltip>
+        <Tooltip
+          title="Boarding houses"
+          TransitionComponent={Zoom}
+          enterDelay={900}
+        >
+          <Tab
+            icon={<ApartmentIcon />}
+            label="BOARDING HOUSE"
+            {...a11yProps(1)}
+          />
+        </Tooltip>
       </Tabs>
     );
   }
@@ -167,9 +179,49 @@ const Home = () => {
                 p={1}
                 pb={8}
                 px={2}
-                style={{ maxWidth: "75rem", margin: "0 auto" }}
+                sx={{
+                  maxWidth: "75rem",
+                  margin: "0 auto",
+                  [theme.breakpoints.up("md")]: {
+                    pl: 3,
+                    py: 2,
+                  },
+                }}
               >
-                {boardingHouse && <RoomLists boardingHouses={boardingHouse} />}
+                {error && (
+                  <Typography variant="caption" align="center">
+                    Error. {error}
+                  </Typography>
+                )}
+                {isPending && (
+                  <Box
+                    py={3}
+                    pt={10}
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      flexDirection: "column",
+                      alignItems: "center",
+                    }}
+                  >
+                    <CircularProgress
+                      variant="indeterminate"
+                      size="2.5rem"
+                      color="primary"
+                    />
+                    <Typography variant="overline" align="center">
+                      Loading...
+                    </Typography>
+                  </Box>
+                )}
+                {boardingHouse && (
+                  <RoomLists
+                    error={error}
+                    isPending={isPending}
+                    boardingHouses={boardingHouse}
+                  />
+                )}
               </Box>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
