@@ -65,12 +65,12 @@ const useStyles = makeStyles((theme) => ({
     position: "relative",
   },
   permanentDrawer: {
-    width: 500,
+    width: 550,
     flexShrink: 0,
     boxShadow: "3px 0px 5px rgba(0,0,0,0.2)",
   },
   drawerPaper: {
-    width: 500,
+    width: 550,
   },
 
   // [theme.breakpoints.up("md")]: {

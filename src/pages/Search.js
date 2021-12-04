@@ -66,44 +66,47 @@ const Search = () => {
         </Slide>
       )}
       <Slide in={true} direction="down">
-        <AppBar
-          position="sticky"
-          color="secondary"
-          variant="outlined"
-          elevation={0}
-          sx={{
-            background: "#fff",
-          }}
-        >
-          <Toolbar
+        <Container maxWidth="md" sx={{ margin: "0 auto" }}>
+          <AppBar
+            position="sticky"
+            color="secondary"
+            variant="outlined"
+            elevation={0}
             sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "0.2rem .3rem",
+              background: "#fff",
+              borderRadius: "0rem 0rem 1rem 1rem",
             }}
           >
-            <IconButton onClick={() => history.goBack()} size="large">
-              <ArrowBackIosIcon />
-            </IconButton>
-            <TextField
-              ref={search}
-              variant="outlined"
-              placeholder="Search"
-              color="secondary"
-              size="small"
-              sx={{ width: "70%", maxWidth: "50rem" }}
-              disabled={filterOpen}
-              autoFocus
-            />
-            <IconButton color="secondary" onClick={filterToggle} size="large">
-              {filterOpen ? (
-                <CheckOutlined fontSize="medium" />
-              ) : (
-                <FilterAltOutlinedIcon />
-              )}
-            </IconButton>
-          </Toolbar>
-        </AppBar>
+            <Toolbar
+              sx={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "0.2rem .3rem",
+              }}
+            >
+              <IconButton onClick={() => history.goBack()} size="large">
+                <ArrowBackIosIcon />
+              </IconButton>
+              <TextField
+                ref={search}
+                variant="outlined"
+                placeholder="Search"
+                color="secondary"
+                size="small"
+                sx={{ width: "70%", maxWidth: "50rem" }}
+                disabled={filterOpen}
+                autoFocus
+              />
+              <IconButton color="secondary" onClick={filterToggle} size="large">
+                {filterOpen ? (
+                  <CheckOutlined fontSize="medium" />
+                ) : (
+                  <FilterAltOutlinedIcon />
+                )}
+              </IconButton>
+            </Toolbar>
+          </AppBar>
+        </Container>
       </Slide>
 
       <Slide in={true} direction="left">
