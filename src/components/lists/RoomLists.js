@@ -18,7 +18,7 @@ const RoomLists = ({ boardingHouses }) => {
           ])
 
           .map((availableRooms, index) => (
-            <Grid item xl={4} lg={6} md={4} sm={6} xs={12}>
+            <Grid item xl={6} lg={6} md={4} sm={6} xs={12}>
               <RoomCard key={index} room={availableRooms} />
             </Grid>
           ))}

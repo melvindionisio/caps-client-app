@@ -32,7 +32,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Logout from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { blue, cyan, lightBlue, pink } from "@mui/material/colors";
+import { blue, cyan, lightBlue } from "@mui/material/colors";
 import { GoogleLogout } from "react-google-login";
 import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
@@ -127,7 +127,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
             <Hidden mdDown>
               <IconButton
                 size="large"
-                sx={{ ml: 1, color: pink[500] }}
+                sx={{ ml: 1 }}
                 variant="text"
                 onClick={() => history.push("/bookmarks")}
               >

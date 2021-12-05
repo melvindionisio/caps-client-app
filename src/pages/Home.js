@@ -10,16 +10,9 @@ import Tab from "@mui/material/Tab";
 import Container from "@mui/material/Container";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
-import Card from "@mui/material/Card";
-import CardHeader from "@mui/material/CardHeader";
-import CardActions from "@mui/material/CardActions";
-import Button from "@mui/material/Button";
-import IconButton from "@mui/material/IconButton";
-import Divider from "@mui/material/Divider";
+
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
-import Grid from "@mui/material/Grid";
-import MoreIcon from "@mui/icons-material/MoreVert";
 
 import { useTheme } from "@mui/styles";
 import { useState } from "react";
@@ -30,43 +23,9 @@ import RoomLists from "../components/lists/RoomLists";
 import useFetch from "../hooks/useFetch";
 // import { Link } from "react-router-dom";
 
+import BoardingHouseLists from "../components/lists/BoardingHouseLists";
+
 import { Typography, CircularProgress } from "@mui/material";
-
-const owners = [
-  "House-1",
-  "House-2",
-  "House-3",
-  "House-4",
-  "House-5",
-  "House-6",
-  "House-7",
-  "House-8",
-];
-
-const House = ({ owner }) => {
-  return (
-    <Card variant="outlined">
-      <CardHeader
-        title={owner}
-        subheader="Lorem, ipsum dolor sit amet consectetur adipisicing elit. Eius
-                  dolores recusandae corrupti error aliquam tempore, repudiandae
-                  nisi aperiam totam, impedit nihil nulla officia id sed
-                  temporibus porro qui sequi fugiat?"
-        action={
-          <IconButton>
-            <MoreIcon fontSize="small" />
-          </IconButton>
-        }
-      />
-      <Divider />
-      <CardActions>
-        <Button variant="outlined" size="small">
-          Learn More
-        </Button>
-      </CardActions>
-    </Card>
-  );
-};
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -176,15 +135,17 @@ const Home = () => {
             <TabPanel value={value} index={0} dir={theme.direction}>
               <Box
                 className={classes.page}
-                p={1}
-                pb={8}
+                py={2}
                 px={2}
+                pb={8}
                 sx={{
                   maxWidth: "75rem",
                   margin: "0 auto",
                   [theme.breakpoints.up("md")]: {
+                    px: 2,
                     pl: 3,
                     py: 2,
+                    pb: 8,
                   },
                 }}
               >
@@ -232,13 +193,7 @@ const Home = () => {
                   px={2}
                   style={{ maxWidth: "75rem", margin: "0 auto" }}
                 >
-                  <Grid container spacing={1}>
-                    {owners.map((owner) => (
-                      <Grid item lg={6} md={4} sm={6} xs={12} key={owner}>
-                        <House owner={owner} />
-                      </Grid>
-                    ))}
-                  </Grid>
+                  <BoardingHouseLists />
                 </Box>
               </Box>
             </TabPanel>
