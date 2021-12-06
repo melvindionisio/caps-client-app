@@ -9,7 +9,6 @@ import {
   IconButton,
   Box,
 } from "@mui/material";
-import { makeStyles } from "@mui/styles";
 import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import RoomOutlinedIcon from "@mui/icons-material/RoomOutlined";
@@ -21,38 +20,12 @@ import { grey, pink } from "@mui/material/colors";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
-const useStyles = makeStyles({
-  btnContainer: {
-    display: "flex",
-    justifyContent: "flex-end",
-  },
-  // card: {
-  //   borderRadius: ".5rem",
-  //   boxShadow: "0 0 5px 1px rgba(0,0,0,0.05)",
-  //   border: "1px solid rgba(0,0,0,0.1)",
-  // },
-  // smallIcon: {
-  //   height: 15,
-  // },
-  // rate: {
-  //   display: "flex",
-  //   alignItems: "center",
-  // },
-  gradeIconActive: {
-    color: amber[600],
-  },
-  link: {
-    textDecoration: "none",
-  },
-});
-
 const BoardingHouseCard = ({ data }) => {
-  const classes = useStyles();
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
     <Grid item lg={6} md={4} sm={6} xs={12}>
-      <Card variant="contained" elevation={2} className={classes.card}>
+      <Card variant="outlined">
         <CardHeader
           sx={{ paddingBottom: 0 }}
           title={<Typography variant="h6">{data.name}</Typography>}
@@ -87,7 +60,7 @@ const BoardingHouseCard = ({ data }) => {
                   <BookmarkAddIcon fontSize="small" />
                 </IconButton>
               )}
-              <Link to={"/"} className={classes.link}>
+              <Link to={"/"} style={{ textDecoration: "none" }}>
                 <Button
                   size="medium"
                   color="primary"
@@ -121,11 +94,7 @@ const BoardingHouseCard = ({ data }) => {
             color="textSecondary"
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <PhoneOutlinedIcon
-              className={classes.smallIcon}
-              sx={{ mr: 1 }}
-              fontSize="small"
-            />
+            <PhoneOutlinedIcon sx={{ mr: 1 }} fontSize="small" />
             <Nlink
               underline="hover"
               color="primary"
@@ -141,12 +110,7 @@ const BoardingHouseCard = ({ data }) => {
             color="textSecondary"
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <RoomOutlinedIcon
-              className={classes.smallIcon}
-              fontSize="small"
-              sx={{ mr: 1 }}
-            />{" "}
-            {data.address}
+            <RoomOutlinedIcon fontSize="small" sx={{ mr: 1 }} /> {data.address}
           </Typography>
           {/* `/boardingHouse/${data.id}` */}
         </CardContent>
