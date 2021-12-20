@@ -24,33 +24,33 @@ const Map = () => {
     [125.368, 12.9979], //northeast coordinates
   ];
 
-  const geojson = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [124.6652, 12.5111],
-        },
-        properties: {
-          title: "Boarding House",
-          description: "UEP Men's Dorm",
-        },
-      },
-      {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [124.665, 12.5109],
-        },
-        properties: {
-          title: "Boarding House",
-          description: "UEP Women's Dorm",
-        },
-      },
-    ],
-  };
+  // const geojson = {
+  //   type: "FeatureCollection",
+  //   features: [
+  //     {
+  //       type: "Feature",
+  //       geometry: {
+  //         type: "Point",
+  //         coordinates: [124.6652, 12.5111],
+  //       },
+  //       properties: {
+  //         title: "Boarding House",
+  //         description: "UEP Men's Dorm",
+  //       },
+  //     },
+  //     {
+  //       type: "Feature",
+  //       geometry: {
+  //         type: "Point",
+  //         coordinates: [124.665, 12.5109],
+  //       },
+  //       properties: {
+  //         title: "Boarding House",
+  //         description: "UEP Women's Dorm",
+  //       },
+  //     },
+  //   ],
+  // };
 
   useEffect(() => {
     if (map.current) return; // initialize map only once
@@ -68,25 +68,45 @@ const Map = () => {
       antialias: true,
       maxBounds: BOUNDS,
     });
+    const abortCont = new AbortController();
 
-    geojson.features.forEach(function (marker) {
-      const el = document.createElement("div");
-      el.innerHTML = `<img src="https://img.icons8.com/color-glass/48/000000/apartment.png"/>`;
-      el.className = "marker";
+    fetch("http://localhost:3500/api/boarding-houses/seeker-map/map-marks", {
+      signal: abortCont.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Something went wrong!");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data);
+        data.features.forEach(function (marker) {
+          const el = document.createElement("div");
+          el.innerHTML = `<img src="https://img.icons8.com/color-glass/48/000000/apartment.png"/>`;
+          el.className = "marker";
 
-      new mapboxgl.Marker(el)
-        .setLngLat(marker.geometry.coordinates)
-        .setPopup(
-          new mapboxgl.Popup({
-            offset: 20,
-            closeButton: false,
-          })
-            .setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
+          new mapboxgl.Marker(el)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(
+              new mapboxgl.Popup({
+                offset: 20,
+                closeButton: false,
+              })
+                .setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
             <h5>${marker.properties.description}</h5>
            `)
-        )
-        .addTo(map.current);
-    });
+            )
+            .addTo(map.current);
+        });
+      })
+      .catch((err) => {
+        if (err.name === "AbortError") {
+          console.log("fetch aborted");
+        } else {
+          console.log("ready");
+        }
+      });
 
     map.current.on("load", () => {
       // Insert the layer beneath any symbol layer.
