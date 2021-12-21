@@ -21,11 +21,10 @@ import HomeNavigation from "../components/Navigations/HomeNavigation";
 import RoomLists from "../components/lists/RoomLists";
 // import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
 import useFetch from "../hooks/useFetch";
-// import { Link } from "react-router-dom";
-
+import LoadingState from "../components/LoadingState";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
 
-import { Typography, CircularProgress } from "@mui/material";
+import { Typography } from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -154,28 +153,7 @@ const Home = () => {
                     Error. {error}
                   </Typography>
                 )}
-                {isPending && (
-                  <Box
-                    py={3}
-                    pt={10}
-                    sx={{
-                      width: "100%",
-                      display: "flex",
-                      justifyContent: "center",
-                      flexDirection: "column",
-                      alignItems: "center",
-                    }}
-                  >
-                    <CircularProgress
-                      variant="indeterminate"
-                      size="2.5rem"
-                      color="primary"
-                    />
-                    <Typography variant="overline" align="center">
-                      Loading...
-                    </Typography>
-                  </Box>
-                )}
+                {isPending && <LoadingState loadWhat="Rooms" />}
                 {boardingHouse && (
                   <RoomLists
                     error={error}

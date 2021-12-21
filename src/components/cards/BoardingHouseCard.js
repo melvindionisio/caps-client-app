@@ -32,7 +32,9 @@ const BoardingHouseCard = ({ data }) => {
           subheader={
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
-              <Typography variant="caption">{data.popularity} stars</Typography>
+              <Typography variant="caption">
+                {data.popularity ?? 0} stars
+              </Typography>
             </Box>
           }
           action={
@@ -60,7 +62,10 @@ const BoardingHouseCard = ({ data }) => {
                   <BookmarkAddIcon fontSize="small" />
                 </IconButton>
               )}
-              <Link to={"/"} style={{ textDecoration: "none" }}>
+              <Link
+                to={`/boardinghouse/${data.id}`}
+                style={{ textDecoration: "none" }}
+              >
                 <Button
                   size="medium"
                   color="primary"
@@ -98,9 +103,9 @@ const BoardingHouseCard = ({ data }) => {
             <Nlink
               underline="hover"
               color="primary"
-              href={`tel: ${data.contact}`}
+              href={`tel: ${data.contacts}`}
             >
-              {data.contact}
+              {data.contacts}
             </Nlink>
           </Typography>
 
@@ -110,7 +115,8 @@ const BoardingHouseCard = ({ data }) => {
             color="textSecondary"
             sx={{ display: "flex", alignItems: "center" }}
           >
-            <RoomOutlinedIcon fontSize="small" sx={{ mr: 1 }} /> {data.address}
+            <RoomOutlinedIcon fontSize="small" sx={{ mr: 1 }} />{" "}
+            {data.completeAddress}
           </Typography>
           {/* `/boardingHouse/${data.id}` */}
         </CardContent>

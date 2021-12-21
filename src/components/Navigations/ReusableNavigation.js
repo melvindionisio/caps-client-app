@@ -4,17 +4,14 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import { useHistory } from "react-router-dom";
-import { makeStyles } from "@mui/styles";
 
-const useStyles = makeStyles({
-  toolbar: {
-    display: "flex",
-    // justifyContent: "space-between",
-  },
-});
-const ReusableNavigation = ({ children }) => {
+const ReusableNavigation = ({
+  children,
+  navigationTabs,
+  center,
+  spaceCenter,
+}) => {
   const history = useHistory();
-  const classes = useStyles();
 
   return (
     <>
@@ -25,7 +22,17 @@ const ReusableNavigation = ({ children }) => {
         color="secondary"
         sx={{ bgcolor: "background.default" }}
       >
-        <Toolbar className={classes.toolbar} sx={{ px: " .3rem" }}>
+        <Toolbar
+          sx={
+            spaceCenter
+              ? {
+                  px: " .3rem",
+                  display: "flex",
+                  justifyContent: "space-between",
+                }
+              : { px: " .3rem", display: "flex", justifyContent: "start" }
+          }
+        >
           <IconButton
             onClick={() => history.goBack()}
             size="large"
@@ -34,8 +41,18 @@ const ReusableNavigation = ({ children }) => {
             <ArrowBackIosIcon />
           </IconButton>
           {children}
+          {center && <IconButton></IconButton>}
         </Toolbar>
       </AppBar>
+      {navigationTabs && (
+        <AppBar
+          position="relative"
+          elevation={0}
+          sx={{ bgcolor: "background.default" }}
+        >
+          {navigationTabs}
+        </AppBar>
+      )}
     </>
   );
 };

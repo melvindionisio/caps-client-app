@@ -9,7 +9,7 @@ const Bookmarks = () => {
   return (
     <Slide in={true} direction="left">
       <Container maxWidth="lg" disableGutters>
-        <ReusableNavigation>
+        <ReusableNavigation center={true}>
           <Typography variant="body1" align="center">
             Bookmarks Page
           </Typography>
