@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Accordion from "@mui/material/Accordion";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import AccordionSummary from "@mui/material/AccordionSummary";
@@ -71,9 +71,6 @@ export default function HelpList() {
       ],
     },
   ];
-  useEffect(() => {
-    console.log(helpInfo);
-  }, [helpInfo]);
 
   return (
     <div sx={{ bgcolor: "red", height: 200 }}>
@@ -95,7 +92,7 @@ export default function HelpList() {
               {help.summary}
             </Typography>
             {help.details.map((step, index) => (
-              <Box>
+              <Box key={index}>
                 <Avatar sx={{ background: pink[500], mt: 2 }}>
                   {index + 1}
                 </Avatar>

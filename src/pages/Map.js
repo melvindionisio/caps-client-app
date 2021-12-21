@@ -60,6 +60,11 @@ const Map = () => {
       // style: "mapbox://styles/mapbox/navigation-night-v1?optimize=true",
       // lightmode
       style: "mapbox://styles/mapbox/streets-v11",
+      // style: "mapbox://styles/mapbox/outdoors-v11",
+      // style: "mapbox://styles/mapbox/satellite-streets-v11",
+
+      // style: "mapbox://styles/melsio/ckxfpxxz40k3r15o5aszjz3nd",
+      // style: "mapbox://styles/melsio/ckxfq49zf03hg14qlylrabt35",
       // style: "mapbox://styles/mapbox/light-v10?optimize=true",
       center: [lng, lat],
       zoom: zoom,
@@ -83,7 +88,7 @@ const Map = () => {
         console.log(data);
         data.features.forEach(function (marker) {
           const el = document.createElement("div");
-          el.innerHTML = `<img src="https://img.icons8.com/color-glass/48/000000/apartment.png"/>`;
+          el.innerHTML = `<img src="assets/images/pngwing.com.png"/>`;
           el.className = "marker";
 
           new mapboxgl.Marker(el)
@@ -98,6 +103,7 @@ const Map = () => {
            `)
             )
             .addTo(map.current);
+          // <button id="visit-btn" onclick="visit">VIEW</button>
         });
       })
       .catch((err) => {
@@ -127,8 +133,8 @@ const Map = () => {
           type: "fill-extrusion",
           minzoom: 15,
           paint: {
-            // 'fill-extrusion-color': '#aaa',
-            "fill-extrusion-color": "#26c6da",
+            "fill-extrusion-color": "#ffa726",
+            // "fill-extrusion-color": "#26c6da",
 
             // Use an 'interpolate' expression to
             // add a smooth transition effect to
