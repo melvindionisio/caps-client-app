@@ -10,7 +10,7 @@ const BoardingHouseLists = () => {
     data: boardinghouses,
     isPending,
     error,
-  } = useFetch("http://localhost:3500/api/boarding-houses");
+  } = useFetch("https://api-searchnstay.herokuapp.com/api/boarding-houses");
 
   return (
     <Grid container spacing={1}>
