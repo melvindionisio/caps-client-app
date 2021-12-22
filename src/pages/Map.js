@@ -57,12 +57,14 @@ const Map = () => {
     map.current = new mapboxgl.Map({
       container: mapContainer.current,
       // darkmode
-      // style: "mapbox://styles/mapbox/navigation-night-v1?optimize=true",
+      // style: "mapbox://styles/mapbox/navigation-night-v1",
       // lightmode
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/melsio/ckxh2zv6w0izd14npfm5p9cn5",
+      // style: "mapbox://styles/mapbox/navigation-day-v1",
+      // style: "mapbox://styles/melsio/ckxh1gtia1zp614oa0dlp8ow1",
+      // style: "mapbox://styles/mapbox/streets-v11",
       // style: "mapbox://styles/mapbox/outdoors-v11",
       // style: "mapbox://styles/mapbox/satellite-streets-v11",
-
       // style: "mapbox://styles/melsio/ckxfpxxz40k3r15o5aszjz3nd",
       // style: "mapbox://styles/melsio/ckxfq49zf03hg14qlylrabt35",
       // style: "mapbox://styles/mapbox/light-v10?optimize=true",
@@ -134,7 +136,9 @@ const Map = () => {
           minzoom: 15,
           paint: {
             "fill-extrusion-color": "#ffa726",
+            // "fill-extrusion-color": "#203f75",
             // "fill-extrusion-color": "#26c6da",
+            // "fill-extrusion-color": "#fff",
 
             // Use an 'interpolate' expression to
             // add a smooth transition effect to
