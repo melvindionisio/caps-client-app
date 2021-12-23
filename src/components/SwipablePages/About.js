@@ -84,106 +84,110 @@ const About = ({ boardinghouse }) => {
         paddingBottom: "5rem",
         height: "85vh",
         overflowY: "auto",
+        // display: "grid",
+        // gridTemplateColumns: "2fr 1fr",
       }}
     >
-      <Card
-        // variant="outlined"
-        sx={{
-          padding: "0rem",
-          margin: "0rem",
-          outline: "none",
-          marginBottom: 1,
-          border: "none",
-          background: `linear-gradient(to bottom right, ${cyan[300]}, ${lightBlue[400]}, ${blue[500]})`,
-        }}
-      >
-        <CardHeader
-          avatar={
-            <Avatar
-              variant="rounded"
-              sx={{
-                background: blue[500],
-                height: 60,
-                width: 60,
-                fontSize: 30,
-                fontWeight: "bold",
-              }}
-            >
-              {boardinghouse.name.charAt(0)}
-            </Avatar>
-          }
-          title={
-            <Typography
-              variant="h6"
-              sx={{ color: "#fff", fontFamily: "Quicksand" }}
-            >
-              {boardinghouse.name}
-            </Typography>
-          }
-          subheader={
-            <Box
-              sx={{
-                display: "flex",
-                itemsCenter: "center",
-              }}
-            >
-              <GradeIcon
-                fontSize="small"
-                className={`${classes.gradeIconActive} ${classes.margin}`}
-              />
-              <Typography variant="body2" color="textSecondary">
-                {stars || boardinghouse.popularity || 0} stars
+      <Box>
+        <Card
+          // variant="outlined"
+          sx={{
+            padding: "0rem",
+            margin: "0rem",
+            outline: "none",
+            marginBottom: 1,
+            border: "none",
+            background: `linear-gradient(to bottom right, ${cyan[300]}, ${lightBlue[400]}, ${blue[500]})`,
+          }}
+        >
+          <CardHeader
+            avatar={
+              <Avatar
+                variant="rounded"
+                sx={{
+                  background: blue[500],
+                  height: 60,
+                  width: 60,
+                  fontSize: 30,
+                  fontWeight: "bold",
+                }}
+              >
+                {boardinghouse.name.charAt(0)}
+              </Avatar>
+            }
+            title={
+              <Typography
+                variant="h6"
+                sx={{ color: "#fff", fontFamily: "Quicksand" }}
+              >
+                {boardinghouse.name}
               </Typography>
-            </Box>
-          }
-          action={
-            <IconButton
-              size="medium"
-              sx={{ boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)" }}
-            >
-              <GradeIcon
-                fontSize="medium"
-                className={
-                  starred ? classes.gradeIconActive : classes.gradeIcon
-                }
-                onClick={addStar}
-              />
-            </IconButton>
-          }
-        />
-      </Card>
+            }
+            subheader={
+              <Box
+                sx={{
+                  display: "flex",
+                  itemsCenter: "center",
+                }}
+              >
+                <GradeIcon
+                  fontSize="small"
+                  className={`${classes.gradeIconActive} ${classes.margin}`}
+                />
+                <Typography variant="body2" color="textSecondary">
+                  {stars || boardinghouse.popularity || 0} stars
+                </Typography>
+              </Box>
+            }
+            action={
+              <IconButton
+                size="medium"
+                sx={{ boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)" }}
+              >
+                <GradeIcon
+                  fontSize="medium"
+                  className={
+                    starred ? classes.gradeIconActive : classes.gradeIcon
+                  }
+                  onClick={addStar}
+                />
+              </IconButton>
+            }
+          />
+        </Card>
 
-      <Card>
-        <CardContent>
-          <List>
-            <ListItem divider>
-              <Typography variant="body1" color="initial">
-                {boardinghouse.completeAddress}
-              </Typography>
-            </ListItem>
-            <ListItem divider>
-              <Typography variant="body1" color="initial">
-                {boardinghouse.contacts}
-              </Typography>
-            </ListItem>
-            <ListItem divider>
-              <Typography variant="body1" color="initial">
-                {boardinghouse.tagline}
-              </Typography>
-            </ListItem>
-            <ListItem divider>
-              <Typography variant="body1" color="initial">
-                {boardinghouse.owner}
-              </Typography>
-            </ListItem>
-            <ListItem divider>
-              <Typography variant="body1" color="initial">
-                {boardinghouse.completeAddress}
-              </Typography>
-            </ListItem>
-          </List>
-        </CardContent>
-      </Card>
+        <Card>
+          <CardContent>
+            <List>
+              <ListItem divider>
+                <Typography variant="body1" color="initial">
+                  {boardinghouse.completeAddress}
+                </Typography>
+              </ListItem>
+              <ListItem divider>
+                <Typography variant="body1" color="initial">
+                  {boardinghouse.contacts}
+                </Typography>
+              </ListItem>
+              <ListItem divider>
+                <Typography variant="body1" color="initial">
+                  {boardinghouse.tagline}
+                </Typography>
+              </ListItem>
+              <ListItem divider>
+                <Typography variant="body1" color="initial">
+                  {boardinghouse.owner}
+                </Typography>
+              </ListItem>
+              <ListItem divider>
+                <Typography variant="body1" color="initial">
+                  {boardinghouse.completeAddress}
+                </Typography>
+              </ListItem>
+            </List>
+          </CardContent>
+        </Card>
+      </Box>
     </Container>
   );
 };

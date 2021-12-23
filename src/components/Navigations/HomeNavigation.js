@@ -106,7 +106,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
         // variant="outlined"
         // sx={{ bgcolor: "background.default" }}
         sx={{
-          background: "rgba(255,255,255,.6)",
+          background: "rgba(255,255,255,.7)",
           backdropFilter: "blur(1rem)",
         }}
       >

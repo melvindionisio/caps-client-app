@@ -19,7 +19,7 @@ const RoomCard = ({ room }) => {
   const history = useHistory();
   return (
     <Card
-      variant="outlined"
+      // variant="outlined"
       // elevation={2}
       sx={{
         // ":hover": {

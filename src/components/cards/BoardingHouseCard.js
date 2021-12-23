@@ -25,9 +25,16 @@ const BoardingHouseCard = ({ data }) => {
 
   return (
     <Grid item lg={6} md={4} sm={6} xs={12}>
-      <Card variant="outlined">
+      <Card
+      // variant="outlined"
+      // sx={{
+      //   background: `linear-gradient(to bottom right, ${lightBlue[400]}, ${blue[500]})`,
+      // }}
+      >
         <CardHeader
-          sx={{ paddingBottom: 0 }}
+          sx={{
+            paddingBottom: 0,
+          }}
           title={
             <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
               {data.name}
