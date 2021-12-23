@@ -137,9 +137,12 @@ const About = ({ boardinghouse }) => {
             </Box>
           }
           action={
-            <IconButton size="medium">
+            <IconButton
+              size="medium"
+              sx={{ boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)" }}
+            >
               <GradeIcon
-                fontSize="large"
+                fontSize="medium"
                 className={
                   starred ? classes.gradeIconActive : classes.gradeIcon
                 }

@@ -49,10 +49,35 @@ function a11yProps(index) {
   };
 }
 
+const SwipeableWrapper = ({ children }) => {
+  const theme = useTheme();
+
+  return (
+    <Box
+      py={2}
+      px={2}
+      sx={{
+        maxWidth: "50rem",
+        minHeight: "70vh",
+        margin: "0 auto",
+        pb: 10,
+        [theme.breakpoints.up("md")]: {
+          px: 2,
+          pl: 3,
+          py: 2,
+          pb: 10,
+        },
+      }}
+    >
+      {children}
+    </Box>
+  );
+};
+
 const Home = () => {
   const classes = useStyles();
-  const theme = useTheme();
   const [value, setValue] = useState(0);
+  const theme = useTheme();
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -114,44 +139,14 @@ const Home = () => {
             onChangeIndex={handleChangeIndex}
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
-              <Box
-                py={2}
-                px={2}
-                sx={{
-                  maxWidth: "50rem",
-                  minHeight: "80vh",
-                  margin: "0 auto",
-                  pb: 10,
-                  [theme.breakpoints.up("md")]: {
-                    px: 2,
-                    pl: 3,
-                    py: 2,
-                    pb: 10,
-                  },
-                }}
-              >
+              <SwipeableWrapper>
                 <RoomLists />
-              </Box>
+              </SwipeableWrapper>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <Box
-                py={2}
-                px={2}
-                sx={{
-                  maxWidth: "50rem",
-                  minHeight: "80vh",
-                  margin: "0 auto",
-                  pb: 10,
-                  [theme.breakpoints.up("md")]: {
-                    px: 2,
-                    pl: 3,
-                    py: 2,
-                    pb: 10,
-                  },
-                }}
-              >
+              <SwipeableWrapper>
                 <BoardingHouseLists />
-              </Box>
+              </SwipeableWrapper>
             </TabPanel>
           </SwipeableViews>
         </Box>

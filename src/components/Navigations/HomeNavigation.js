@@ -104,7 +104,11 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
         position="sticky"
         elevation={1}
         // variant="outlined"
-        sx={{ bgcolor: "background.default" }}
+        // sx={{ bgcolor: "background.default" }}
+        sx={{
+          background: "rgba(255,255,255,.6)",
+          backdropFilter: "blur(1rem)",
+        }}
       >
         <Toolbar className={classes.toolbar} sx={{ padding: "0rem .3rem" }}>
           <Hidden mdUp>
@@ -134,20 +138,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                 <BookmarksIcon fontSize="medium" />
               </IconButton>
             </Hidden>
-            {/* <Hidden lgDown>
-              <Typography
-                variant="h6"
-                component="h1"
-                style={{
-                  marginLeft: ".2rem",
-                  fontFamily: "Quicksand",
-                  fontWeight: "bold",
-                  color: "#333",
-                }}
-              >
-                SEARCH 'N STAY
-              </Typography>
-            </Hidden> */}
+
             <Hidden mdUp>
               <Typography
                 variant="body1"
@@ -181,7 +172,13 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
           </Box>
         </Toolbar>
         <Hidden mdUp>
-          <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
+          <AppBar
+            position="static"
+            sx={{
+              background: "transparent",
+            }}
+            elevation={0}
+          >
             <NavigationTabs />
           </AppBar>
         </Hidden>
