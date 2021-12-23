@@ -28,7 +28,11 @@ const BoardingHouseCard = ({ data }) => {
       <Card variant="outlined">
         <CardHeader
           sx={{ paddingBottom: 0 }}
-          title={<Typography variant="h6">{data.name}</Typography>}
+          title={
+            <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
+              {data.name}
+            </Typography>
+          }
           subheader={
             <Box sx={{ display: "flex", alignItems: "center" }}>
               <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />

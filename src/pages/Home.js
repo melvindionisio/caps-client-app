@@ -19,12 +19,7 @@ import { useState } from "react";
 import { useStyles } from "./styles/Home.styles";
 import HomeNavigation from "../components/Navigations/HomeNavigation";
 import RoomLists from "../components/lists/RoomLists";
-// import DeskPageNavigation from "../components/Navigations/DeskPageNavigation";
-import useFetch from "../hooks/useFetch";
-import LoadingState from "../components/LoadingState";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
-
-import { Typography } from "@mui/material";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,14 +50,6 @@ function a11yProps(index) {
 }
 
 const Home = () => {
-  const {
-    data: boardingHouse,
-    isPending,
-    error,
-  } = useFetch(
-    "https://my-json-server.typicode.com/melvindionisio/bhfinder-api/boardingHouse"
-  );
-
   const classes = useStyles();
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -120,11 +107,6 @@ const Home = () => {
           <HomeNavigation NavigationTabs={NavigationTabs}>
             <NavigationTabs />
           </HomeNavigation>
-          {/* <Hidden mdUp>
-            <AppBar position="static" sx={{ background: "#fff" }} elevation={0}>
-              <NavigationTabs />
-            </AppBar>
-          </Hidden> */}
 
           <SwipeableViews
             axis={theme.direction === "rtl" ? "x-reverse" : "x"}
@@ -133,46 +115,42 @@ const Home = () => {
           >
             <TabPanel value={value} index={0} dir={theme.direction}>
               <Box
-                className={classes.page}
                 py={2}
                 px={2}
-                pb={8}
                 sx={{
-                  maxWidth: "75rem",
+                  maxWidth: "50rem",
+                  minHeight: "80vh",
                   margin: "0 auto",
+                  pb: 10,
                   [theme.breakpoints.up("md")]: {
                     px: 2,
                     pl: 3,
                     py: 2,
-                    pb: 8,
+                    pb: 10,
                   },
                 }}
               >
-                {error && (
-                  <Typography variant="caption" align="center">
-                    Error. {error}
-                  </Typography>
-                )}
-                {isPending && <LoadingState loadWhat="Rooms" />}
-                {boardingHouse && (
-                  <RoomLists
-                    error={error}
-                    isPending={isPending}
-                    boardingHouses={boardingHouse}
-                  />
-                )}
+                <RoomLists />
               </Box>
             </TabPanel>
             <TabPanel value={value} index={1} dir={theme.direction}>
-              <Box className={classes.page}>
-                <Box
-                  p={1}
-                  pb={8}
-                  px={2}
-                  style={{ maxWidth: "75rem", margin: "0 auto" }}
-                >
-                  <BoardingHouseLists />
-                </Box>
+              <Box
+                py={2}
+                px={2}
+                sx={{
+                  maxWidth: "50rem",
+                  minHeight: "80vh",
+                  margin: "0 auto",
+                  pb: 10,
+                  [theme.breakpoints.up("md")]: {
+                    px: 2,
+                    pl: 3,
+                    py: 2,
+                    pb: 10,
+                  },
+                }}
+              >
+                <BoardingHouseLists />
               </Box>
             </TabPanel>
           </SwipeableViews>

@@ -15,7 +15,7 @@ const LoadingState = ({ loadWhat }) => {
       loadingColor === "primary"
         ? setLoadingColor("secondary")
         : setLoadingColor("primary");
-    }, 350);
+    }, 300);
     return () => clearInterval(intervalId);
   });
 
@@ -24,7 +24,7 @@ const LoadingState = ({ loadWhat }) => {
       py={3}
       sx={{
         width: "100%",
-        minHeight: 250,
+        minHeight: 350,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",

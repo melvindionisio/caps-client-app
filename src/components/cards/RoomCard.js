@@ -5,16 +5,16 @@ import CardMedia from "@mui/material/CardMedia";
 import CardHeader from "@mui/material/CardHeader";
 import Box from "@mui/material/Box";
 import { IconButton, CardContent, Typography, Button } from "@mui/material";
-import { grey, pink, amber } from "@mui/material/colors";
+import { grey, pink } from "@mui/material/colors";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import ThumbUpIcon from "@mui/icons-material/ThumbUp";
-import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
+// import ThumbUpIcon from "@mui/icons-material/ThumbUp";
+// import ThumbUpOffAltIcon from "@mui/icons-material/ThumbUpOffAlt";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import { useHistory } from "react-router-dom";
 
 const RoomCard = ({ room }) => {
-  const [isLiked, setIsLiked] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const history = useHistory();
   return (
@@ -89,7 +89,7 @@ const RoomCard = ({ room }) => {
               alignSelf: "flex-end",
             }}
           >
-            {isLiked ? (
+            {/* {isLiked ? (
               <IconButton
                 size="medium"
                 sx={{
@@ -111,7 +111,7 @@ const RoomCard = ({ room }) => {
               >
                 <ThumbUpOffAltIcon fontSize="small" />
               </IconButton>
-            )}
+            )} */}
 
             {isBookmarked ? (
               <IconButton

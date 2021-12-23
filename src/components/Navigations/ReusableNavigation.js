@@ -48,7 +48,9 @@ const ReusableNavigation = ({
         <AppBar
           position="relative"
           elevation={0}
-          sx={{ bgcolor: "background.default" }}
+          sx={{
+            bgcolor: "background.default",
+          }}
         >
           {navigationTabs}
         </AppBar>

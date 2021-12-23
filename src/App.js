@@ -20,7 +20,7 @@ import Register from "./pages/Register";
 import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import Bookmarks from "./pages/Bookmarks";
-import BoardingHouse from "./pages/BoardingHouse";
+import BoardingHouseProfile from "./pages/BoardingHouseProfile";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
@@ -150,7 +150,7 @@ const App = () => {
                 <Bookmarks />
               </Route>
               <Route path="/boardinghouse/:bhId">
-                <BoardingHouse />
+                <BoardingHouseProfile />
               </Route>
               <Route path="*">
                 <Container maxWidth="sm">

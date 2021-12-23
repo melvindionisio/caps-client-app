@@ -7,25 +7,21 @@ import Typography from "@mui/material/Typography";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import useFetch from "../hooks/useFetch";
 import LoadingState from "../components/LoadingState";
-import CardHeader from "@mui/material/CardHeader";
-import Card from "@mui/material/Card";
-import Avatar from "@mui/material/Avatar";
 import IconButton from "@mui/material/IconButton";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import { CardContent, List, ListItem } from "@mui/material";
 
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
-
 import Box from "@mui/material/Box";
-
 import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 
 import { useTheme } from "@mui/styles";
+
+import About from "../components/SwipablePages/About";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,7 +51,7 @@ function a11yProps(index) {
   };
 }
 
-const BoardingHouse = () => {
+const BoardingHouseProfile = () => {
   const { bhId } = useParams();
   const [isBookmarked, setIsBookmarked] = useState(false);
 
@@ -79,7 +75,13 @@ const BoardingHouse = () => {
   function NavigationTabs() {
     return (
       <Tabs
-        sx={{ borderBottom: "1px solid rgba(0,0,0,0.2)" }}
+        sx={{
+          borderBottom: "1px solid rgba(0,0,0,0.2)",
+          "& .MuiTabs-indicator": {
+            height: 4,
+            borderRadius: "1.5rem 1.5rem 0 0 ",
+          },
+        }}
         value={value}
         onChange={handleChange}
         indicatorColor="secondary"
@@ -103,7 +105,11 @@ const BoardingHouse = () => {
 
   return (
     <Slide in={true} direction="left">
-      <Container maxWidth="lg" disableGutters>
+      <Container
+        maxWidth="lg"
+        disableGutters
+        sx={{ height: "100vh", overflow: "hidden" }}
+      >
         {error && (
           <Typography variant="body1" color="initial" align="center">
             {error}
@@ -150,45 +156,7 @@ const BoardingHouse = () => {
               onChangeIndex={handleChangeIndex}
             >
               <TabPanel value={value} index={0} dir={theme.direction}>
-                <Container maxWidth="md" disableGutters sx={{ padding: 2 }}>
-                  <Card variant="outlined">
-                    <CardHeader
-                      avatar={<Avatar aria-label=""></Avatar>}
-                      action={<IconButton aria-label=""></IconButton>}
-                      title={boardinghouse.name}
-                      subheader={boardinghouse.popularity ?? 0}
-                    />
-                    <CardContent>
-                      <List>
-                        <ListItem divider>
-                          <Typography variant="body1" color="initial">
-                            {boardinghouse.completeAddress}
-                          </Typography>
-                        </ListItem>
-                        <ListItem divider>
-                          <Typography variant="body1" color="initial">
-                            {boardinghouse.contacts}
-                          </Typography>
-                        </ListItem>
-                        <ListItem divider>
-                          <Typography variant="body1" color="initial">
-                            {boardinghouse.tagline}
-                          </Typography>
-                        </ListItem>
-                        <ListItem divider>
-                          <Typography variant="body1" color="initial">
-                            {boardinghouse.owner}
-                          </Typography>
-                        </ListItem>
-                        <ListItem divider>
-                          <Typography variant="body1" color="initial">
-                            {boardinghouse.completeAddress}
-                          </Typography>
-                        </ListItem>
-                      </List>
-                    </CardContent>
-                  </Card>
-                </Container>
+                <About boardinghouse={boardinghouse} />
               </TabPanel>
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <Box sx={{ minHeight: "100vh", paddingBottom: "5rem" }}>
@@ -210,4 +178,4 @@ const BoardingHouse = () => {
   );
 };
 
-export default BoardingHouse;
+export default BoardingHouseProfile;
