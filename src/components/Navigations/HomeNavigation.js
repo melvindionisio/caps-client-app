@@ -38,6 +38,8 @@ import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
 import AccountMenu from "../AccountMenu";
 
+import useAddToHomescreenPrompt from "../../hooks/useAddToHomescreenPrompt.ts";
+
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     display: "flex",
@@ -97,6 +99,27 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
   };
   const vertical = "bottom";
   const horizontal = "right";
+
+  // let deferredPrompt;
+
+  // window.addEventListener("beforeinstallprompt", (e) => {
+  //   e.preventDefault();
+  //   deferredPrompt = e;
+  //   // showInstallPromotion();
+  //   console.log("before install");
+  // });
+
+  const onInstallPrompt = async () => {
+    // if (deferredPrompt !== null) {
+    //   deferredPrompt.prompt();
+    //   const { outcome } = await deferredPrompt.userChoice;
+
+    //   if (outcome === "accepted") {
+    //     deferredPrompt = null;
+    //   }
+    // }
+    console.log("Installing");
+  };
 
   return (
     <>
@@ -343,6 +366,18 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               </ListItem>
             </>
           )}
+
+          <ListItem disablePadding button onClick={onInstallPrompt}>
+            <ListItemButton>
+              <ListItemIcon>
+                <PersonIcon />
+              </ListItemIcon>
+              <ListItemText
+                primary={"Install the App"}
+                secondary="Recommended"
+              />
+            </ListItemButton>
+          </ListItem>
         </List>
       </MobileMenu>
       <Hidden mdDown>
