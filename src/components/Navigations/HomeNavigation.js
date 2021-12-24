@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -38,7 +38,7 @@ import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
 import AccountMenu from "../AccountMenu";
 
-import useAddToHomescreenPrompt from "../../hooks/useAddToHomescreenPrompt.ts";
+import useAddToHomescreenPrompt from "../../hooks/useAddToHomescreenPrompt";
 
 const useStyles = makeStyles((theme) => ({
   toolbar: {
@@ -100,26 +100,27 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
   const vertical = "bottom";
   const horizontal = "right";
 
-  // let deferredPrompt;
+  const [prompt, promptToInstall] = useAddToHomescreenPrompt();
+  useEffect(() => {
+    if (prompt) console.log(prompt);
+  });
+  // const [isVisible, setVisibleState] = useState(false);
 
-  // window.addEventListener("beforeinstallprompt", (e) => {
-  //   e.preventDefault();
-  //   deferredPrompt = e;
-  //   // showInstallPromotion();
-  //   console.log("before install");
-  // });
+  // const hide = () => setVisibleState(false);
 
-  const onInstallPrompt = async () => {
-    // if (deferredPrompt !== null) {
-    //   deferredPrompt.prompt();
-    //   const { outcome } = await deferredPrompt.userChoice;
+  // useEffect(() => {
+  //   if (prompt) {
+  //     setVisibleState(true);
+  //   }
+  // }, [prompt]);
 
-    //   if (outcome === "accepted") {
-    //     deferredPrompt = null;
-    //   }
-    // }
-    console.log("Installing");
-  };
+  // if (!isVisible) {
+  //   return <div />;
+  // }
+
+  // const onInstallPrompt = async () => {
+  //   console.log("Installing");
+  // };
 
   return (
     <>
@@ -367,7 +368,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
             </>
           )}
 
-          <ListItem disablePadding button onClick={onInstallPrompt}>
+          <ListItem disablePadding button onClick={promptToInstall}>
             <ListItemButton>
               <ListItemIcon>
                 <PersonIcon />
@@ -378,6 +379,12 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               />
             </ListItemButton>
           </ListItem>
+
+          {/* <div onClick={hide}>
+            <button onClick={hide}>Close</button>
+            Hello! Wanna add to homescreen?
+            <button onClick={promptToInstall}>Add to homescreen</button>
+          </div> */}
         </List>
       </MobileMenu>
       <Hidden mdDown>
