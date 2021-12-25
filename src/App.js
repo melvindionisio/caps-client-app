@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   BrowserRouter as Router,
   Switch,
@@ -26,6 +26,7 @@ import MobilePageNavigation from "./components/Navigations/MobilePageNavigation"
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
 import LoginContextProvider from "./contexts/LoginContext";
+import useAddToHomescreenPrompt from "./hooks/useAddToHomescreenPrompt";
 
 const theme = createTheme({
   palette: {
@@ -83,6 +84,17 @@ const useStyles = makeStyles((theme) => ({
 }));
 const App = () => {
   const classes = useStyles();
+
+  const [prompt] = useAddToHomescreenPrompt();
+
+  useEffect(() => {
+    if (prompt) console.log(prompt);
+    console.log(prompt);
+  }, [prompt]);
+
+  // const onInstallPrompt = async () => {
+  //   console.log("Installing");
+  // };
 
   return (
     <ThemeProvider theme={theme}>

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
@@ -101,26 +101,6 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
   const horizontal = "right";
 
   const [prompt, promptToInstall] = useAddToHomescreenPrompt();
-  useEffect(() => {
-    if (prompt) console.log(prompt);
-  });
-  // const [isVisible, setVisibleState] = useState(false);
-
-  // const hide = () => setVisibleState(false);
-
-  // useEffect(() => {
-  //   if (prompt) {
-  //     setVisibleState(true);
-  //   }
-  // }, [prompt]);
-
-  // if (!isVisible) {
-  //   return <div />;
-  // }
-
-  // const onInstallPrompt = async () => {
-  //   console.log("Installing");
-  // };
 
   return (
     <>
@@ -367,18 +347,19 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
               </ListItem>
             </>
           )}
-
-          <ListItem disablePadding button onClick={promptToInstall}>
-            <ListItemButton>
-              <ListItemIcon>
-                <PersonIcon />
-              </ListItemIcon>
-              <ListItemText
-                primary={"Install the App"}
-                secondary="Recommended"
-              />
-            </ListItemButton>
-          </ListItem>
+          {prompt && (
+            <ListItem disablePadding button onClick={promptToInstall}>
+              <ListItemButton>
+                <ListItemIcon>
+                  <PersonIcon />
+                </ListItemIcon>
+                <ListItemText
+                  primary={"Install the App"}
+                  secondary="Recommended"
+                />
+              </ListItemButton>
+            </ListItem>
+          )}
 
           {/* <div onClick={hide}>
             <button onClick={hide}>Close</button>

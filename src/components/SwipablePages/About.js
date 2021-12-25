@@ -142,6 +142,7 @@ const About = ({ boardinghouse }) => {
             action={
               <IconButton
                 size="medium"
+                onClick={addStar}
                 sx={{ boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)" }}
               >
                 <GradeIcon
@@ -149,7 +150,6 @@ const About = ({ boardinghouse }) => {
                   className={
                     starred ? classes.gradeIconActive : classes.gradeIcon
                   }
-                  onClick={addStar}
                 />
               </IconButton>
             }

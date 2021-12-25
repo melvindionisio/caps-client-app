@@ -77,9 +77,12 @@ const Map = () => {
     });
     const abortCont = new AbortController();
 
-    fetch("http://localhost:3500/api/boarding-houses/seeker-map/map-marks", {
-      signal: abortCont.signal,
-    })
+    fetch(
+      "https://api-searchnstay.herokuapp.com/api/boarding-houses/seeker-map/map-marks",
+      {
+        signal: abortCont.signal,
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw Error("Something went wrong!");
