@@ -57,7 +57,7 @@ const SwipeableWrapper = ({ children }) => {
       py={2}
       px={2}
       sx={{
-        maxWidth: "50rem",
+        maxWidth: "55rem",
         minHeight: "70vh",
         margin: "0 auto",
         pb: 10,

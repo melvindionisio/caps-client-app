@@ -1,12 +1,13 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
-// import Masonry from "@mui/lab/Masonry";
+// import Grid from "@mui/material/Grid";
+import Masonry from "@mui/lab/Masonry";
 import RoomCard from "../cards/RoomCard";
 import useFetch from "../../hooks/useFetch";
 import Typography from "@mui/material/Typography";
 import LoadingState from "../../components/LoadingState";
+import { Box } from "@mui/material";
 
-const RoomLists = ({ boardingHouses }) => {
+const RoomLists = () => {
   const {
     data: boardinghouses,
     isPending,
@@ -16,15 +17,16 @@ const RoomLists = ({ boardingHouses }) => {
   );
 
   return (
-    <>
-      <Grid container spacing={1}>
-        {/* <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 3 }} spacing={1}> */}
-        {error && (
-          <Typography variant="caption" align="center">
-            Error. {error}
-          </Typography>
-        )}
-        {isPending && <LoadingState loadWhat="boardinghouses" />}
+    <Box sx={{ width: "100%" }}>
+      {/* // <Grid container spacing={1}> */}
+      {error && (
+        <Typography variant="caption" align="center">
+          Error. {error}
+        </Typography>
+      )}
+      {isPending && <LoadingState loadWhat="boardinghouses" />}
+
+      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={1}>
         {boardinghouses &&
           boardinghouses
             .map((bh) => bh.room)
@@ -36,13 +38,11 @@ const RoomLists = ({ boardingHouses }) => {
             ])
 
             .map((availableRooms, index) => (
-              <Grid item xl={6} lg={6} md={4} sm={6} xs={12} key={index}>
-                <RoomCard key={index} room={availableRooms} />
-              </Grid>
+              <RoomCard key={index} room={availableRooms} />
             ))}
-        {/* </Masonry> */}
-      </Grid>
-    </>
+      </Masonry>
+      {/* </Grid> */}
+    </Box>
   );
 };
 

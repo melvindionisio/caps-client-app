@@ -24,115 +24,115 @@ const BoardingHouseCard = ({ data }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
 
   return (
-    <Grid item lg={6} md={4} sm={6} xs={12}>
-      <Card
-      // variant="outlined"
-      // sx={{
-      //   background: `linear-gradient(to bottom right, ${lightBlue[400]}, ${blue[500]})`,
-      // }}
-      >
-        <CardHeader
-          sx={{
-            paddingBottom: 0,
-          }}
-          title={
-            <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
-              {data.name}
+    // <Grid item lg={6} md={4} sm={6} xs={12}>
+    <Card
+    // variant="outlined"
+    // sx={{
+    //   background: `linear-gradient(to bottom right, ${lightBlue[400]}, ${blue[500]})`,
+    // }}
+    >
+      <CardHeader
+        sx={{
+          paddingBottom: 0,
+        }}
+        title={
+          <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
+            {data.name}
+          </Typography>
+        }
+        subheader={
+          <Box sx={{ display: "flex", alignItems: "center" }}>
+            <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
+            <Typography variant="caption">
+              {data.popularity ?? 0} stars
             </Typography>
-          }
-          subheader={
-            <Box sx={{ display: "flex", alignItems: "center" }}>
-              <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
-              <Typography variant="caption">
-                {data.popularity ?? 0} stars
-              </Typography>
-            </Box>
-          }
-          action={
-            <Box>
-              {isBookmarked ? (
-                <IconButton
-                  size="medium"
-                  sx={{
-                    background: grey[100],
-                    color: pink[500],
-                  }}
-                  onClick={() => setIsBookmarked(!isBookmarked)}
-                >
-                  <BookmarkAddedIcon fontSize="small" />
-                </IconButton>
-              ) : (
-                <IconButton
-                  size="medium"
-                  sx={{
-                    background: grey[100],
-                    color: grey[500],
-                  }}
-                  onClick={() => setIsBookmarked(!isBookmarked)}
-                >
-                  <BookmarkAddIcon fontSize="small" />
-                </IconButton>
-              )}
-              <Link
-                to={`/boardinghouse/${data.id}`}
-                style={{ textDecoration: "none" }}
+          </Box>
+        }
+        action={
+          <Box>
+            {isBookmarked ? (
+              <IconButton
+                size="medium"
+                sx={{
+                  background: grey[100],
+                  color: pink[500],
+                }}
+                onClick={() => setIsBookmarked(!isBookmarked)}
               >
-                <Button
-                  size="medium"
-                  color="primary"
-                  disableElevation
-                  variant="text"
-                  sx={{
-                    background: grey[100],
-                    ml: 1,
-                  }}
-                  endIcon={<CallMadeOutlinedIcon fontSize="small" />}
-                  // onClick={() =>
-                  //   history.push(
-                  //     `/boarding-houses/${room.bhname
-                  //       .replace(/\s+/g, "-")
-                  //       .replace(/'/g, "")
-                  //       .toLowerCase()}/${room.roomName
-                  //       .replace(/\s+/g, "")
-                  //       .toLowerCase()}`
-                  //   )
-                  // }
-                >
-                  Visit
-                </Button>
-              </Link>
-            </Box>
-          }
-        />
-        <CardContent>
-          <Typography
-            variant="body2"
-            color="textSecondary"
-            sx={{ display: "flex", alignItems: "center" }}
-          >
-            <PhoneOutlinedIcon sx={{ mr: 1 }} fontSize="small" />
-            <Nlink
-              underline="hover"
-              color="primary"
-              href={`tel: ${data.contacts}`}
+                <BookmarkAddedIcon fontSize="small" />
+              </IconButton>
+            ) : (
+              <IconButton
+                size="medium"
+                sx={{
+                  background: grey[100],
+                  color: grey[500],
+                }}
+                onClick={() => setIsBookmarked(!isBookmarked)}
+              >
+                <BookmarkAddIcon fontSize="small" />
+              </IconButton>
+            )}
+            <Link
+              to={`/boardinghouse/${data.id}`}
+              style={{ textDecoration: "none" }}
             >
-              {data.contacts}
-            </Nlink>
-          </Typography>
-
-          <Typography
-            variant="body2"
-            gutterBottom
-            color="textSecondary"
-            sx={{ display: "flex", alignItems: "center" }}
+              <Button
+                size="medium"
+                color="primary"
+                disableElevation
+                variant="text"
+                sx={{
+                  background: grey[100],
+                  ml: 1,
+                }}
+                endIcon={<CallMadeOutlinedIcon fontSize="small" />}
+                // onClick={() =>
+                //   history.push(
+                //     `/boarding-houses/${room.bhname
+                //       .replace(/\s+/g, "-")
+                //       .replace(/'/g, "")
+                //       .toLowerCase()}/${room.roomName
+                //       .replace(/\s+/g, "")
+                //       .toLowerCase()}`
+                //   )
+                // }
+              >
+                Visit
+              </Button>
+            </Link>
+          </Box>
+        }
+      />
+      <CardContent>
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <PhoneOutlinedIcon sx={{ mr: 1 }} fontSize="small" />
+          <Nlink
+            underline="hover"
+            color="primary"
+            href={`tel: ${data.contacts}`}
           >
-            <RoomOutlinedIcon fontSize="small" sx={{ mr: 1 }} />{" "}
-            {data.completeAddress}
-          </Typography>
-          {/* `/boardingHouse/${data.id}` */}
-        </CardContent>
-      </Card>
-    </Grid>
+            {data.contacts}
+          </Nlink>
+        </Typography>
+
+        <Typography
+          variant="body2"
+          gutterBottom
+          color="textSecondary"
+          sx={{ display: "flex", alignItems: "center" }}
+        >
+          <RoomOutlinedIcon fontSize="small" sx={{ mr: 1 }} />{" "}
+          {data.completeAddress}
+        </Typography>
+        {/* `/boardingHouse/${data.id}` */}
+      </CardContent>
+    </Card>
+    // </Grid>
   );
 };
 

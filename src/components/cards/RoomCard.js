@@ -18,6 +18,7 @@ const RoomCard = ({ room }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const history = useHistory();
   return (
+    // <Grid item xl={6} lg={6} md={4} sm={6} xs={12}>
     <Card
       // variant="outlined"
       // elevation={2}
@@ -163,6 +164,7 @@ const RoomCard = ({ room }) => {
         </Box>
       </Box>
     </Card>
+    // {/* </Grid> */}
   );
 };
 
