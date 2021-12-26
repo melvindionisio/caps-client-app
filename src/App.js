@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Hidden from "@mui/material/Hidden";
 import { Drawer } from "@mui/material";
 import { makeStyles } from "@mui/styles";
-import { blueGrey, blue, orange } from "@mui/material/colors";
+import { blueGrey, blue, amber } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Home from "./pages/Home";
 import Map from "./pages/Map";
@@ -35,7 +35,7 @@ const theme = createTheme({
       main: blue[600],
     },
     secondary: {
-      main: orange[600],
+      main: amber[700],
     },
   },
   typography: {

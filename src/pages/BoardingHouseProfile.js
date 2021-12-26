@@ -22,6 +22,7 @@ import Zoom from "@mui/material/Zoom";
 import { useTheme } from "@mui/styles";
 
 import About from "../components/SwipablePages/About";
+import MyRooms from "../components/SwipablePages/MyRooms";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -160,14 +161,7 @@ const BoardingHouseProfile = () => {
               </TabPanel>
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <Box sx={{ minHeight: "100vh", paddingBottom: "5rem" }}>
-                  <Box
-                    p={1}
-                    pb={8}
-                    px={2}
-                    style={{ maxWidth: "75rem", margin: "0 auto" }}
-                  >
-                    {/* <BoardingHouseLists /> */}
-                  </Box>
+                  <MyRooms />
                 </Box>
               </TabPanel>
             </SwipeableViews>

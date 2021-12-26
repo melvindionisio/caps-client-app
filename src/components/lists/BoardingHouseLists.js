@@ -1,5 +1,4 @@
 import React from "react";
-import Grid from "@mui/material/Grid";
 import useFetch from "../../hooks/useFetch";
 import BoardingHouseCard from "../cards/BoardingHouseCard";
 import LoadingState from "../../components/LoadingState";

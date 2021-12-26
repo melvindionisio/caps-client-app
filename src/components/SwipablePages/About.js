@@ -2,18 +2,26 @@ import React, { useState } from "react";
 import {
   Container,
   Card,
-  CardHeader,
   Avatar,
   Typography,
   Box,
   IconButton,
-  CardContent,
-  List,
   ListItem,
+  Divider,
+  ListItemText,
+  ListItemAvatar,
 } from "@mui/material";
-import { amber, blue, grey, cyan, lightBlue } from "@mui/material/colors";
+import { amber, blue, grey, lightBlue } from "@mui/material/colors";
 import { makeStyles } from "@mui/styles";
 import GradeIcon from "@mui/icons-material/Grade";
+import DetailsCard from "../cards/DetailsCard";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
+import GpsFixedIcon from "@mui/icons-material/GpsFixed";
+import PersonPinIcon from "@mui/icons-material/PersonPin";
+import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import { Link as Nlink } from "@mui/material";
+
+import MiniMap from "../MiniMap";
 
 const useStyles = makeStyles({
   avatar: {
@@ -29,7 +37,7 @@ const useStyles = makeStyles({
   },
 
   gradeIcon: {
-    color: "#fff",
+    color: grey[200],
   },
   gradeIconActive: {
     color: amber[300],
@@ -64,6 +72,17 @@ const useStyles = makeStyles({
   },
 });
 
+const InfoItem = ({ icon, primaryText, secondaryText }) => {
+  return (
+    <ListItem sx={{ display: "flex", justifyContent: "space-between" }}>
+      <ListItemAvatar>
+        <Avatar sx={{ background: lightBlue[500] }}>{icon}</Avatar>
+      </ListItemAvatar>
+      <ListItemText primary={primaryText} secondary={secondaryText} />
+    </ListItem>
+  );
+};
+
 const About = ({ boardinghouse }) => {
   const classes = useStyles();
   const [starred, setStarred] = useState(false);
@@ -76,119 +95,135 @@ const About = ({ boardinghouse }) => {
   };
 
   return (
-    <Container
-      maxWidth="md"
-      disableGutters
+    <Box
       sx={{
-        padding: 2,
-        paddingBottom: "5rem",
         height: "85vh",
         overflowY: "auto",
-        // display: "grid",
-        // gridTemplateColumns: "2fr 1fr",
       }}
     >
-      <Box>
-        <Card
-          // variant="outlined"
+      <Card
+        sx={{
+          borderRadius: 0,
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          padding: 2,
+          paddingTop: 5,
+          position: "relative",
+        }}
+        elevation={0}
+      >
+        <Avatar
           sx={{
-            padding: "0rem",
-            margin: "0rem",
-            outline: "none",
-            marginBottom: 1,
-            border: "none",
-            background: `linear-gradient(to bottom right, ${cyan[300]}, ${lightBlue[400]}, ${blue[500]})`,
+            background: blue[500],
+            height: 70,
+            width: 70,
+            fontSize: 30,
+            fontWeight: "bold",
           }}
         >
-          <CardHeader
-            avatar={
-              <Avatar
-                variant="rounded"
-                sx={{
-                  background: blue[500],
-                  height: 60,
-                  width: 60,
-                  fontSize: 30,
-                  fontWeight: "bold",
-                }}
-              >
-                {boardinghouse.name.charAt(0)}
-              </Avatar>
-            }
-            title={
-              <Typography
-                variant="h6"
-                sx={{ color: "#fff", fontFamily: "Quicksand" }}
-              >
-                {boardinghouse.name}
-              </Typography>
-            }
-            subheader={
-              <Box
-                sx={{
-                  display: "flex",
-                  itemsCenter: "center",
-                }}
-              >
-                <GradeIcon
-                  fontSize="small"
-                  className={`${classes.gradeIconActive} ${classes.margin}`}
-                />
-                <Typography variant="body2" color="textSecondary">
-                  {stars || boardinghouse.popularity || 0} stars
-                </Typography>
-              </Box>
-            }
-            action={
-              <IconButton
-                size="medium"
-                onClick={addStar}
-                sx={{ boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)" }}
-              >
-                <GradeIcon
-                  fontSize="medium"
-                  className={
-                    starred ? classes.gradeIconActive : classes.gradeIcon
-                  }
-                />
-              </IconButton>
-            }
+          {boardinghouse.name.charAt(0)}
+        </Avatar>
+        <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
+          {boardinghouse.name}
+        </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            itemsCenter: "center",
+          }}
+        >
+          <GradeIcon
+            fontSize="small"
+            className={`${classes.gradeIconActive} ${classes.margin}`}
           />
-        </Card>
+          <Typography variant="body2" color="textSecondary">
+            {stars || boardinghouse.popularity || 0} stars
+          </Typography>
+        </Box>
+        <Typography
+          variant="body1"
+          color="text.secondary"
+          sx={{ mt: 2, fontStyle: "italic" }}
+        >
+          {boardinghouse.tagline}
+        </Typography>
 
-        <Card>
-          <CardContent>
-            <List>
-              <ListItem divider>
-                <Typography variant="body1" color="initial">
-                  {boardinghouse.completeAddress}
-                </Typography>
-              </ListItem>
-              <ListItem divider>
-                <Typography variant="body1" color="initial">
-                  {boardinghouse.contacts}
-                </Typography>
-              </ListItem>
-              <ListItem divider>
-                <Typography variant="body1" color="initial">
-                  {boardinghouse.tagline}
-                </Typography>
-              </ListItem>
-              <ListItem divider>
-                <Typography variant="body1" color="initial">
-                  {boardinghouse.owner}
-                </Typography>
-              </ListItem>
-              <ListItem divider>
-                <Typography variant="body1" color="initial">
-                  {boardinghouse.completeAddress}
-                </Typography>
-              </ListItem>
-            </List>
-          </CardContent>
-        </Card>
-      </Box>
-    </Container>
+        <IconButton
+          size="large"
+          onClick={addStar}
+          sx={{
+            // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+            position: "absolute",
+            top: ".5rem",
+            right: ".5rem",
+          }}
+        >
+          <GradeIcon
+            fontSize="large"
+            className={starred ? classes.gradeIconActive : classes.gradeIcon}
+          />
+        </IconButton>
+      </Card>
+      <Divider />
+
+      <Container
+        maxWidth="sm"
+        disableGutters
+        sx={{
+          padding: 2,
+          paddingBottom: "5rem",
+        }}
+      >
+        <DetailsCard title="Owner">
+          <InfoItem
+            icon={<PersonPinIcon />}
+            primaryText={boardinghouse.owner}
+            secondaryText={"Owner"}
+          />
+        </DetailsCard>
+
+        <DetailsCard title="Contacts">
+          <InfoItem
+            icon={<PhoneOutlinedIcon />}
+            primaryText={
+              <Nlink
+                underline="hover"
+                color="primary"
+                href={`tel: ${boardinghouse.contacts}`}
+              >
+                {boardinghouse.contacts}
+              </Nlink>
+            }
+            secondaryText={"Contact Number"}
+          />
+        </DetailsCard>
+
+        <DetailsCard title="Location">
+          <InfoItem
+            icon={<LocationOnIcon />}
+            primaryText={boardinghouse.completeAddress}
+            secondaryText={"Full Address"}
+          />
+          <InfoItem
+            icon={<GpsFixedIcon />}
+            primaryText={`${boardinghouse.longitude} LNG  -  ${boardinghouse.latitude} LAT`}
+            secondaryText={"Coordinates"}
+          />
+        </DetailsCard>
+
+        <DetailsCard title="House Protocols">Do's and Dont's</DetailsCard>
+        <DetailsCard title="We Offer">Offers</DetailsCard>
+        <DetailsCard title="Gender/s Allowed">Allowed genders</DetailsCard>
+        <DetailsCard title="Water source">Bombahan</DetailsCard>
+        <DetailsCard title="Price Range">Price</DetailsCard>
+        <DetailsCard title="Total Rooms">n Rooms</DetailsCard>
+
+        <Box>
+          <MiniMap coordinates={"Gg"} />
+        </Box>
+      </Container>
+    </Box>
   );
 };
 
