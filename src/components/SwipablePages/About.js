@@ -11,7 +11,7 @@ import {
   ListItemText,
   ListItemAvatar,
 } from "@mui/material";
-import { amber, blue, grey, lightBlue } from "@mui/material/colors";
+import { amber, blue, grey, lightBlue, pink } from "@mui/material/colors";
 import { makeStyles } from "@mui/styles";
 import GradeIcon from "@mui/icons-material/Grade";
 import DetailsCard from "../cards/DetailsCard";
@@ -115,9 +115,9 @@ const About = ({ boardinghouse }) => {
       >
         <Avatar
           sx={{
-            background: blue[500],
-            height: 70,
-            width: 70,
+            background: pink[400],
+            height: 90,
+            width: 90,
             fontSize: 30,
             fontWeight: "bold",
           }}
