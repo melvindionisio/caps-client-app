@@ -5,6 +5,7 @@ import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState, useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 import AccountMenu from "../components/AccountMenu";
+import MarkerLogo from "../marker-logo.png";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
@@ -77,12 +78,9 @@ const Map = () => {
     });
     const abortCont = new AbortController();
 
-    fetch(
-      "https://api-searchnstay.herokuapp.com/api/boarding-houses/seeker-map/map-marks",
-      {
-        signal: abortCont.signal,
-      }
-    )
+    fetch("http://localhost:3500/api/boarding-houses/seeker-map/map-marks", {
+      signal: abortCont.signal,
+    })
       .then((res) => {
         if (!res.ok) {
           throw Error("Something went wrong!");
@@ -93,7 +91,7 @@ const Map = () => {
         console.log(data);
         data.features.forEach(function (marker) {
           const el = document.createElement("div");
-          el.innerHTML = `<img src="assets/images/pngwing.com.png"/>`;
+          el.innerHTML = `<img src="${MarkerLogo}"/>`;
           el.className = "marker";
 
           new mapboxgl.Marker(el)
@@ -192,12 +190,18 @@ const Map = () => {
   });
 
   useEffect(() => {
+    const controller = new AbortController();
+
     if (!map.current) return; // wait for map to initialize
     map.current.on("move", () => {
       setLng(map.current.getCenter().lng.toFixed(4));
       setLat(map.current.getCenter().lat.toFixed(4));
       setZoom(map.current.getZoom().toFixed(2));
     });
+    return () => {
+      // cancel the request before component unmounts
+      controller.abort();
+    };
   });
 
   return (

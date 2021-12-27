@@ -3,6 +3,7 @@ import {
   Card,
   CardHeader,
   CardContent,
+  CardActions,
   Typography,
   Button,
   IconButton,
@@ -47,61 +48,6 @@ const BoardingHouseCard = ({ data }) => {
             </Typography>
           </Box>
         }
-        action={
-          <Box>
-            {isBookmarked ? (
-              <IconButton
-                size="medium"
-                sx={{
-                  background: grey[100],
-                  color: pink[500],
-                }}
-                onClick={() => setIsBookmarked(!isBookmarked)}
-              >
-                <BookmarkAddedIcon fontSize="small" />
-              </IconButton>
-            ) : (
-              <IconButton
-                size="medium"
-                sx={{
-                  background: grey[100],
-                  color: grey[500],
-                }}
-                onClick={() => setIsBookmarked(!isBookmarked)}
-              >
-                <BookmarkAddIcon fontSize="small" />
-              </IconButton>
-            )}
-            <Link
-              to={`/boardinghouse/${data.id}`}
-              style={{ textDecoration: "none" }}
-            >
-              <Button
-                size="medium"
-                color="primary"
-                disableElevation
-                variant="text"
-                sx={{
-                  background: grey[100],
-                  ml: 1,
-                }}
-                endIcon={<CallMadeOutlinedIcon fontSize="small" />}
-                // onClick={() =>
-                //   history.push(
-                //     `/boarding-houses/${room.bhname
-                //       .replace(/\s+/g, "-")
-                //       .replace(/'/g, "")
-                //       .toLowerCase()}/${room.roomName
-                //       .replace(/\s+/g, "")
-                //       .toLowerCase()}`
-                //   )
-                // }
-              >
-                Visit
-              </Button>
-            </Link>
-          </Box>
-        }
       />
       <CardContent>
         <Typography
@@ -130,6 +76,60 @@ const BoardingHouseCard = ({ data }) => {
         </Typography>
         {/* `/boardingHouse/${data.id}` */}
       </CardContent>
+      <CardActions sx={{ display: "flex", justifyContent: "end" }}>
+        <Box sx={{ display: "flex", gap: 1 }}>
+          {isBookmarked ? (
+            <IconButton
+              size="medium"
+              sx={{
+                background: grey[100],
+                color: pink[500],
+              }}
+              onClick={() => setIsBookmarked(!isBookmarked)}
+            >
+              <BookmarkAddedIcon fontSize="small" />
+            </IconButton>
+          ) : (
+            <IconButton
+              size="medium"
+              sx={{
+                background: grey[100],
+                color: grey[500],
+              }}
+              onClick={() => setIsBookmarked(!isBookmarked)}
+            >
+              <BookmarkAddIcon fontSize="small" />
+            </IconButton>
+          )}
+          <Link
+            to={`/boardinghouse/${data.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            <Button
+              size="medium"
+              color="primary"
+              disableElevation
+              variant="text"
+              sx={{
+                background: grey[100],
+              }}
+              endIcon={<CallMadeOutlinedIcon fontSize="small" />}
+              // onClick={() =>
+              //   history.push(
+              //     `/boarding-houses/${room.bhname
+              //       .replace(/\s+/g, "-")
+              //       .replace(/'/g, "")
+              //       .toLowerCase()}/${room.roomName
+              //       .replace(/\s+/g, "")
+              //       .toLowerCase()}`
+              //   )
+              // }
+            >
+              Visit
+            </Button>
+          </Link>
+        </Box>
+      </CardActions>
     </Card>
     // </Grid>
   );

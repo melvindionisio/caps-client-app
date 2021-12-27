@@ -11,7 +11,7 @@ import {
   ListItemText,
   ListItemAvatar,
 } from "@mui/material";
-import { amber, blue, grey, lightBlue, pink } from "@mui/material/colors";
+import { amber, blue, grey, lightBlue, purple } from "@mui/material/colors";
 import { makeStyles } from "@mui/styles";
 import GradeIcon from "@mui/icons-material/Grade";
 import DetailsCard from "../cards/DetailsCard";
@@ -20,7 +20,6 @@ import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { Link as Nlink } from "@mui/material";
-
 import MiniMap from "../MiniMap";
 
 const useStyles = makeStyles({
@@ -78,7 +77,15 @@ const InfoItem = ({ icon, primaryText, secondaryText }) => {
       <ListItemAvatar>
         <Avatar sx={{ background: lightBlue[500] }}>{icon}</Avatar>
       </ListItemAvatar>
-      <ListItemText primary={primaryText} secondary={secondaryText} />
+      <ListItemText
+        primary={primaryText}
+        secondary={secondaryText}
+        sx={{
+          ".MuiListItemText-primary": {
+            fontFamily: "Quicksand",
+          },
+        }}
+      />
     </ListItem>
   );
 };
@@ -115,16 +122,16 @@ const About = ({ boardinghouse }) => {
       >
         <Avatar
           sx={{
-            background: pink[400],
-            height: 90,
-            width: 90,
-            fontSize: 30,
+            background: purple[400],
+            height: 110,
+            width: 110,
+            fontSize: 40,
             fontWeight: "bold",
           }}
         >
           {boardinghouse.name.charAt(0)}
         </Avatar>
-        <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
+        <Typography variant="h6" sx={{ fontFamily: "Quicksand", mt: 1 }}>
           {boardinghouse.name}
         </Typography>
         <Box
@@ -207,7 +214,22 @@ const About = ({ boardinghouse }) => {
           />
           <InfoItem
             icon={<GpsFixedIcon />}
-            primaryText={`${boardinghouse.longitude} LNG  -  ${boardinghouse.latitude} LAT`}
+            primaryText={
+              <Typography
+                variant="body1"
+                color="initial"
+                sx={{ fontFamily: "Quicksand" }}
+              >
+                {boardinghouse.longitude}{" "}
+                <Typography variant="caption" color="text.secondary">
+                  LNG
+                </Typography>{" "}
+                - {boardinghouse.latitude}{" "}
+                <Typography variant="caption" color="text.secondary">
+                  LAT
+                </Typography>
+              </Typography>
+            }
             secondaryText={"Coordinates"}
           />
         </DetailsCard>
@@ -219,8 +241,22 @@ const About = ({ boardinghouse }) => {
         <DetailsCard title="Price Range">Price</DetailsCard>
         <DetailsCard title="Total Rooms">n Rooms</DetailsCard>
 
-        <Box>
-          <MiniMap coordinates={"Gg"} />
+        <Box sx={{ mb: 2, mt: 4 }}>
+          <Typography
+            variant="body1"
+            color="text.secondary"
+            align="center"
+            sx={{
+              mt: 2,
+              mb: 1,
+              textTransform: "uppercase",
+              fontFamily: "Quicksand",
+              fontSize: 12,
+            }}
+          >
+            {boardinghouse.name}'s Location
+          </Typography>
+          <MiniMap bhId={boardinghouse.id} />
         </Box>
       </Container>
     </Box>
