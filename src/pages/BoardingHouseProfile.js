@@ -23,7 +23,7 @@ import { useTheme } from "@mui/styles";
 
 import About from "../components/SwipablePages/About";
 import MyRooms from "../components/SwipablePages/MyRooms";
-
+import Reviews from "../components/SwipablePages/Reviews";
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -100,6 +100,9 @@ const BoardingHouseProfile = () => {
         <Tooltip title="Rooms" TransitionComponent={Zoom} enterDelay={1000}>
           <Tab label="ROOMS" {...a11yProps(1)} />
         </Tooltip>
+        <Tooltip title="Reviews" TransitionComponent={Zoom} enterDelay={1000}>
+          <Tab label="Reviews" {...a11yProps(1)} />
+        </Tooltip>
       </Tabs>
     );
   }
@@ -163,6 +166,10 @@ const BoardingHouseProfile = () => {
                 <Box sx={{ minHeight: "100vh", paddingBottom: "5rem" }}>
                   <MyRooms />
                 </Box>
+              </TabPanel>
+
+              <TabPanel value={value} index={2} dir={theme.direction}>
+                <Reviews />
               </TabPanel>
             </SwipeableViews>
           </>

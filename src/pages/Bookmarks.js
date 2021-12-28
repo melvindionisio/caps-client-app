@@ -7,6 +7,7 @@ import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import useFetch from "../hooks/useFetch";
 import { LoginContext } from "../contexts/LoginContext";
 import LoadingState from "../components/LoadingState";
+import BookmarkCard from "../components/cards/BookmarkCard";
 
 const Bookmarks = () => {
   const { currentUser } = useContext(LoginContext);
@@ -25,7 +26,7 @@ const Bookmarks = () => {
             Bookmarks Page
           </Typography>
         </ReusableNavigation>
-        <Container disableGutters maxWidth="md">
+        <Container disableGutters maxWidth="md" sx={{ padding: 2 }}>
           {error && (
             <Typography variant="body1" color="initial" align="center">
               {error}
@@ -43,6 +44,8 @@ const Bookmarks = () => {
               Bookmarks is empty.
             </Typography>
           )}
+
+          <BookmarkCard />
         </Container>
       </Container>
     </Slide>
