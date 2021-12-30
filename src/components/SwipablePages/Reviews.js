@@ -25,12 +25,11 @@ const Reviews = () => {
         sx={{
           display: "flex",
           flexDirection: "column",
-          gap: 2,
-          height: "50vh",
+          gap: 1,
+          height: "53vh",
           overflowY: "auto",
           padding: "1rem 5px",
           borderRadius: 1,
-          border: `1px solid ${lightBlue[400]}`,
         }}
       >
         <ReviewCard isMyReview={false} />
@@ -40,31 +39,36 @@ const Reviews = () => {
       </Box>
       <Box
         sx={{
+          marginTop: 1,
           display: "flex",
-          gap: 1,
-          width: "90%",
-          position: "absolute",
-          bottom: "5rem",
-          right: "1rem",
-          padding: 1,
-          background: "#fff",
-          borderRadius: 1,
+          justifyContent: "center",
         }}
       >
-        <TextField
-          id="review-field"
-          label="Enter your review..."
-          size="small"
-          fullWidth
-          multiline
-          rows={3}
-          variant="filled"
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-        />
-        <Button size="small" variant="contained">
-          Send
-        </Button>
+        <Box
+          sx={{
+            display: "flex",
+            gap: 1,
+            width: "100%",
+            padding: 1,
+            background: "#fff",
+            borderRadius: 1,
+          }}
+        >
+          <TextField
+            id="review-field"
+            label="Enter your review..."
+            size="small"
+            fullWidth
+            multiline
+            rows={3}
+            variant="filled"
+            value={review}
+            onChange={(e) => setReview(e.target.value)}
+          />
+          <Button size="small" variant="contained">
+            Send
+          </Button>
+        </Box>
       </Box>
     </Container>
   );

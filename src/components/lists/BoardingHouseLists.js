@@ -25,7 +25,10 @@ const BoardingHouseLists = () => {
       <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={1}>
         {boardinghouses &&
           boardinghouses.map((boardinghouse) => (
-            <BoardingHouseCard key={boardinghouse.id} data={boardinghouse} />
+            <BoardingHouseCard
+              key={boardinghouse.id}
+              boardinghouse={boardinghouse}
+            />
           ))}
       </Masonry>
       {/* </Grid> */}

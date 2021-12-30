@@ -108,7 +108,7 @@ const BoardingHouseProfile = () => {
   }
 
   return (
-    <Slide in={true} direction="left">
+    <Slide in={true} direction="up">
       <Container
         maxWidth="lg"
         disableGutters

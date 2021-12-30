@@ -20,8 +20,40 @@ import { grey, pink } from "@mui/material/colors";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
-const BoardingHouseCard = ({ data }) => {
+const BoardingHouseCard = ({ boardinghouse }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
+
+  const handleAddBookmark = () => {
+    setIsBookmarked(!isBookmarked);
+    // const abortCont = new AbortController();
+    // if (isBookmarked) {
+    //   fetch(`http://localhost:3500/api/bookmarks/add${seekerId}`, {
+    //     signal: abortCont.signal,
+    //   })
+    //     .then((res) => {
+    //       if (!res.ok) {
+    //         throw Error("Something went wrong!");
+    //       }
+    //       return res.json();
+    //     })
+    //     .then((boardinghouse) => {
+    //       setIsBookmarked(true);
+    //     })
+    //     .catch((err) => {
+    //       if (err.name === "AbortError") {
+    //         console.log("fetch aborted");
+    //       } else {
+    //         console.log(err);
+    //         setIsBookmarked(false);
+    //       }
+    //     });
+    //   return () => {
+    //     abortCont.abort();
+    //   };
+    // } else {
+    //
+    // }
+  };
 
   return (
     // <Grid item lg={6} md={4} sm={6} xs={12}>
@@ -37,19 +69,19 @@ const BoardingHouseCard = ({ data }) => {
         }}
         title={
           <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
-            {data.name}
+            {boardinghouse.name}
           </Typography>
         }
         subheader={
           <Box sx={{ display: "flex", alignItems: "center" }}>
             <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
             <Typography variant="caption">
-              {data.popularity ?? 0} stars
+              {boardinghouse.popularity ?? 0} stars
             </Typography>
           </Box>
         }
       />
-      <CardContent>
+      <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>
         <Typography
           variant="body2"
           color="textSecondary"
@@ -59,9 +91,9 @@ const BoardingHouseCard = ({ data }) => {
           <Nlink
             underline="hover"
             color="primary"
-            href={`tel: ${data.contacts}`}
+            href={`tel: ${boardinghouse.contacts}`}
           >
-            {data.contacts}
+            {boardinghouse.contacts}
           </Nlink>
         </Typography>
 
@@ -72,47 +104,29 @@ const BoardingHouseCard = ({ data }) => {
           sx={{ display: "flex", alignItems: "center" }}
         >
           <RoomOutlinedIcon fontSize="small" sx={{ mr: 1 }} />{" "}
-          {data.completeAddress}
+          {boardinghouse.completeAddress}
         </Typography>
-        {/* `/boardingHouse/${data.id}` */}
+        {/* `/boardingHouse/${boardinghouse.id}` */}
       </CardContent>
-      <CardActions sx={{ display: "flex", justifyContent: "end" }}>
-        <Box sx={{ display: "flex", gap: 1 }}>
-          {isBookmarked ? (
-            <IconButton
-              size="medium"
-              sx={{
-                background: grey[100],
-                color: pink[500],
-              }}
-              onClick={() => setIsBookmarked(!isBookmarked)}
-            >
-              <BookmarkAddedIcon fontSize="small" />
-            </IconButton>
-          ) : (
-            <IconButton
-              size="medium"
-              sx={{
-                background: grey[100],
-                color: grey[500],
-              }}
-              onClick={() => setIsBookmarked(!isBookmarked)}
-            >
-              <BookmarkAddIcon fontSize="small" />
-            </IconButton>
-          )}
+      <CardActions sx={{ width: "100%" }}>
+        <Box
+          sx={{
+            display: "flex",
+            width: "100%",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Link
-            to={`/boardinghouse/${data.id}`}
-            style={{ textDecoration: "none" }}
+            to={`/boardinghouse/${boardinghouse.id}`}
+            style={{ textDecoration: "none", width: "70%" }}
           >
             <Button
-              size="medium"
+              size="small"
               color="primary"
               disableElevation
-              variant="text"
-              sx={{
-                background: grey[100],
-              }}
+              variant="contained"
+              fullWidth
               endIcon={<CallMadeOutlinedIcon fontSize="small" />}
               // onClick={() =>
               //   history.push(
@@ -128,6 +142,30 @@ const BoardingHouseCard = ({ data }) => {
               Visit
             </Button>
           </Link>
+
+          <IconButton
+            size="medium"
+            sx={
+              isBookmarked
+                ? {
+                    background: grey[100],
+                    ml: 1,
+                    color: pink[500],
+                  }
+                : {
+                    background: grey[100],
+                    ml: 1,
+                    color: grey[500],
+                  }
+            }
+            onClick={handleAddBookmark}
+          >
+            {isBookmarked ? (
+              <BookmarkAddedIcon fontSize="small" />
+            ) : (
+              <BookmarkAddIcon fontSize="small" />
+            )}
+          </IconButton>
         </Box>
       </CardActions>
     </Card>
