@@ -30,6 +30,9 @@ const useStyles = makeStyles({
 
 const Login = () => {
   const classes = useStyles();
+  const { clientId, setIsLoggedIn, setCurrentUser, setIsSuccess } =
+    useContext(LoginContext);
+
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("Login with your account.");
@@ -38,18 +41,43 @@ const Login = () => {
   const input = useRef(null);
   const history = useHistory();
 
-  const login = (e) => {
+  const handleLogin = (e) => {
     e.preventDefault();
-
-    const loginInfo = {
-      username: "",
-      password: "",
-    };
 
     // validate first
     if (username !== "" && password !== "") {
-      loginInfo.username = username;
-      loginInfo.passsword = password;
+      fetch("http://localhost:3500/api/seekers/login", {
+        method: "POST",
+        body: JSON.stringify({
+          username: username,
+          password: password,
+        }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      })
+        .then((res) => {
+          return res.json();
+        })
+        .then((data) => {
+          if (data.status === "success") {
+            history.push("/");
+            console.log(data);
+
+            setIsLoggedIn(true);
+            setCurrentUser({
+              id: data.seeker_id,
+              name: data.seeker_name,
+              username: data.seeker_username,
+            });
+          } else if (data.status === "incorrect") {
+            setMessage(data.message);
+            setErrorLevel("warning");
+          } else {
+            setMessage(data.message);
+            setErrorLevel("warning");
+          }
+        });
 
       console.log(`Username: ${username} Password: ${password}`);
     } else {
@@ -64,8 +92,6 @@ const Login = () => {
     setIsError(false);
   }, [username, password]);
 
-  const { clientId, setIsLoggedIn, setCurrentUser, setIsSuccess } =
-    useContext(LoginContext);
   const loginGoogle = (response) => {
     setIsLoggedIn(true);
     setCurrentUser({
@@ -134,6 +160,7 @@ const Login = () => {
                   margin="none"
                   fullWidth
                   required
+                  autoFocus
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   ref={input}
@@ -161,7 +188,7 @@ const Login = () => {
                   size="large"
                   type="submit"
                   sx={{ marginTop: ".3rem", borderRadius: 0, width: "100%" }}
-                  onClick={login}
+                  onClick={handleLogin}
                 >
                   Login
                 </Button>
@@ -214,7 +241,7 @@ const Login = () => {
                     </Box>
                   )}
                   onSuccess={loginGoogle}
-                  onFailure={() => console.log("Gmail login failed.")}
+                  onFailure={() => console.log("Google login failed.")}
                   cookiePolicy={"single_host_origin"}
                   isSignedIn={true}
                 />

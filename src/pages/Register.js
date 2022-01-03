@@ -11,6 +11,7 @@ import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Button from "@mui/material/Button";
+import { Link } from "react-router-dom";
 
 const Register = () => {
   const [username, setUserName] = useState("");
@@ -23,20 +24,42 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("Register");
   const [errorLevel, setErrorLevel] = useState("info");
 
-  const handleRegistration = (e) => {
+  const handleRegistration = async (e) => {
     e.preventDefault();
     const registrationInfo = {
       username: username,
       fullName: fullName,
       password: "",
     };
+
     if (username && password && fullName && repeatPassword !== (null || ""))
       if (password === repeatPassword && password && repeatPassword !== "") {
         registrationInfo.password = password;
-        setUserName("");
-        setFullName("");
-        setPassword("");
-        setRepeatPassword("");
+        fetch("http://localhost:3500/api/seekers/register", {
+          method: "POST",
+          body: JSON.stringify({
+            name: registrationInfo.fullName,
+            username: registrationInfo.username,
+            password: registrationInfo.password,
+          }),
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => {
+            return res.json();
+          })
+          .then((data) => {
+            console.log(data);
+            setUserName("");
+            setFullName("");
+            setPassword("");
+            setRepeatPassword("");
+
+            setErrorMessage("Successfully registered!");
+            setErrorLevel("success");
+          })
+          .catch((err) => console.log(err));
       } else {
         setErrorMessage("Password does not match.");
         setErrorLevel("warning");
@@ -47,6 +70,7 @@ const Register = () => {
       setErrorLevel("warning");
     }
   };
+
   useEffect(() => {
     if (username && fullName && password && repeatPassword !== "") {
       setIsRegReady(true);
@@ -174,6 +198,15 @@ const Register = () => {
               </CardActions>
             </Card>
           </form>
+          <Typography
+            variant="body1"
+            color="initial"
+            align="center"
+            sx={{ textDecoration: "none", py: 3, fontSize: 14 }}
+          >
+            If you already have an account. You can proceed to{" "}
+            <Link to="/login">Login</Link>
+          </Typography>
         </Box>
       </Container>
     </Slide>

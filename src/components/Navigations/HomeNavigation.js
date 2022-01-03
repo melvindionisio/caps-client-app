@@ -76,23 +76,11 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
   const {
     clientId,
     isLoggedIn,
-    setIsLoggedIn,
     currentUser,
-    setCurrentUser,
     isSuccess,
     setIsSuccess,
+    handleLogout,
   } = useContext(LoginContext);
-
-  const googleLogout = () => {
-    setIsLoggedIn(false);
-    setCurrentUser({
-      googleId: null,
-      email: null,
-      name: null,
-      picture: null,
-    });
-    console.log(isLoggedIn);
-  };
 
   const handleClose = () => {
     setIsSuccess(false);
@@ -122,7 +110,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                   outline: "1px solid rgba(25, 118, 210, 0.5)",
                   outlineOffset: "2px",
                 }}
-                src={currentUser.picture}
+                src={currentUser.picture ?? null}
               />
             </IconButton>
           </Hidden>
@@ -241,7 +229,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                           border: "3px solid",
                           borderColor: "background.default",
                         }}
-                        src={currentUser.picture}
+                        src={currentUser.picture ?? null}
                       />
                     </Box>
                     <CardHeader
@@ -269,7 +257,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                           }}
                           align="center"
                         >
-                          {currentUser.email ?? "email"}
+                          {currentUser.email ?? currentUser.username}
                         </Typography>
                       }
                     />
@@ -309,7 +297,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
 
               <GoogleLogout
                 clientId={clientId}
-                onLogoutSuccess={googleLogout}
+                onLogoutSuccess={handleLogout}
                 render={(renderProps) => (
                   <ListItem
                   // disablePadding
@@ -339,9 +327,23 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
           ) : (
             <>
               <Divider />
-              <ListItem sx={{ dislay: "flex", justifyContent: "center" }}>
-                <Button onClick={() => history.push("/login")}>Login</Button> or{" "}
-                <Button onClick={() => history.push("/register")}>
+              <ListItem
+                sx={{ dislay: "flex", justifyContent: "center", gap: 1 }}
+              >
+                <Button
+                  onClick={() => history.push("/login")}
+                  sx={{ width: "100%" }}
+                  variant="contained"
+                  disableElevation
+                >
+                  Login
+                </Button>
+                <Button
+                  onClick={() => history.push("/register")}
+                  sx={{ width: "100%" }}
+                  variant="contained"
+                  disableElevation
+                >
                   Register
                 </Button>
               </ListItem>
@@ -371,7 +373,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
       <Hidden mdDown>
         <Snackbar
           open={isSuccess}
-          autoHideDuration={2000}
+          autoHideDuration={1000}
           onClose={handleClose}
           message="Login Successfuly!"
           anchorOrigin={{ vertical, horizontal }}

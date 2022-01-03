@@ -35,7 +35,7 @@ export default function AccountMenu({ currentUser }) {
     setAnchorEl(null);
   };
 
-  const { clientId, isLoggedIn, handleGoogleLogin, handleGoogleLogout } =
+  const { clientId, isLoggedIn, handleGoogleLogin, handleLogout } =
     useContext(LoginContext);
 
   return (
@@ -106,7 +106,7 @@ export default function AccountMenu({ currentUser }) {
             <Divider />
             <GoogleLogout
               clientId={clientId}
-              onLogoutSuccess={handleGoogleLogout}
+              onLogoutSuccess={handleLogout}
               render={(renderProps) => (
                 <MenuItem
                   onClick={renderProps.onClick}

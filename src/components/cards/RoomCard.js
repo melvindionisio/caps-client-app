@@ -23,18 +23,19 @@ const RoomCard = ({ room }) => {
       // variant="outlined"
       // elevation={2}
       sx={{
-        // ":hover": {
-        //   // boxShadow: "0px 5px 10px rgba(0,0,0,0.3)",
-        //   // transform: " scale(1.01)",
-        // },
-        // ":active": {
-        //   transform: " scale(.99)",
-        // },
-        transition: "150ms ease",
         overflow: "hidden",
         borderRadius: 1,
         padding: 0,
         height: 170,
+
+        transition: "150ms ease",
+        "&:hover": {
+          transform: "scale(1.02)",
+          // outline: `3px solid ${amber[600]}`,
+        },
+        "&:active": {
+          transform: "scale(.98)",
+        },
       }}
     >
       <Box sx={{ display: "flex", height: "inherit" }}>
@@ -92,27 +93,27 @@ const RoomCard = ({ room }) => {
           >
             {/* {isLiked ? (
               <IconButton
-                size="medium"
-                sx={{
-                  background: grey[100],
-                  color: amber[500],
-                }}
-                onClick={() => setIsLiked(!isLiked)}
+              size="medium"
+              sx={{
+                background: grey[100],
+                color: amber[500],
+              }}
+              onClick={() => setIsLiked(!isLiked)}
               >
-                <ThumbUpIcon fontSize="small" />
-              </IconButton>
-            ) : (
-              <IconButton
-                size="medium"
-                sx={{
+              <ThumbUpIcon fontSize="small" />
+                </IconButton>
+                ) : (
+                  <IconButton
+                  size="medium"
+                  sx={{
                   background: grey[100],
                   color: grey[500],
                 }}
                 onClick={() => setIsLiked(!isLiked)}
-              >
+                >
                 <ThumbUpOffAltIcon fontSize="small" />
-              </IconButton>
-            )} */}
+                </IconButton>
+              )} */}
 
             {isBookmarked ? (
               <IconButton

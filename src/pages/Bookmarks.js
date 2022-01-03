@@ -1,10 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
+import Box from "@mui/material/Box";
 
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
-import useFetch from "../hooks/useFetch";
 import { LoginContext } from "../contexts/LoginContext";
 import LoadingState from "../components/LoadingState";
 import BookmarkCard from "../components/cards/BookmarkCard";
@@ -12,18 +12,69 @@ import BookmarkCard from "../components/cards/BookmarkCard";
 const Bookmarks = () => {
   const { currentUser } = useContext(LoginContext);
 
-  const {
-    data: bookmarks,
-    isPending,
-    error,
-  } = useFetch(`http://localhost:3500/api/bookmarks/${currentUser.googleId}`);
+  const [bookmarks, setBookmarks] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState("");
+
+  const [isEmpty, setIsEmpty] = useState(false);
+
+  useEffect(() => {
+    const abortCont = new AbortController();
+
+    setTimeout(() => {
+      fetch(`http://localhost:3500/api/bookmarks/seeker/${currentUser.id}`, {
+        signal: abortCont.signal,
+      })
+        .then((res) => {
+          if (!res.ok) {
+            setError("Something went wrong!");
+            throw Error("Something went wrong!");
+          }
+          return res.json();
+        })
+        .then((data) => {
+          setBookmarks(data);
+          setIsPending(false);
+          if (data.length <= 0) {
+            setIsEmpty(true);
+          }
+        })
+        .catch((err) => {
+          if (err.name === "AbortError") {
+            console.log("fetch aborted");
+          } else {
+            console.log("ready");
+          }
+        });
+    }, 0);
+    return () => {
+      abortCont.abort();
+    };
+  });
+
+  const handleDeleteBookmark = async (bookmarkId) => {
+    setBookmarks(() =>
+      bookmarks.filter((bookmark) => bookmark.id !== bookmarkId)
+    );
+    fetch(`http://localhost:3500/api/bookmarks/delete/${bookmarkId}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data.message);
+        // window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <Slide in={true} direction="left">
       <Container maxWidth="lg" disableGutters>
         <ReusableNavigation center={true}>
           <Typography variant="body1" align="center">
-            Bookmarks Page
+            Bookmarks
           </Typography>
         </ReusableNavigation>
         <Container disableGutters maxWidth="md" sx={{ padding: 2 }}>
@@ -33,19 +84,26 @@ const Bookmarks = () => {
             </Typography>
           )}
           {isPending && <LoadingState loadWhat={"Bookmarks"} />}
-          {bookmarks ? (
-            bookmarks.map((bookmark) => (
-              <Typography variant="body1" color="initial">
-                a bookmark
-              </Typography>
-            ))
-          ) : (
-            <Typography variant="body1" color="initial" align="center">
-              Bookmarks is empty.
+          <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
+            {bookmarks &&
+              bookmarks.map((bookmark) => (
+                <BookmarkCard
+                  key={bookmark.id}
+                  bookmark={bookmark}
+                  handleDeleteBookmark={handleDeleteBookmark}
+                />
+              ))}
+          </Box>
+          {isEmpty && (
+            <Typography
+              variant="body2"
+              color="text.secondary"
+              align="center"
+              sx={{ mt: 4 }}
+            >
+              Bookmark is empty!
             </Typography>
           )}
-
-          <BookmarkCard />
         </Container>
       </Container>
     </Slide>

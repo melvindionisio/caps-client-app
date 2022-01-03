@@ -15,13 +15,15 @@ function LoginContextProvider(props) {
   const clientId =
     "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
 
-  const handleGoogleLogout = () => {
+  const handleLogout = () => {
     setIsLoggedIn(false);
     setCurrentUser({
       googleId: null,
-      email: null,
+      facebookId: null,
       name: null,
+      email: null,
       picture: null,
+      username: null,
     });
     console.log(isLoggedIn);
   };
@@ -37,6 +39,47 @@ function LoginContextProvider(props) {
     console.log(response);
     setIsSuccess(true);
   };
+
+  // const handleLogin = (e) => {
+  //   e.preventDefault();
+  //   // validate first
+  //   if (username !== "" && password !== "") {
+  //     fetch("http://localhost:3500/api/seekers/login", {
+  //       method: "POST",
+  //       body: JSON.stringify({
+  //         username: username,
+  //         password: password,
+  //       }),
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //     })
+  //       .then((res) => {
+  //         return res.json();
+  //       })
+  //       .then((data) => {
+  //         if (data.status === "success") {
+  //           setMessage(data.message);
+  //           setErrorLevel("success");
+  //           history.push("/");
+  //         } else if (data.status === "incorrect") {
+  //           setMessage(data.message);
+  //           setErrorLevel("warning");
+  //         } else {
+  //           setMessage(data.message);
+  //           setErrorLevel("warning");
+  //         }
+  //       });
+
+  //     console.log(`Username: ${username} Password: ${password}`);
+  //   } else {
+  //     setMessage("Please complete all fields.");
+  //     setIsError(true);
+  //     setErrorLevel("warning");
+  //     input.current.lastElementChild.firstElementChild.focus();
+  //   }
+  // };
+
   const value = {
     clientId,
     isLoggedIn,
@@ -46,7 +89,7 @@ function LoginContextProvider(props) {
     isSuccess,
     setIsSuccess,
     handleGoogleLogin,
-    handleGoogleLogout,
+    handleLogout,
   };
 
   return (

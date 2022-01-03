@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
-import { lightBlue } from "@mui/material/colors";
 import Button from "@mui/material/Button";
 
 import ReviewCard from "../cards/ReviewCard";
@@ -9,6 +8,10 @@ import TextField from "@mui/material/TextField";
 
 const Reviews = () => {
   const [review, setReview] = useState();
+  const handleAddReview = () => {
+    console.log("Review Added");
+  };
+
   return (
     <Container
       maxWidth="md"
@@ -26,7 +29,7 @@ const Reviews = () => {
           display: "flex",
           flexDirection: "column",
           gap: 1,
-          height: "53vh",
+          height: "50vh",
           overflowY: "auto",
           padding: "1rem 5px",
           borderRadius: 1,
@@ -65,7 +68,7 @@ const Reviews = () => {
             value={review}
             onChange={(e) => setReview(e.target.value)}
           />
-          <Button size="small" variant="contained">
+          <Button size="small" variant="contained" onClick={handleAddReview}>
             Send
           </Button>
         </Box>

@@ -125,7 +125,9 @@ const Search = () => {
               aria-label="sort"
               color="primary"
             >
-              <ToggleButton disabled>Sort:</ToggleButton>
+              <ToggleButton disabled value="disabled">
+                Sort:
+              </ToggleButton>
               <ToggleButton value="name" aria-label="sort by name">
                 Name
               </ToggleButton>

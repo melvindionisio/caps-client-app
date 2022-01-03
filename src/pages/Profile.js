@@ -22,7 +22,7 @@ const Profile = () => {
       <Container maxWidth="lg" disableGutters>
         <ReusableNavigation>
           <Typography variant="body1" align="center">
-            Profile Page
+            Profile
           </Typography>
         </ReusableNavigation>
         <Box sx={{ p: 2 }}>
@@ -69,7 +69,7 @@ const Profile = () => {
                   border: "3px solid",
                   borderColor: "background.default",
                 }}
-                src={currentUser.picture}
+                src={currentUser.picture ?? "none"}
               />
             </Box>
             <CardHeader
@@ -97,7 +97,7 @@ const Profile = () => {
                   }}
                   align="center"
                 >
-                  {currentUser.email ?? "email"}
+                  {currentUser.email ?? currentUser.username}
                 </Typography>
               }
             />

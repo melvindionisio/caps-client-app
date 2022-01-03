@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Card,
   CardHeader,
@@ -19,49 +19,50 @@ import { Link as Nlink } from "@mui/material";
 import { grey, pink } from "@mui/material/colors";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+import { LoginContext } from "../../contexts/LoginContext";
+import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
 
 const BoardingHouseCard = ({ boardinghouse }) => {
+  const { currentUser } = useContext(LoginContext);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const time = useCurrentTimeDate();
 
-  const handleAddBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    // const abortCont = new AbortController();
-    // if (isBookmarked) {
-    //   fetch(`http://localhost:3500/api/bookmarks/add${seekerId}`, {
-    //     signal: abortCont.signal,
-    //   })
-    //     .then((res) => {
-    //       if (!res.ok) {
-    //         throw Error("Something went wrong!");
-    //       }
-    //       return res.json();
-    //     })
-    //     .then((boardinghouse) => {
-    //       setIsBookmarked(true);
-    //     })
-    //     .catch((err) => {
-    //       if (err.name === "AbortError") {
-    //         console.log("fetch aborted");
-    //       } else {
-    //         console.log(err);
-    //         setIsBookmarked(false);
-    //       }
-    //     });
-    //   return () => {
-    //     abortCont.abort();
-    //   };
-    // } else {
-    //
-    // }
+  const handleAddBookmark = (boardinghouseId, boardinghouseName) => {
+    fetch(`http://localhost:3500/api/bookmarks/add/${currentUser.id}`, {
+      method: "POST",
+      body: JSON.stringify({
+        bookmarkDate: time,
+        roomId: null,
+        boardinghouseId: boardinghouseId,
+        // bookmarkType: "boardinghouse",
+        // bookmarkName: boardinghouseName
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data.message);
+        setIsBookmarked(true);
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     // <Grid item lg={6} md={4} sm={6} xs={12}>
     <Card
-    // variant="outlined"
-    // sx={{
-    //   background: `linear-gradient(to bottom right, ${lightBlue[400]}, ${blue[500]})`,
-    // }}
+      sx={{
+        transition: "150ms ease",
+        "&:hover": {
+          transform: "scale(1.01)",
+        },
+        "&:active": {
+          transform: "scale(.98)",
+        },
+      }}
     >
       <CardHeader
         sx={{
@@ -158,7 +159,9 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                     color: grey[500],
                   }
             }
-            onClick={handleAddBookmark}
+            onClick={() =>
+              handleAddBookmark(boardinghouse.id, boardinghouse.name)
+            }
           >
             {isBookmarked ? (
               <BookmarkAddedIcon fontSize="small" />
