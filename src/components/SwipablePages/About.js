@@ -256,7 +256,7 @@ const About = ({ boardinghouse }) => {
           >
             {boardinghouse.name}'s Location
           </Typography>
-          <MiniMap bhId={boardinghouse.id} />
+          <MiniMap ownerId={boardinghouse.ownerId} />
         </Box>
       </Container>
     </Box>

@@ -3,6 +3,8 @@ import { Delete } from "@mui/icons-material";
 import { pink, lightBlue } from "@mui/material/colors";
 import React from "react";
 import { useHistory } from "react-router-dom";
+import HouseIcon from "@mui/icons-material/House";
+import BedroomParentIcon from "@mui/icons-material/BedroomParent";
 
 const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
   const history = useHistory();
@@ -25,6 +27,25 @@ const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
           }}
         >
           <CardHeader
+            avatar={
+              bookmark.type === "room" ? (
+                <BedroomParentIcon
+                  color="primary"
+                  fontSize="large"
+                  onClick={() =>
+                    visitBookmark(bookmark.boardinghouseId || bookmark.roomId)
+                  }
+                />
+              ) : (
+                <HouseIcon
+                  fontSize="large"
+                  color="primary"
+                  onClick={() =>
+                    visitBookmark(bookmark.boardinghouseId || bookmark.roomId)
+                  }
+                />
+              )
+            }
             action={
               <IconButton
                 aria-label="delete-bookmark"
@@ -47,7 +68,7 @@ const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
                   visitBookmark(bookmark.boardinghouseId || bookmark.roomId)
                 }
               >
-                {bookmark.boardinghouseId}
+                {bookmark.name}
               </Typography>
             }
             subheader={
@@ -80,7 +101,7 @@ const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
                     visitBookmark(bookmark.boardinghouseId || bookmark.roomId)
                   }
                 >
-                  Boarding House
+                  {bookmark.type}
                 </Typography>
               </>
             }

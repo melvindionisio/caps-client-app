@@ -34,8 +34,8 @@ const BoardingHouseCard = ({ boardinghouse }) => {
         bookmarkDate: time,
         roomId: null,
         boardinghouseId: boardinghouseId,
-        // bookmarkType: "boardinghouse",
-        // bookmarkName: boardinghouseName
+        bookmarkType: "boardinghouse",
+        bookmarkName: boardinghouseName,
       }),
       headers: {
         "Content-Type": "application/json",

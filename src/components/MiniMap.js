@@ -7,7 +7,7 @@ import MarkerLogo from "../marker-logo.png";
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
 
-const MiniMap = ({ bhId }) => {
+const MiniMap = ({ ownerId }) => {
   const controls = new mapboxgl.NavigationControl();
   const mapContainer = useRef(null);
   const map = useRef(null);
@@ -36,7 +36,7 @@ const MiniMap = ({ bhId }) => {
 
     const abortCont = new AbortController();
     fetch(
-      `http://localhost:3500/api/boarding-houses/owner-map/map-marks/${bhId}`,
+      `http://localhost:3500/api/boarding-houses/owner-map/map-marks/${ownerId}`,
       {
         signal: abortCont.signal,
       }

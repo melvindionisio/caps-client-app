@@ -18,18 +18,12 @@ import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
-import { makeStyles } from "@mui/styles";
 import { amber } from "@mui/material/colors";
 import { LoginContext } from "../contexts/LoginContext";
 import { useContext } from "react";
 import { useHistory } from "react-router";
 
-const useStyles = makeStyles({
-  textfield: {},
-});
-
 const Login = () => {
-  const classes = useStyles();
   const { clientId, setIsLoggedIn, setCurrentUser, setIsSuccess } =
     useContext(LoginContext);
 
@@ -62,8 +56,6 @@ const Login = () => {
         .then((data) => {
           if (data.status === "success") {
             history.push("/");
-            console.log(data);
-
             setIsLoggedIn(true);
             setCurrentUser({
               id: data.seeker_id,
@@ -152,7 +144,6 @@ const Login = () => {
                   label="Username"
                   variant="filled"
                   size="medium"
-                  className={classes.textfield}
                   // helperText="No username exist!"
                   color="primary"
                   error={isError}
@@ -172,7 +163,6 @@ const Login = () => {
                   type="password"
                   variant="filled"
                   size="medium"
-                  className={classes.textfield}
                   color="primary"
                   error={isError}
                   margin="dense"
