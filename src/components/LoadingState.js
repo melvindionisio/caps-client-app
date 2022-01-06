@@ -1,5 +1,5 @@
 import React from "react";
-import LinearProgress from "@mui/material/LinearProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useEffect, useState } from "react";
 import Typography from "@mui/material/Typography";
@@ -31,7 +31,7 @@ const LoadingState = ({ loadWhat }) => {
         flexDirection: "column",
       }}
     >
-      <LinearProgress
+      <CircularProgress
         // variant="indeterminate"
         size="2.5rem"
         color={loadingColor}
