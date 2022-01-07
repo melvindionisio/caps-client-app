@@ -3,6 +3,7 @@ import { Typography, Container } from "@mui/material";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState } from "react";
 import MarkerLogo from "../marker-logo.png";
+import { domain } from "../fetch-url/fetchUrl";
 
 mapboxgl.accessToken =
   "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
@@ -35,12 +36,9 @@ const MiniMap = ({ ownerId }) => {
     });
 
     const abortCont = new AbortController();
-    fetch(
-      `http://localhost:3500/api/boarding-houses/owner-map/map-marks/${ownerId}`,
-      {
-        signal: abortCont.signal,
-      }
-    )
+    fetch(`${domain}/api/boarding-houses/owner-map/map-marks/${ownerId}`, {
+      signal: abortCont.signal,
+    })
       .then((res) => {
         if (!res.ok) {
           throw Error("Something went wrong!");

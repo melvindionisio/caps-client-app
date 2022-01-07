@@ -8,6 +8,7 @@ import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import { LoginContext } from "../contexts/LoginContext";
 import LoadingState from "../components/LoadingState";
 import BookmarkCard from "../components/cards/BookmarkCard";
+import { domain } from "../fetch-url/fetchUrl";
 
 const Bookmarks = () => {
   const { currentUser } = useContext(LoginContext);
@@ -22,7 +23,7 @@ const Bookmarks = () => {
     const abortCont = new AbortController();
 
     setTimeout(() => {
-      fetch(`http://localhost:3500/api/bookmarks/seeker/${currentUser.id}`, {
+      fetch(`${domain}/api/bookmarks/seeker/${currentUser.id}`, {
         signal: abortCont.signal,
       })
         .then((res) => {
@@ -56,7 +57,7 @@ const Bookmarks = () => {
     setBookmarks(() =>
       bookmarks.filter((bookmark) => bookmark.id !== bookmarkId)
     );
-    fetch(`http://localhost:3500/api/bookmarks/delete/${bookmarkId}`, {
+    fetch(`${domain}/api/bookmarks/delete/${bookmarkId}`, {
       method: "DELETE",
     })
       .then((res) => {

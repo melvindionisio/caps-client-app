@@ -22,6 +22,7 @@ import { amber } from "@mui/material/colors";
 import { LoginContext } from "../contexts/LoginContext";
 import { useContext } from "react";
 import { useHistory } from "react-router";
+import { domain } from "../fetch-url/fetchUrl";
 
 const Login = () => {
   const { clientId, setIsLoggedIn, setCurrentUser, setIsSuccess } =
@@ -40,7 +41,7 @@ const Login = () => {
 
     // validate first
     if (username !== "" && password !== "") {
-      fetch("http://localhost:3500/api/seekers/login", {
+      fetch(`${domain}/api/seekers/login`, {
         method: "POST",
         body: JSON.stringify({
           username: username,

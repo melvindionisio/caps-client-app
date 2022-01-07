@@ -1,19 +1,20 @@
 import React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
-import RoomCard from "../cards/RoomCard";
 import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import LoadingState from "../../components/LoadingState";
 import Masonry from "@mui/lab/Masonry";
+import SimpleRoomCard from "../../components/cards/SimpleRoomCard";
+import { domain } from "../../fetch-url/fetchUrl";
 
-const Rooms = () => {
+const Rooms = ({ bhName }) => {
   const { bhId } = useParams();
   const {
     data: rooms,
     isPending,
     error,
-  } = useFetch(`http://localhost:3500/api/rooms/all/${bhId}`);
+  } = useFetch(`${domain}/api/rooms/all/${bhId}`);
 
   return (
     <Container
@@ -33,8 +34,11 @@ const Rooms = () => {
       )}
       {isPending && <LoadingState loadWhat="rooms" />}
 
-      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={1}>
-        {rooms && rooms.map((room) => <RoomCard key={room.id} room={rooms} />)}
+      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>
+        {rooms &&
+          rooms.map((room) => (
+            <SimpleRoomCard key={room.id} room={room} bhName={bhName} />
+          ))}
       </Masonry>
     </Container>
   );

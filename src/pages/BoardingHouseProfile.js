@@ -24,6 +24,12 @@ import { useTheme } from "@mui/styles";
 import About from "../components/SwipablePages/About";
 import MyRooms from "../components/SwipablePages/MyRooms";
 import Reviews from "../components/SwipablePages/Reviews";
+import { domain } from "../fetch-url/fetchUrl";
+
+import InfoIcon from "@mui/icons-material/Info";
+import BedroomChildIcon from "@mui/icons-material/BedroomChild";
+import ReviewsIcon from "@mui/icons-material/Reviews";
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
   return (
@@ -60,7 +66,7 @@ const BoardingHouseProfile = () => {
     data: boardinghouse,
     isPending,
     error,
-  } = useFetch(`http://localhost:3500/api/boarding-houses/${bhId}`);
+  } = useFetch(`${domain}/api/boarding-houses/${bhId}`);
 
   const theme = useTheme();
   const [value, setValue] = useState(0);
@@ -95,13 +101,13 @@ const BoardingHouseProfile = () => {
           TransitionComponent={Zoom}
           enterDelay={1000}
         >
-          <Tab label="ABOUT" {...a11yProps(0)} />
+          <Tab icon={<InfoIcon />} {...a11yProps(0)} />
         </Tooltip>
         <Tooltip title="Rooms" TransitionComponent={Zoom} enterDelay={1000}>
-          <Tab label="ROOMS" {...a11yProps(1)} />
+          <Tab icon={<BedroomChildIcon />} {...a11yProps(1)} />
         </Tooltip>
         <Tooltip title="Reviews" TransitionComponent={Zoom} enterDelay={1000}>
-          <Tab label="Reviews" {...a11yProps(1)} />
+          <Tab icon={<ReviewsIcon />} {...a11yProps(2)} />
         </Tooltip>
       </Tabs>
     );
@@ -164,7 +170,7 @@ const BoardingHouseProfile = () => {
               </TabPanel>
               <TabPanel value={value} index={1} dir={theme.direction}>
                 <Box sx={{ minHeight: "100vh", paddingBottom: "5rem" }}>
-                  <MyRooms />
+                  <MyRooms bhName={boardinghouse.name} />
                 </Box>
               </TabPanel>
 

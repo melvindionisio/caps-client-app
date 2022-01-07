@@ -63,6 +63,9 @@ const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
                   fontSize: 16,
                   fontFamily: "Quicksand",
                   cursor: "pointer",
+                  "&:hover": {
+                    textDecoration: "underline",
+                  },
                 }}
                 onClick={() =>
                   visitBookmark(bookmark.boardinghouseId || bookmark.roomId)
