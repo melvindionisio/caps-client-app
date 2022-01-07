@@ -48,6 +48,7 @@ const Bookmarks = () => {
           }
         });
     }, 0);
+
     return () => {
       abortCont.abort();
     };

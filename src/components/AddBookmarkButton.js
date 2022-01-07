@@ -24,8 +24,8 @@ const AddBookmarkButton = ({
       method: "POST",
       body: JSON.stringify({
         bookmarkDate: dateTime,
-        roomId: roomId,
-        boardinghouseId: boardinghouseId,
+        roomId: roomId ?? null,
+        boardinghouseId: boardinghouseId ?? null,
         bookmarkType: bookmarkType,
         bookmarkName: boardinghouseName ?? roomName,
       }),
@@ -46,6 +46,20 @@ const AddBookmarkButton = ({
   const handleRemoveBookmark = () => {
     console.log(`${roomId} Bookmark removed!`);
     setIsBookmarked(false);
+    const bookmarkId = 0;
+
+    // WORK HERE BUKAS
+    fetch(`${domain}/api/bookmarks/delete/${bookmarkId}`, {
+      method: "DELETE",
+    })
+      .then((res) => {
+        return res.json();
+      })
+      .then((data) => {
+        console.log(data.message);
+        // window.location.reload(false);
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <>
