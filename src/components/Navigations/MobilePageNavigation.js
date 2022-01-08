@@ -14,111 +14,113 @@ import { useHistory, useLocation } from "react-router-dom";
 import { makeStyles } from "@mui/styles";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    position: "fixed",
-    bottom: 0,
-    left: 0,
-    zIndex: 100,
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
-  },
-  bottomNavigation: {
-    boxShadow: "0px 0px 0px 1px rgba(0,0,0,.1)",
-    width: 270,
-    borderRadius: ".5rem .5rem 0rem 0rem",
-    overflow: "hidden",
-  },
-  bottomNavigationAction: {},
+   root: {
+      position: "fixed",
+      bottom: 0,
+      left: 0,
+      zIndex: 100,
+      width: "100%",
+      display: "flex",
+      justifyContent: "center",
+   },
+   bottomNavigation: {
+      boxShadow: "0px 0px 0px 1px rgba(0,0,0,.1)",
+      width: 270,
+      borderRadius: ".5rem .5rem 0rem 0rem",
+      overflow: "hidden",
+   },
+   bottomNavigationAction: {},
 }));
 
 export default function MobilePageNavigation() {
-  const classes = useStyles();
-  const history = useHistory();
-  const location = useLocation();
-  const [value, setValue] = useState("home");
+   const classes = useStyles();
+   const history = useHistory();
+   const location = useLocation();
+   const [value, setValue] = useState("home");
 
-  const navItems = [
-    {
-      label: "Map",
-      value: "map",
-      icons: {
-        inactive: <LocationOnOutlinedIcon fontSize="medium" />,
-        active: <LocationOnIcon />,
+   const navItems = [
+      {
+         label: "Map",
+         value: "map",
+         icons: {
+            inactive: <LocationOnOutlinedIcon fontSize="medium" />,
+            active: <LocationOnIcon />,
+         },
+         path: "/map",
+         index: 0,
       },
-      path: "/map",
-      index: 0,
-    },
-    {
-      label: "Home",
-      value: "home",
-      icons: {
-        inactive: <HomeOutlinedIcon fontSize="medium" />,
-        active: <HomeIcon />,
+      {
+         label: "Home",
+         value: "home",
+         icons: {
+            inactive: <HomeOutlinedIcon fontSize="medium" />,
+            active: <HomeIcon />,
+         },
+         path: "/home",
+         index: 1,
       },
-      path: "/home",
-      index: 1,
-    },
-    {
-      label: "Help",
-      value: "help",
-      icons: {
-        inactive: <HelpOutlineIcon fontSize="medium" />,
-        active: <HelpOutlinedIcon />,
+      {
+         label: "Help",
+         value: "help",
+         icons: {
+            inactive: <HelpOutlineIcon fontSize="medium" />,
+            active: <HelpOutlinedIcon />,
+         },
+         path: "/help",
+         index: 2,
       },
-      path: "/help",
-      index: 2,
-    },
-  ];
+   ];
 
-  // const paths = Array.from(navItems.map((item) => item.path));
+   // const paths = Array.from(navItems.map((item) => item.path));
 
-  const tabChange = (event, newValue) => {
-    if (location.pathname !== newValue) {
-      setValue(newValue);
-    } else {
-      setValue(null);
-    }
-  };
-
-  return (
-    <Box
-      className={classes.root}
-      sx={
-        location.pathname === "/search" ||
-        location.pathname === "/register" ||
-        location.pathname === "/login" ||
-        location.pathname === "/profile" ||
-        location.pathname === "/bookmarks"
-          ? { display: "none" }
-          : { display: "flex" }
+   const tabChange = (event, newValue) => {
+      if (location.pathname !== newValue) {
+         setValue(newValue);
+      } else {
+         setValue(null);
       }
-    >
-      <BottomNavigation
-        // showLabels
-        value={value}
-        onChange={tabChange}
-        className={classes.bottomNavigation}
-        sx={{
-          height: "4rem",
-        }}
+   };
+
+   return (
+      <Box
+         className={classes.root}
+         sx={
+            location.pathname === "/search" ||
+            location.pathname === "/register" ||
+            location.pathname === "/login" ||
+            location.pathname === "/profile" ||
+            location.pathname === "/bookmarks"
+               ? { display: "none" }
+               : { display: "flex" }
+         }
       >
-        {navItems.map((item) => (
-          <BottomNavigationAction
-            style={{ fontFamily: "Quicksand" }}
-            key={item.index}
-            label={item.label.toUpperCase()}
-            value={item.value}
-            icon={
-              value === item.value ? item.icons.active : item.icons.inactive
-            }
-            onClick={() => {
-              history.push(item.path);
+         <BottomNavigation
+            // showLabels
+            value={value}
+            onChange={tabChange}
+            className={classes.bottomNavigation}
+            sx={{
+               height: "4rem",
             }}
-            className={classes.bottomNavigationAction}
-          />
-        ))}
-      </BottomNavigation>
-    </Box>
-  );
+         >
+            {navItems.map((item) => (
+               <BottomNavigationAction
+                  style={{ fontFamily: "Quicksand" }}
+                  key={item.index}
+                  label={item.label.toUpperCase()}
+                  value={item.value}
+                  icon={
+                     value === item.value
+                        ? item.icons.active
+                        : item.icons.inactive
+                  }
+                  onClick={() => {
+                     history.push(item.path);
+                  }}
+                  className={classes.bottomNavigationAction}
+               />
+            ))}
+         </BottomNavigation>
+      </Box>
+   );
 }

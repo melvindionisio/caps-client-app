@@ -8,33 +8,33 @@ import { Box } from "@mui/material";
 import { domain } from "../../fetch-url/fetchUrl";
 
 const BoardingHouseLists = () => {
-  const {
-    data: boardinghouses,
-    isPending,
-    error,
-  } = useFetch(`${domain}/api/boarding-houses`);
+   const {
+      data: boardinghouses,
+      isPending,
+      error,
+   } = useFetch(`${domain}/api/boarding-houses`);
 
-  return (
-    <Box sx={{ width: "100%" }}>
-      {/* <Grid container spacing={1}> */}
-      {error && (
-        <Typography variant="body1" color="initial" align="center">
-          {error}
-        </Typography>
-      )}
-      {isPending && <LoadingState loadWhat="Boarding Houses" />}
-      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>
-        {boardinghouses &&
-          boardinghouses.map((boardinghouse) => (
-            <BoardingHouseCard
-              key={boardinghouse.id}
-              boardinghouse={boardinghouse}
-            />
-          ))}
-      </Masonry>
-      {/* </Grid> */}
-    </Box>
-  );
+   return (
+      <Box sx={{ width: "100%" }}>
+         {/* <Grid container spacing={1}> */}
+         {error && (
+            <Typography variant="body1" color="initial" align="center">
+               {error}
+            </Typography>
+         )}
+         {isPending && <LoadingState loadWhat="Boarding Houses" />}
+         <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>
+            {boardinghouses &&
+               boardinghouses.map((boardinghouse) => (
+                  <BoardingHouseCard
+                     key={boardinghouse.id}
+                     boardinghouse={boardinghouse}
+                  />
+               ))}
+         </Masonry>
+         {/* </Grid> */}
+      </Box>
+   );
 };
 
 export default BoardingHouseLists;

@@ -9,25 +9,27 @@ import { Box } from "@mui/material";
 import { domain } from "../../fetch-url/fetchUrl";
 
 const RoomLists = () => {
-  const { data: rooms, isPending, error } = useFetch(`${domain}/api/rooms`);
+   const { data: rooms, isPending, error } = useFetch(`${domain}/api/rooms`);
 
-  return (
-    <Box sx={{ width: "100%" }}>
-      {/* // <Grid container spacing={1}> */}
-      {error && (
-        <Typography variant="caption" align="center">
-          Error. {error}
-        </Typography>
-      )}
-      {isPending && <LoadingState loadWhat="boardinghouses" />}
+   return (
+      <Box sx={{ width: "100%" }}>
+         {/* // <Grid container spacing={1}> */}
+         {error && (
+            <Typography variant="caption" align="center">
+               Error. {error}
+            </Typography>
+         )}
+         {isPending && <LoadingState loadWhat="boardinghouses" />}
 
-      <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>
-        {rooms &&
-          rooms.map((room) => <SimpleRoomCard key={room.id} room={room} />)}
-      </Masonry>
-      {/* </Grid> */}
-    </Box>
-  );
+         <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>
+            {rooms &&
+               rooms.map((room) => (
+                  <SimpleRoomCard key={room.id} room={room} />
+               ))}
+         </Masonry>
+         {/* </Grid> */}
+      </Box>
+   );
 };
 
 export default RoomLists;
