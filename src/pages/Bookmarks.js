@@ -88,13 +88,15 @@ const Bookmarks = () => {
                {isPending && <LoadingState loadWhat={"Bookmarks"} />}
                <Box sx={{ display: "flex", flexDirection: "column", gap: 1 }}>
                   {bookmarks &&
-                     bookmarks.map((bookmark) => (
-                        <BookmarkCard
-                           key={bookmark.id}
-                           bookmark={bookmark}
-                           handleDeleteBookmark={handleDeleteBookmark}
-                        />
-                     ))}
+                     bookmarks
+                        .map((bookmark) => (
+                           <BookmarkCard
+                              key={bookmark.id}
+                              bookmark={bookmark}
+                              handleDeleteBookmark={handleDeleteBookmark}
+                           />
+                        ))
+                        .reverse()}
                </Box>
                {isEmpty && (
                   <Typography

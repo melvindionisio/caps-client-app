@@ -21,6 +21,7 @@ import Search from "./pages/Search";
 import Profile from "./pages/Profile";
 import Bookmarks from "./pages/Bookmarks";
 import BoardingHouseProfile from "./pages/BoardingHouseProfile";
+import RoomProfile from "./pages/RoomProfile";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
@@ -163,6 +164,9 @@ const App = () => {
                      </Route>
                      <Route path="/boardinghouse/:bhId">
                         <BoardingHouseProfile />
+                     </Route>
+                     <Route path="/rooms/:roomId">
+                        <RoomProfile />
                      </Route>
                      <Route path="*">
                         <Container maxWidth="sm">

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
 import {
    Card,
    CardHeader,
@@ -6,7 +6,6 @@ import {
    CardActions,
    Typography,
    Button,
-   IconButton,
    Box,
 } from "@mui/material";
 import CallMadeOutlinedIcon from "@mui/icons-material/CallMadeOutlined";
@@ -16,41 +15,10 @@ import GradeIcon from "@mui/icons-material/Grade";
 import { amber } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 import { Link as Nlink } from "@mui/material";
-import { grey, pink } from "@mui/material/colors";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
-import { LoginContext } from "../../contexts/LoginContext";
-import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
-import { domain } from "../../fetch-url/fetchUrl";
+import AddBookmarkButton from "../../components/AddBookmarkButton";
 
 const BoardingHouseCard = ({ boardinghouse }) => {
-   const { currentUser } = useContext(LoginContext);
    const [isBookmarked, setIsBookmarked] = useState(false);
-   const time = useCurrentTimeDate();
-
-   const handleAddBookmark = (boardinghouseId, boardinghouseName) => {
-      fetch(`${domain}/api/bookmarks/add/${currentUser.id}`, {
-         method: "POST",
-         body: JSON.stringify({
-            bookmarkDate: time,
-            roomId: null,
-            boardinghouseId: boardinghouseId,
-            bookmarkType: "boardinghouse",
-            bookmarkName: boardinghouseName,
-         }),
-         headers: {
-            "Content-Type": "application/json",
-         },
-      })
-         .then((res) => {
-            return res.json();
-         })
-         .then((data) => {
-            console.log(data.message);
-            setIsBookmarked(true);
-         })
-         .catch((err) => console.log(err));
-   };
 
    return (
       // <Grid item lg={6} md={4} sm={6} xs={12}>
@@ -63,6 +31,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
             "&:active": {
                transform: "scale(.98)",
             },
+            borderRadius: 2,
          }}
       >
          <CardHeader
@@ -70,9 +39,23 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                paddingBottom: 0,
             }}
             title={
-               <Typography variant="h6" sx={{ fontFamily: "Quicksand" }}>
-                  {boardinghouse.name}
-               </Typography>
+               <Link
+                  to={`/boardinghouse/${boardinghouse.id}`}
+                  style={{ textDecoration: "none", width: "100%" }}
+               >
+                  <Typography
+                     variant="h6"
+                     sx={{
+                        fontFamily: "Quicksand",
+                        color: "#2C2C2C",
+                        "&:hover": {
+                           textDecoration: "underline",
+                        },
+                     }}
+                  >
+                     {boardinghouse.name}
+                  </Typography>
+               </Link>
             }
             subheader={
                <Box sx={{ display: "flex", alignItems: "center" }}>
@@ -83,31 +66,13 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                </Box>
             }
             action={
-               <IconButton
-                  size="medium"
-                  sx={
-                     isBookmarked
-                        ? {
-                             background: grey[100],
-                             ml: 1,
-                             color: pink[500],
-                          }
-                        : {
-                             background: grey[100],
-                             ml: 1,
-                             color: grey[500],
-                          }
-                  }
-                  onClick={() =>
-                     handleAddBookmark(boardinghouse.id, boardinghouse.name)
-                  }
-               >
-                  {isBookmarked ? (
-                     <BookmarkAddedIcon fontSize="small" />
-                  ) : (
-                     <BookmarkAddIcon fontSize="small" />
-                  )}
-               </IconButton>
+               <AddBookmarkButton
+                  boardinghouseId={boardinghouse.id}
+                  boardinghouseName={boardinghouse.name}
+                  bookmarkType={"boardinghouse"}
+                  isBookmarked={isBookmarked}
+                  setIsBookmarked={setIsBookmarked}
+               />
             }
          />
          <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>

@@ -24,6 +24,7 @@ const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
             <Card
                sx={{
                   transition: "150ms ease",
+                  borderRadius: 2,
                   "&:hover": {
                      transform: "scale(1.01)",
                   },

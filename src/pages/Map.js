@@ -89,7 +89,6 @@ const Map = () => {
             return res.json();
          })
          .then((data) => {
-            console.log(data);
             data.features.forEach(function (marker) {
                const el = document.createElement("div");
                el.innerHTML = `<img src="${MarkerLogo}"/>`;

@@ -21,6 +21,10 @@ import PersonPinIcon from "@mui/icons-material/PersonPin";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { Link as Nlink } from "@mui/material";
 import MiniMap from "../MiniMap";
+//import {useEffect, useContext} from "react"
+//import useFetch from "../../hooks/useFetch";
+//import { LoginContext } from "../../contexts/LoginContext";
+//import { domain } from "../../fetch-url/fetchUrl";
 
 const useStyles = makeStyles({
    avatar: {
@@ -94,11 +98,44 @@ const About = ({ boardinghouse }) => {
    const classes = useStyles();
    const [starred, setStarred] = useState(false);
    const [stars, setStars] = useState(null);
+   //  const { currentUser } = useContext(LoginContext);
+
+   /*const { data: isStarred, error } = useFetch(
+      `${domain}/api/${boardinghouse.id}/${currentUser.id}`
+   );
+
+   useEffect(() => {
+      if (isStarred.isStarred === true) {
+         setStarred(true);
+      } else {
+         setStarred(false);
+      }
+   }, [isStarred]);
+   */
 
    const addStar = () => {
       setStarred(!starred);
       setStars(boardinghouse && boardinghouse.popularity);
       if (!starred) setStars(boardinghouse.popularity + 1);
+
+      /*
+      fetch(`${domain}/api/add/${boardinghouse.id}/${currentUser.id}`, {
+         method: "POST",
+         body: JSON.stringify({
+            seekerName: currentUser.name,
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            console.log(data.message);
+         })
+         .catch((err) => console.log(err));
+         */
    };
 
    return (
@@ -238,7 +275,12 @@ const About = ({ boardinghouse }) => {
 
             <DetailsCard title="House Protocols">Do's and Dont's</DetailsCard>
             <DetailsCard title="We Offer">Offers</DetailsCard>
-            <DetailsCard title="Gender/s Allowed">Allowed genders</DetailsCard>
+            <DetailsCard title="Gender/s Allowed">
+               <InfoItem
+                  icon={<LocationOnIcon />}
+                  primaryText={boardinghouse.genderAllowed}
+               />
+            </DetailsCard>
             <DetailsCard title="Water source">Bombahan</DetailsCard>
             <DetailsCard title="Price Range">Price</DetailsCard>
             <DetailsCard title="Total Rooms">n Rooms</DetailsCard>
