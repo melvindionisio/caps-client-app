@@ -71,8 +71,6 @@ const Login = () => {
                   setErrorLevel("warning");
                }
             });
-
-         console.log(`Username: ${username} Password: ${password}`);
       } else {
          setMessage("Please complete all fields.");
          setIsError(true);

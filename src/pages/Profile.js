@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
@@ -10,6 +10,7 @@ import { blue, lightBlue, cyan } from "@mui/material/colors";
 import { useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 import EditIcon from "@mui/icons-material/Edit";
+import { domain } from "../fetch-url/fetchUrl";
 
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import {
@@ -18,10 +19,11 @@ import {
    CardActions,
    TextField,
    CardContent,
+   Alert,
 } from "@mui/material";
 
 const Profile = () => {
-   const { currentUser } = useContext(LoginContext);
+   const { currentUser, setCurrentUser } = useContext(LoginContext);
    const [passwordEditable, setPasswordEditable] = useState(!false);
    const [profileEditable, setProfileEditable] = useState(!false);
 
@@ -32,13 +34,87 @@ const Profile = () => {
    const [newPassword, setNewPassword] = useState("");
    const [repeatPassword, setRepeatPassword] = useState("");
 
+   const [profileMessage, setProfileMessage] = useState("");
+   const [profileErrorLevel, setProfileErrorLevel] = useState("warning");
+   const [isProfileErrorShow, setIsProfileErrorShow] = useState(false);
+
+   const [passwordMessage, setPasswordMessage] = useState("");
+   const [passwordErrorLevel, setPasswordErrorLevel] = useState("warning");
+   const [isPasswordErrorShow, setIsPasswordErrorShow] = useState(false);
+
    const handleUpdateProfile = () => {
-      console.log("Update Profile");
+      fetch(`${domain}/api/seekers/update-seeker-profile/${currentUser.id}`, {
+         method: "PUT",
+         body: JSON.stringify({
+            name: name,
+            username: username,
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setProfileMessage(data.message);
+            setProfileErrorLevel("success");
+            setIsProfileErrorShow(true);
+            console.log(data.message);
+            setCurrentUser({
+               id: currentUser.id,
+               name: name,
+               username: username,
+            });
+            setProfileEditable(!profileEditable);
+         })
+         .catch((err) => {
+            setProfileMessage(err);
+            setProfileErrorLevel("warning");
+            setIsProfileErrorShow(true);
+            console.log(err);
+         });
    };
 
    const handleChangePassword = () => {
-      console.log("Change password");
+      fetch(`${domain}/api/seekers/update-seeker-password/${currentUser.id}`, {
+         method: "POST",
+         body: JSON.stringify({
+            currentPassword: currentPassword,
+            newPassword: newPassword,
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setPasswordMessage(data.message);
+            setPasswordErrorLevel("success");
+            setIsPasswordErrorShow(true);
+            console.log(data.message);
+            setPasswordEditable(!passwordEditable);
+         })
+         .catch((err) => {
+            setPasswordMessage(err);
+            setPasswordErrorLevel("warning");
+            setIsPasswordErrorShow(true);
+            console.log(err);
+         });
    };
+
+   useEffect(() => {
+      setTimeout(() => {
+         if (isProfileErrorShow) {
+            setIsProfileErrorShow(false);
+         }
+         if (isPasswordErrorShow) {
+            setIsPasswordErrorShow(false);
+         }
+      }, 3000);
+   }, [isProfileErrorShow, isPasswordErrorShow]);
 
    return (
       <Slide in={true} direction="left">
@@ -183,6 +259,16 @@ const Profile = () => {
                            Update Profile
                         </Button>
                      </CardActions>
+                     <Alert
+                        sx={
+                           isProfileErrorShow
+                              ? { display: "flex" }
+                              : { display: "none" }
+                        }
+                        severity={profileErrorLevel}
+                     >
+                        {profileMessage}
+                     </Alert>
                   </Card>
                   <Card
                      sx={{
@@ -264,6 +350,16 @@ const Profile = () => {
                            Change Password
                         </Button>
                      </CardActions>
+                     <Alert
+                        sx={
+                           isPasswordErrorShow
+                              ? { display: "flex" }
+                              : { display: "none" }
+                        }
+                        severity={passwordErrorLevel}
+                     >
+                        {passwordMessage}
+                     </Alert>
                   </Card>
                </Box>
             </Box>
