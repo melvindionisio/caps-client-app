@@ -20,12 +20,20 @@ import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
 import { Box } from "@mui/system";
 import { useHistory } from "react-router-dom";
 import CheckOutlined from "@mui/icons-material/CheckOutlined";
+import { domain } from "../fetch-url/fetchUrl";
+import BoardingHouseCard from "../components/cards/BoardingHouseCard";
+import LoadingState from "../components/LoadingState";
 
 const Search = () => {
    const history = useHistory();
    const search = useRef(null);
    const [filterOpen, setFilterOpen] = useState(false);
    const [sort, setSort] = useState("name");
+   const [query, setQuery] = useState("");
+   const [isPending, setIsPending] = useState(false);
+   const [queryResult, setQueryResult] = useState([]);
+   const [resultSize, setResultSize] = useState(0);
+   const [error, setError] = useState("");
 
    const filterToggle = () => {
       setFilterOpen(!filterOpen);
@@ -35,9 +43,42 @@ const Search = () => {
       setSort(newSort);
    };
 
-   // useEffect(() => {
-   //   search.current.firstElementChild.firstElementChild.focus();
-   // }, []);
+   let timer;
+   const valueGetter = () => {
+      clearTimeout(timer);
+      setIsPending(true);
+      setError(null);
+      timer = setTimeout(() => {
+         console.log(query);
+         setIsPending(true);
+         fetch(`${domain}/api/boarding-houses/search`, {
+            method: "POST",
+            body: JSON.stringify({
+               query: query,
+            }),
+            headers: {
+               "Content-Type": "application/json",
+            },
+         })
+            .then((res) => {
+               return res.json();
+            })
+            .then((data) => {
+               setIsPending(false);
+               setQueryResult(data);
+               setResultSize(data.length);
+               if (data.length <= 0) {
+                  setError("No result.");
+                  setResultSize(data.length);
+               }
+            })
+            .catch((err) => {
+               console.log(err);
+               setError(err);
+               setIsPending(false);
+            });
+      }, 2000);
+   };
 
    return (
       <Container
@@ -96,6 +137,12 @@ const Search = () => {
                         placeholder="Search"
                         color="secondary"
                         size="small"
+                        value={query}
+                        onChange={(e) => setQuery(e.target.value)}
+                        onKeyUp={valueGetter}
+                        onKeyDown={() => {
+                           clearTimeout(timer);
+                        }}
                         sx={{ width: "70%", maxWidth: "50rem" }}
                         disabled={filterOpen}
                         autoFocus
@@ -150,13 +197,39 @@ const Search = () => {
                   </ToggleButtonGroup>
                </Box>
                <Card variant="outlined" sx={{ minHeight: "80vh" }}>
-                  <CardContent>
-                     <Typography
-                        variant="subtitle1"
-                        sx={{ marginBottom: ".5rem" }}
-                     >
-                        Results here
+                  <CardContent
+                     sx={{ display: "flex", flexDirection: "column", gap: 2 }}
+                  >
+                     <Typography sx={{ fontStyle: "italic" }} variant="body1">
+                        Search result of {resultSize}
                      </Typography>
+                     {error && (
+                        <Typography variant="body1" align="center">
+                           {error}
+                        </Typography>
+                     )}
+
+                     {isPending ? (
+                        <LoadingState />
+                     ) : (
+                        <>
+                           {queryResult &&
+                              queryResult.map((boardinghouse) => (
+                                 <div
+                                    style={{
+                                       margin: "0 auto",
+                                       maxWidth: "30rem",
+                                       minWidth: "29rem",
+                                    }}
+                                    key={boardinghouse.id}
+                                 >
+                                    <BoardingHouseCard
+                                       boardinghouse={boardinghouse}
+                                    />
+                                 </div>
+                              ))}
+                        </>
+                     )}
                   </CardContent>
                </Card>
             </Box>

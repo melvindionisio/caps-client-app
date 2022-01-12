@@ -9,7 +9,7 @@ const useFetch = (url) => {
 
    useEffect(() => {
       const abortCont = new AbortController();
-
+      console.log("Fetched.");
       setTimeout(() => {
          fetch(url, { signal: abortCont.signal })
             .then((res) => {

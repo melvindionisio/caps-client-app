@@ -22,6 +22,7 @@ const Bookmarks = () => {
    useEffect(() => {
       const abortCont = new AbortController();
 
+      console.log("useeffect fired");
       setTimeout(() => {
          fetch(`${domain}/api/bookmarks/seeker/${currentUser.id}`, {
             signal: abortCont.signal,
@@ -52,7 +53,7 @@ const Bookmarks = () => {
       return () => {
          abortCont.abort();
       };
-   });
+   }, [currentUser]);
 
    const handleDeleteBookmark = async (bookmarkId) => {
       setBookmarks(() =>

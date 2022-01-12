@@ -6,12 +6,12 @@ import Slide from "@mui/material/Slide";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
 import Box from "@mui/system/Box";
-import Button from "@mui/material/Button";
 import IconButton from "@mui/material/IconButton";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardHeader from "@mui/material/CardHeader";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
@@ -33,45 +33,52 @@ const Login = () => {
    const [message, setMessage] = useState("Login with your account.");
    const [isError, setIsError] = useState(false);
    const [errorLevel, setErrorLevel] = useState("info");
+   const [isPending, setIsPending] = useState(false);
    const input = useRef(null);
    const history = useHistory();
 
    const handleLogin = (e) => {
       e.preventDefault();
-
+      setIsPending(true);
       // validate first
       if (username !== "" && password !== "") {
-         fetch(`${domain}/api/seekers/login`, {
-            method: "POST",
-            body: JSON.stringify({
-               username: username,
-               password: password,
-            }),
-            headers: {
-               "Content-Type": "application/json",
-            },
-         })
-            .then((res) => {
-               return res.json();
+         setTimeout(() => {
+            fetch(`${domain}/api/seekers/login`, {
+               method: "POST",
+               body: JSON.stringify({
+                  username: username,
+                  password: password,
+               }),
+               headers: {
+                  "Content-Type": "application/json",
+               },
             })
-            .then((data) => {
-               if (data.status === "success") {
-                  history.push("/");
-                  setIsLoggedIn(true);
-                  setCurrentUser({
-                     id: data.seeker_id,
-                     name: data.seeker_name,
-                     username: data.seeker_username,
-                  });
-               } else if (data.status === "incorrect") {
-                  setMessage(data.message);
-                  setErrorLevel("warning");
-               } else {
-                  setMessage(data.message);
-                  setErrorLevel("warning");
-               }
-            });
+               .then((res) => {
+                  return res.json();
+               })
+               .then((data) => {
+                  if (data.status === "success") {
+                     setIsPending(false);
+                     history.push("/");
+                     setIsLoggedIn(true);
+                     setCurrentUser({
+                        id: data.seeker_id,
+                        name: data.seeker_name,
+                        username: data.seeker_username,
+                     });
+                  } else if (data.status === "incorrect") {
+                     setIsPending(false);
+                     setMessage(data.message);
+                     setErrorLevel("warning");
+                  } else {
+                     setIsPending(false);
+                     setMessage(data.message);
+                     setErrorLevel("warning");
+                  }
+               });
+         }, 2000);
       } else {
+         setIsPending(false);
          setMessage("Please complete all fields.");
          setIsError(true);
          setErrorLevel("warning");
@@ -172,8 +179,10 @@ const Login = () => {
                         />
                      </CardContent>
                      <CardActions sx={{ padding: 0 }}>
-                        <Button
+                        <LoadingButton
                            variant="contained"
+                           loading={isPending}
+                           loadingIndicator="Logging in..."
                            size="large"
                            type="submit"
                            sx={{
@@ -184,7 +193,7 @@ const Login = () => {
                            onClick={handleLogin}
                         >
                            Login
-                        </Button>
+                        </LoadingButton>
                      </CardActions>
                   </Card>
                   <Typography

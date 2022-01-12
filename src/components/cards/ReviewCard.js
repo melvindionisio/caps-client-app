@@ -1,32 +1,43 @@
-import { Paper, Avatar, Typography, Box, IconButton } from "@mui/material";
-import { red, lightBlue } from "@mui/material/colors";
+import { Paper, Avatar, Typography, Box, Button } from "@mui/material";
+import { red, lightBlue, green } from "@mui/material/colors";
 import React from "react";
 import { Delete } from "@mui/icons-material";
 
-const ReviewCard = ({ isMyReview }) => {
+const ReviewCard = ({ review, isCurrentUserReview, handleDeleteReview }) => {
    return (
       <Box
          sx={
-            isMyReview
-               ? { display: "flex", justifyContent: "start" }
-               : { display: "flex", justifyContent: "end" }
+            isCurrentUserReview
+               ? { display: "flex", justifyContent: "end" }
+               : {
+                    display: "flex",
+                    justifyContent: "start",
+                 }
          }
       >
          <Paper
-            elevation={isMyReview ? 1 : 0}
+            elevation={1}
             sx={
-               isMyReview
+               isCurrentUserReview
                   ? {
                        padding: 2,
-                       border: `1px solid ${lightBlue[500]}`,
-                       borderRadius: "1.5rem 1.5rem 1.5rem 0rem",
-                       width: 270,
+                       borderRight: `3px solid ${green[500]}`,
+                       borderRadius: "1rem 1rem 0rem 1rem",
+                       width: "90%",
+                       transition: "150ms ease",
+                       "&:hover": {
+                          transform: "scale(1.01)",
+                       },
                     }
                   : {
                        padding: 2,
-                       // border: `1px solid ${purple[500]}`,
-                       borderRadius: "1.5rem 0rem 1.5rem 1.5rem",
-                       width: 270,
+                       borderLeft: `3px solid ${lightBlue[500]}`,
+                       borderRadius: "0rem 1rem 1rem 1rem",
+                       width: "90%",
+                       transition: "150ms ease",
+                       "&:hover": {
+                          transform: "scale(1.01)",
+                       },
                     }
             }
          >
@@ -39,33 +50,69 @@ const ReviewCard = ({ isMyReview }) => {
                      paddingBottom: 1,
                   }}
                >
-                  <Typography variant="body1" color="initial">
-                     Reviewee's name
-                  </Typography>
+                  {isCurrentUserReview ? (
+                     <Typography
+                        variant="body1"
+                        color="initial"
+                        sx={{ fontSize: 14 }}
+                     >
+                        Me{" "}
+                        <Typography
+                           variant="caption"
+                           sx={{ fontWeight: "thin" }}
+                        >
+                           ({review.reviewerName})
+                        </Typography>
+                     </Typography>
+                  ) : (
+                     <Typography
+                        variant="body1"
+                        color="initial"
+                        sx={{ fontSize: 14 }}
+                     >
+                        {review.reviewerName}
+                     </Typography>
+                  )}
 
                   <Typography
                      variant="caption"
                      color="text.secondary"
-                     sx={{ textTransform: "uppercase", fontStyle: "italic" }}
+                     sx={{
+                        textTransform: "uppercase",
+                        fontSize: 10,
+                     }}
                   >
                      Review Date
                   </Typography>
                </Box>
-               {isMyReview && (
-                  <IconButton
+               {isCurrentUserReview && (
+                  <Button
+                     size="small"
+                     onClick={() => handleDeleteReview(review.id)}
+                     variant="contained"
+                     disableElevation
                      sx={{
                         position: "absolute",
                         top: 1,
                         right: 1,
+                        background: red[50],
+                        color: red[500],
+                        "&:hover": {
+                           background: red[100],
+                        },
                      }}
+                     startIcon={
+                        <Delete fontSize="small" sx={{ color: red[400] }} />
+                     }
                   >
-                     <Delete sx={{ color: red[400] }} />
-                  </IconButton>
+                     delete
+                  </Button>
                )}
             </Box>
-            <Typography variant="body1" color="initial">
-               The condtent of the actual review and comments
+            <Typography variant="body1" color="initial" sx={{ px: 5 }}>
+               {review.text}
             </Typography>
+            {review.last}
          </Paper>
       </Box>
    );

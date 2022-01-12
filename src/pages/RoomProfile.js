@@ -14,6 +14,8 @@ import {
    CardMedia,
    Card,
    CardHeader,
+   Grid,
+   Box,
 } from "@mui/material";
 import { lightBlue, green } from "@mui/material/colors";
 import AddBookmarkButton from "../components/AddBookmarkButton";
@@ -71,74 +73,119 @@ const RoomProfile = (props) => {
                      </Typography>
                      <AddBookmarkButton />
                   </ReusableNavigation>
-
-                  <Card sx={{ borderRadius: 0, position: "relative" }}>
-                     <CardMedia
-                        component="img"
-                        height="200"
-                        alt="room-image"
-                        image="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2057&q=80"
-                     />
-                     <CardHeader
-                        sx={{
-                           background: "#fff",
-                           borderRadius: 10,
-                           padding: 1,
-                           px: 3,
-                           boxShadow: "2px 2px 8px rgba(0,0,0,0.4)",
-                        }}
-                        style={{
-                           position: "absolute",
-                           bottom: 10,
-                           left: 15,
-                        }}
-                        title={
-                           <Typography
-                              variant="h6"
-                              sx={{
-                                 textTransform: "uppercase",
-                                 fontFamily: "Quicksand",
-                              }}
-                           >
-                              {room.name}
-                           </Typography>
-                        }
-                     />
-                  </Card>
-                  <Container
-                     maxWidth="sm"
-                     disableGutters
+                  <Box
                      sx={{
-                        padding: 2,
+                        height: "100vh",
+                        overflowY: "auto",
                         paddingBottom: "5rem",
                      }}
                   >
-                     <Typography
-                        variant="body1"
+                     <Card sx={{ borderRadius: 0, position: "relative" }}>
+                        <CardMedia
+                           component="img"
+                           height="200"
+                           alt="room-image"
+                           image="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2057&q=80"
+                        />
+                        <CardHeader
+                           sx={{
+                              background: "#fff",
+                              borderRadius: 10,
+                              padding: 1,
+                              px: 3,
+                              boxShadow: "2px 2px 8px rgba(0,0,0,0.4)",
+                           }}
+                           style={{
+                              position: "absolute",
+                              bottom: 10,
+                              left: 15,
+                           }}
+                           title={
+                              <Typography
+                                 variant="h6"
+                                 sx={{
+                                    textTransform: "uppercase",
+                                    fontFamily: "Quicksand",
+                                 }}
+                              >
+                                 {room.name}
+                              </Typography>
+                           }
+                        />
+                     </Card>
+                     <Container
+                        maxWidth="sm"
+                        disableGutters
                         sx={{
-                           marginBottom: 1,
+                           padding: 2,
+                           paddingBottom: "8rem",
                         }}
                      >
-                        STATUS:{" "}
                         <Typography
-                           variant="caption"
+                           variant="body1"
                            sx={{
-                              color: green[500],
-                              fontWeight: "bold",
-                              fontSize: 16,
-                              textTransform: "uppercase",
+                              marginBottom: 1,
                            }}
                         >
-                           Available
+                           STATUS:{" "}
+                           <Typography
+                              variant="caption"
+                              sx={{
+                                 color: green[500],
+                                 fontWeight: "bold",
+                                 fontSize: 16,
+                                 textTransform: "uppercase",
+                              }}
+                           >
+                              Available
+                           </Typography>
                         </Typography>
-                     </Typography>
-                     <DetailsCard title="Room Type">
-                        <InfoItem primaryText={room.type} />
-                     </DetailsCard>
-                     <DetailsCard title="Gender Allowed">
-                        <InfoItem primaryText={room.genderAllowed} />
-                     </DetailsCard>
-                  </Container>
+                        <Grid container spacing={1}>
+                           <Grid item xs={4}>
+                              <DetailsCard title="Beds" colors="blue">
+                                 <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                    align="center"
+                                    sx={{ fontSize: 45, fontWeight: "bold" }}
+                                 >
+                                    {room.totalSlots}
+                                 </Typography>
+                              </DetailsCard>
+                           </Grid>
+                           <Grid item xs={4}>
+                              <DetailsCard title="Occupied">
+                                 <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                    align="center"
+                                    sx={{ fontSize: 45, fontWeight: "bold" }}
+                                 >
+                                    {room.occupiedSlots}
+                                 </Typography>
+                              </DetailsCard>
+                           </Grid>
+                           <Grid item xs={4}>
+                              <DetailsCard title="Available" colors="green">
+                                 <Typography
+                                    variant="body1"
+                                    color="text.secondary"
+                                    align="center"
+                                    sx={{ fontSize: 45, fontWeight: "bold" }}
+                                 >
+                                    {room.totalSlots - room.occupiedSlots}
+                                 </Typography>
+                              </DetailsCard>
+                           </Grid>
+                        </Grid>
+                        <DetailsCard title="Room Type">
+                           <InfoItem primaryText={room.type} />
+                        </DetailsCard>
+                        <DetailsCard title="Gender Allowed">
+                           <InfoItem primaryText={room.genderAllowed} />
+                        </DetailsCard>
+                     </Container>
+                  </Box>
                </>
             )}
          </Container>

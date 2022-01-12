@@ -77,32 +77,43 @@ const Profile = () => {
    };
 
    const handleChangePassword = () => {
-      fetch(`${domain}/api/seekers/update-seeker-password/${currentUser.id}`, {
-         method: "POST",
-         body: JSON.stringify({
-            currentPassword: currentPassword,
-            newPassword: newPassword,
-         }),
-         headers: {
-            "Content-Type": "application/json",
-         },
-      })
-         .then((res) => {
-            return res.json();
-         })
-         .then((data) => {
-            setPasswordMessage(data.message);
-            setPasswordErrorLevel("success");
-            setIsPasswordErrorShow(true);
-            console.log(data.message);
-            setPasswordEditable(!passwordEditable);
-         })
-         .catch((err) => {
-            setPasswordMessage(err);
-            setPasswordErrorLevel("warning");
-            setIsPasswordErrorShow(true);
-            console.log(err);
-         });
+      if (newPassword === repeatPassword) {
+         fetch(
+            `${domain}/api/seekers/update-seeker-password/auth/${currentUser.id}`,
+            {
+               method: "POST",
+               body: JSON.stringify({
+                  currentPassword: currentPassword,
+                  newPassword: newPassword,
+               }),
+               headers: {
+                  "Content-Type": "application/json",
+               },
+            }
+         )
+            .then((res) => {
+               return res.json();
+            })
+            .then((data) => {
+               setPasswordMessage(data.message);
+               setPasswordErrorLevel("success");
+               setIsPasswordErrorShow(true);
+               console.log(data.message);
+               setCurrentPassword("");
+               setNewPassword("");
+               setRepeatPassword("");
+               setPasswordEditable(!passwordEditable);
+            })
+            .catch((err) => {
+               setPasswordMessage(err);
+               setPasswordErrorLevel("warning");
+               setIsPasswordErrorShow(true);
+               console.log(err);
+            });
+      } else {
+         setPasswordMessage("Password does not match!");
+         setPasswordErrorLevel("warning");
+      }
    };
 
    useEffect(() => {
@@ -276,6 +287,7 @@ const Profile = () => {
                         margin: "0 auto",
                         marginTop: 2,
                         borderRadius: 2,
+                        marginBottom: 4,
                      }}
                      elevation={0}
                   >

@@ -1,8 +1,15 @@
 import React from "react";
 import { Paper, Typography, List } from "@mui/material";
-import { yellow, orange } from "@mui/material/colors";
+import {
+   yellow,
+   orange,
+   lime,
+   green,
+   blue,
+   lightBlue,
+} from "@mui/material/colors";
 
-const DetailsCard = ({ title, children }) => {
+const DetailsCard = ({ title, children, colors }) => {
    return (
       <Paper
          elevation={0}
@@ -24,7 +31,19 @@ const DetailsCard = ({ title, children }) => {
                textTransform: "uppercase",
                fontFamily: "Quicksand",
                fontSize: 12,
-               background: `linear-gradient(to bottom right, ${yellow[400]}, ${orange[500]})`,
+               background: `linear-gradient(to bottom right, ${
+                  colors === "green"
+                     ? lime[500]
+                     : colors === "blue"
+                     ? lightBlue[300]
+                     : yellow[400]
+               }, ${
+                  colors === "green"
+                     ? green[500]
+                     : colors === "blue"
+                     ? blue[500]
+                     : orange[500]
+               })`,
                padding: ".2rem .4rem",
                borderRadius: 1,
                fontWeight: "bold",

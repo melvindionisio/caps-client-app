@@ -10,9 +10,9 @@ import CardContent from "@mui/material/CardContent";
 import CardActions from "@mui/material/CardActions";
 import TextField from "@mui/material/TextField";
 import Alert from "@mui/material/Alert";
-import Button from "@mui/material/Button";
 import { Link } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
+import LoadingButton from "@mui/lab/LoadingButton";
 
 const Register = () => {
    const [username, setUserName] = useState("");
@@ -25,7 +25,9 @@ const Register = () => {
    const [errorMessage, setErrorMessage] = useState("Register");
    const [errorLevel, setErrorLevel] = useState("info");
 
+   const [isPending, setIsPending] = useState(false);
    const handleRegistration = async (e) => {
+      setIsPending(true);
       e.preventDefault();
       const registrationInfo = {
          username: username,
@@ -36,40 +38,47 @@ const Register = () => {
       if (username && password && fullName && repeatPassword !== (null || ""))
          if (password === repeatPassword && password && repeatPassword !== "") {
             registrationInfo.password = password;
-
-            fetch(`${domain}/api/seekers/register`, {
-               method: "POST",
-               body: JSON.stringify({
-                  name: registrationInfo.fullName,
-                  username: registrationInfo.username,
-                  password: registrationInfo.password,
-               }),
-               headers: {
-                  "Content-Type": "application/json",
-               },
-            })
-               .then((res) => {
-                  return res.json();
+            setTimeout(() => {
+               fetch(`${domain}/api/seekers/register`, {
+                  method: "POST",
+                  body: JSON.stringify({
+                     name: registrationInfo.fullName,
+                     username: registrationInfo.username,
+                     password: registrationInfo.password,
+                  }),
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
                })
-               .then((data) => {
-                  console.log(data);
-                  setUserName("");
-                  setFullName("");
-                  setPassword("");
-                  setRepeatPassword("");
+                  .then((res) => {
+                     return res.json();
+                  })
+                  .then((data) => {
+                     console.log(data);
+                     setUserName("");
+                     setFullName("");
+                     setPassword("");
+                     setRepeatPassword("");
 
-                  setErrorMessage("Successfully registered!");
-                  setErrorLevel("success");
-               })
-               .catch((err) => console.log(err));
+                     setErrorMessage("Successfully registered!");
+                     setErrorLevel("success");
+                     setIsPending(false);
+                  })
+                  .catch((err) => {
+                     console.log(err);
+                     setIsPending(false);
+                  });
+            }, 2000);
          } else {
             setErrorMessage("Password does not match.");
             setErrorLevel("warning");
             setIsPasswordError(true);
+            setIsPending(false);
          }
       else {
          setErrorMessage("Please complete all fields");
          setErrorLevel("warning");
+         setIsPending(false);
       }
    };
 
@@ -187,8 +196,9 @@ const Register = () => {
                         />
                      </CardContent>
                      <CardActions sx={{ padding: 0 }}>
-                        <Button
+                        <LoadingButton
                            variant="contained"
+                           loading={isPending}
                            size="large"
                            disabled={!isRegReady}
                            type="submit"
@@ -200,7 +210,7 @@ const Register = () => {
                            onClick={handleRegistration}
                         >
                            Register Now!
-                        </Button>
+                        </LoadingButton>
                      </CardActions>
                   </Card>
                </form>

@@ -70,9 +70,6 @@ const useStyles = makeStyles({
       display: "grid",
       placeItems: "center",
    },
-   loader: {
-      // placeSelf: "center",
-   },
 });
 
 const InfoItem = ({ icon, primaryText, secondaryText }) => {
