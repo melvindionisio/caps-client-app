@@ -32,7 +32,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Logout from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { blue, cyan, lightBlue } from "@mui/material/colors";
+import { blue, cyan, lightBlue, red } from "@mui/material/colors";
 import { GoogleLogout } from "react-google-login";
 import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
@@ -209,7 +209,7 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                </ListItem>
                <Divider />
 
-               {isLoggedIn ? (
+               {isLoggedIn.isLoggedIn ? (
                   <>
                      <ListItem>
                         <Card
@@ -308,34 +308,70 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                         </ListItemButton>
                      </ListItem>
 
-                     <GoogleLogout
-                        clientId={clientId}
-                        onLogoutSuccess={handleLogout}
-                        render={(renderProps) => (
-                           <ListItem
-                           // disablePadding
-                           // button
+                     {isLoggedIn.loginType === "google-login" ? (
+                        <GoogleLogout
+                           clientId={clientId}
+                           onLogoutSuccess={handleLogout}
+                           render={(renderProps) => (
+                              <ListItem>
+                                 <Button
+                                    variant="contained"
+                                    startIcon={<Logout />}
+                                    color="warning"
+                                    size="large"
+                                    fullWidth
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
+                                 >
+                                    Logout Google
+                                 </Button>
+                                 {/* </ListItemButton> */}
+                              </ListItem>
+                           )}
+                        ></GoogleLogout>
+                     ) : isLoggedIn.loginType === "normal" ? (
+                        <ListItem>
+                           <Button
+                              variant="contained"
+                              startIcon={<Logout />}
+                              color="warning"
+                              sx={{
+                                 transition: "350ms ease",
+                                 background: red[500],
+                                 "&:hover": {
+                                    background: red[600],
+                                 },
+                              }}
+                              size="large"
+                              fullWidth
+                              onClick={handleLogout}
                            >
-                              {/* <ListItemButton > */}
-                              {/* <ListItemIcon>
-                        <Logout />
-                      </ListItemIcon>
-                      <ListItemText primary={"LOGOUT"} /> */}
-                              <Button
-                                 variant="contained"
-                                 startIcon={<Logout />}
-                                 color="warning"
-                                 size="large"
-                                 fullWidth
-                                 onClick={renderProps.onClick}
-                                 disabled={renderProps.disabled}
-                              >
-                                 Logout
-                              </Button>
-                              {/* </ListItemButton> */}
-                           </ListItem>
-                        )}
-                     ></GoogleLogout>
+                              Logout
+                           </Button>
+                        </ListItem>
+                     ) : isLoggedIn.loginType === "facebook-login" ? (
+                        <ListItem>
+                           <Button
+                              variant="contained"
+                              startIcon={<Logout />}
+                              color="warning"
+                              sx={{
+                                 transition: "350ms ease",
+                                 background: red[500],
+                                 "&:hover": {
+                                    background: red[600],
+                                 },
+                              }}
+                              size="large"
+                              fullWidth
+                              onClick={handleLogout}
+                           >
+                              Logout Facebook
+                           </Button>
+                        </ListItem>
+                     ) : (
+                        ""
+                     )}
                   </>
                ) : (
                   <>

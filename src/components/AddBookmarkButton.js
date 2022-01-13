@@ -44,23 +44,42 @@ const AddBookmarkButton = ({
    };
 
    const handleRemoveBookmark = () => {
-      console.log(`${roomId} Bookmark removed!`);
       setIsBookmarked(false);
-      const bookmarkId = 0;
 
       // WORK HERE BUKAS
-      fetch(`${domain}/api/bookmarks/delete/${bookmarkId}`, {
-         method: "DELETE",
-      })
-         .then((res) => {
-            return res.json();
+      if (bookmarkType === "room") {
+         fetch(`${domain}/api/bookmarks/delete/room/${roomId}`, {
+            method: "DELETE",
          })
-         .then((data) => {
-            console.log(data.message);
-            // window.location.reload(false);
-         })
-         .catch((err) => console.log(err));
+            .then((res) => {
+               return res.json();
+            })
+            .then((data) => {
+               console.log(data.message);
+               setIsBookmarked(false);
+               // window.location.reload(false);
+            })
+            .catch((err) => console.log(err));
+      } else if (bookmarkType === "boardinghouse") {
+         fetch(
+            `${domain}/api/bookmarks/delete/boardinghouse/${boardinghouseId}`,
+            {
+               method: "DELETE",
+            }
+         )
+            .then((res) => {
+               return res.json();
+            })
+            .then((data) => {
+               console.log(data.message);
+               setIsBookmarked(false);
+            })
+            .catch((err) => console.log(err));
+      } else {
+         console.log("Invalid bookmark type");
+      }
    };
+
    return (
       <>
          {isBookmarked ? (

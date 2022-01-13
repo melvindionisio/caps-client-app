@@ -11,8 +11,6 @@ import {
    Toolbar,
    IconButton,
 } from "@mui/material";
-import ToggleButton from "@mui/material/ToggleButton";
-import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 import { useRef, useState } from "react";
 import ArrowBackIosIcon from "@mui/icons-material/ArrowBackIos";
 import FilterAltOutlinedIcon from "@mui/icons-material/FilterAltOutlined";
@@ -28,7 +26,6 @@ const Search = () => {
    const history = useHistory();
    const search = useRef(null);
    const [filterOpen, setFilterOpen] = useState(false);
-   const [sort, setSort] = useState("name");
    const [query, setQuery] = useState("");
    const [isPending, setIsPending] = useState(false);
    const [queryResult, setQueryResult] = useState([]);
@@ -38,9 +35,6 @@ const Search = () => {
    const filterToggle = () => {
       setFilterOpen(!filterOpen);
       console.log(filterOpen);
-   };
-   const handleSort = (event, newSort) => {
-      setSort(newSort);
    };
 
    let timer;
@@ -171,31 +165,7 @@ const Search = () => {
                      display: "flex",
                      justifyContent: "space-between",
                   }}
-               >
-                  <ToggleButtonGroup
-                     value={sort}
-                     exclusive
-                     onChange={handleSort}
-                     aria-label="sort"
-                     color="primary"
-                  >
-                     <ToggleButton disabled value="disabled">
-                        Sort:
-                     </ToggleButton>
-                     <ToggleButton value="name" aria-label="sort by name">
-                        Name
-                     </ToggleButton>
-                     <ToggleButton
-                        value="popularity"
-                        aria-label="sort by popularity"
-                     >
-                        Popularity
-                     </ToggleButton>
-                     <ToggleButton value="vacancy" aria-label="sort by vacancy">
-                        Vacancy
-                     </ToggleButton>
-                  </ToggleButtonGroup>
-               </Box>
+               ></Box>
                <Card variant="outlined" sx={{ minHeight: "80vh" }}>
                   <CardContent
                      sx={{ display: "flex", flexDirection: "column", gap: 2 }}

@@ -82,7 +82,7 @@ const ReviewCard = ({ review, isCurrentUserReview, handleDeleteReview }) => {
                         fontSize: 10,
                      }}
                   >
-                     Review Date
+                     {review.date}
                   </Typography>
                </Box>
                {isCurrentUserReview && (

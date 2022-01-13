@@ -6,7 +6,7 @@ import Typography from "@mui/material/Typography";
 import ReviewCard from "../cards/ReviewCard";
 import TextField from "@mui/material/TextField";
 import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import LoadingState from "../LoadingState";
@@ -18,6 +18,7 @@ const Reviews = () => {
    const dateTime = useCurrentTimeDate();
    const [reviewText, setReviewText] = useState("");
    const { bhId } = useParams();
+   const history = useHistory();
 
    const [reviews, setReviews] = useState([]);
    const [isEmpty, setIsEmpty] = useState(false);
@@ -228,13 +229,44 @@ const Reviews = () => {
                   </Button>
                </Box>
             ) : (
-               <Typography
-                  variant="body1"
-                  align="center"
-                  color="text.secondary"
+               <Box
+                  sx={{
+                     display: "flex",
+                     flexDirection: "column",
+                     justifyContent: "center",
+                  }}
                >
-                  You must logged in to submit a review.
-               </Typography>
+                  <Typography
+                     variant="body1"
+                     align="center"
+                     color="text.secondary"
+                  >
+                     You must logged in to submit a review.
+                  </Typography>
+                  <Box
+                     sx={{
+                        display: "flex",
+                        gap: 1,
+                        justifyContent: "center",
+                        mt: 2,
+                     }}
+                  >
+                     <Button
+                        variant="contained"
+                        size="small"
+                        onClick={() => history.push("/login")}
+                     >
+                        Login
+                     </Button>
+                     <Button
+                        variant="contained"
+                        size="small"
+                        onClick={() => history.push("/register")}
+                     >
+                        Register
+                     </Button>
+                  </Box>
+               </Box>
             )}
          </Box>
       </Container>

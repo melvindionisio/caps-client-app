@@ -40,12 +40,6 @@ export default function AccountMenu({ currentUser }) {
 
    return (
       <React.Fragment>
-         {/* <Tooltip title="Account settings">
-        <IconButton onClick={handleClick} size="small" sx={{ ml: 2 }}>
-          <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
-        </IconButton>
-      </Tooltip> */}
-
          <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={600}>
             <IconButton onClick={handleClick} size="small" sx={{ ml: 1 }}>
                <Avatar
@@ -91,7 +85,7 @@ export default function AccountMenu({ currentUser }) {
             transformOrigin={{ horizontal: "right", vertical: "top" }}
             anchorOrigin={{ horizontal: "right", vertical: "bottom" }}
          >
-            {isLoggedIn ? (
+            {isLoggedIn.isLoggedIn ? (
                <div>
                   <MenuItem onClick={() => history.push("/profile")}>
                      <ListItemIcon>
@@ -104,21 +98,32 @@ export default function AccountMenu({ currentUser }) {
                      />
                   </MenuItem>
                   <Divider />
-                  <GoogleLogout
-                     clientId={clientId}
-                     onLogoutSuccess={handleLogout}
-                     render={(renderProps) => (
-                        <MenuItem
-                           onClick={renderProps.onClick}
-                           disabled={renderProps.disabled}
-                        >
-                           <ListItemIcon>
-                              <Logout fontSize="small" />
-                           </ListItemIcon>
-                           Logout
-                        </MenuItem>
-                     )}
-                  ></GoogleLogout>
+                  {isLoggedIn.loginType === "google-login" ? (
+                     <GoogleLogout
+                        clientId={clientId}
+                        onLogoutSuccess={handleLogout}
+                        render={(renderProps) => (
+                           <MenuItem
+                              onClick={renderProps.onClick}
+                              disabled={renderProps.disabled}
+                           >
+                              <ListItemIcon>
+                                 <Logout fontSize="small" />
+                              </ListItemIcon>
+                              Logout
+                           </MenuItem>
+                        )}
+                     ></GoogleLogout>
+                  ) : isLoggedIn.loginType === "normal" ? (
+                     <MenuItem onClick={handleLogout}>
+                        <ListItemIcon>
+                           <Logout fontSize="small" />
+                        </ListItemIcon>
+                        Logout
+                     </MenuItem>
+                  ) : (
+                     ""
+                  )}
                </div>
             ) : (
                <React.Fragment>

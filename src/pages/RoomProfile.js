@@ -49,6 +49,28 @@ const RoomProfile = (props) => {
       error,
    } = useFetch(`${domain}/api/rooms/${roomId}`);
 
+   //async function getBoardinghouse(abortCont) {
+   //const bhId = await room.boardinghouseId;
+   //fetch(`${domain}/api/boarding-houses/${bhId}`, {
+   //signal: abortCont.signal,
+   //})
+   //.then((res) => res.json())
+   //.then((data) => {
+   //console.log(data);
+   //})
+   //.catch((err) => console.log(err));
+   //}
+
+   //useEffect(() => {
+   //const abortCont = new AbortController();
+   //getBoardinghouse(abortCont);
+   //console.log("effect fired");
+
+   //return () => {
+   //abortCont.abort();
+   //};
+   //});
+
    return (
       <Slide in={true} direction="up">
          <Container

@@ -2,11 +2,15 @@ import { createContext } from "react";
 import React from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 import { useState } from "react";
+//import { domain } from "../fetch-url/fetchUrl";
 
 export const LoginContext = createContext();
 
 function LoginContextProvider(props) {
-   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("loggedIn", false);
+   const [isLoggedIn, setIsLoggedIn] = useLocalStorage("loggedIn ", {
+      isLoggedIn: false,
+   });
+
    const [currentUser, setCurrentUser] = useLocalStorage(
       "user",
       "not logged in"
@@ -29,56 +33,36 @@ function LoginContextProvider(props) {
    };
 
    const handleGoogleLogin = (response) => {
-      setIsLoggedIn(true);
+      setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
       setCurrentUser({
          googleId: response.profileObj.googleId,
-         email: response.profileObj.email,
+         facebookId: null,
          name: response.profileObj.name,
+         email: response.profileObj.email,
          picture: response.profileObj.imageUrl,
+         //username: response.profileObj
       });
       console.log(response);
       setIsSuccess(true);
+
+      //CHECK if the user google id is existing if not, store to db, if yes, get userId
    };
 
-   // const handleLogin = (e) => {
-   //   e.preventDefault();
-   //   // validate first
-   //   if (username !== "" && password !== "") {
-   //     fetch("http://localhost:3500/api/seekers/login", {
-   //       method: "POST",
-   //       body: JSON.stringify({
-   //         username: username,
-   //         password: password,
-   //       }),
-   //       headers: {
-   //         "Content-Type": "application/json",
-   //       },
-   //     })
-   //       .then((res) => {
-   //         return res.json();
-   //       })
-   //       .then((data) => {
-   //         if (data.status === "success") {
-   //           setMessage(data.message);
-   //           setErrorLevel("success");
-   //           history.push("/");
-   //         } else if (data.status === "incorrect") {
-   //           setMessage(data.message);
-   //           setErrorLevel("warning");
-   //         } else {
-   //           setMessage(data.message);
-   //           setErrorLevel("warning");
-   //         }
-   //       });
+   const handleFacebookLogin = (response) => {
+      setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
+      setCurrentUser({
+         googleId: null,
+         facebookId: response.profileObj.facebookId,
+         name: response.profileObj.name,
+         email: response.profileObj.email,
+         picture: response.profileObj.imageUrl,
+         //username: response.profileObj
+      });
+      console.log(response);
+      setIsSuccess(true);
 
-   //     console.log(`Username: ${username} Password: ${password}`);
-   //   } else {
-   //     setMessage("Please complete all fields.");
-   //     setIsError(true);
-   //     setErrorLevel("warning");
-   //     input.current.lastElementChild.firstElementChild.focus();
-   //   }
-   // };
+      //CHECK if the user google id is existing if not, store to db, if yes, get userId
+   };
 
    const value = {
       clientId,
@@ -89,6 +73,7 @@ function LoginContextProvider(props) {
       isSuccess,
       setIsSuccess,
       handleGoogleLogin,
+      handleFacebookLogin,
       handleLogout,
    };
 

@@ -1,10 +1,11 @@
 import React from "react";
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
+import Grid from "@mui/material/Grid";
 import useFetch from "../../hooks/useFetch";
 import { useParams } from "react-router-dom";
 import LoadingState from "../../components/LoadingState";
-import Masonry from "@mui/lab/Masonry";
+//import Masonry from "@mui/lab/Masonry";
 import SimpleRoomCard from "../../components/cards/SimpleRoomCard";
 import { domain } from "../../fetch-url/fetchUrl";
 
@@ -27,19 +28,21 @@ const Rooms = ({ bhName }) => {
             overflowY: "auto",
          }}
       >
-         {error && (
-            <Typography variant="caption" align="center">
-               Error. {error}
-            </Typography>
-         )}
-         {isPending && <LoadingState loadWhat="rooms" />}
+         <Grid container spacing={2}>
+            {error && (
+               <Typography variant="caption" align="center">
+                  Error. {error}
+               </Typography>
+            )}
+            {isPending && <LoadingState loadWhat="rooms" />}
 
-         <Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>
+            {/*<Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>*/}
             {rooms &&
                rooms.map((room) => (
-                  <SimpleRoomCard key={room.id} room={room} bhName={bhName} />
+                  <SimpleRoomCard key={room.id} room={room} />
                ))}
-         </Masonry>
+            {/*</Masonry>*/}
+         </Grid>
       </Container>
    );
 };

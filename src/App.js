@@ -22,6 +22,7 @@ import Profile from "./pages/Profile";
 import Bookmarks from "./pages/Bookmarks";
 import BoardingHouseProfile from "./pages/BoardingHouseProfile";
 import RoomProfile from "./pages/RoomProfile";
+import AboutApp from "./pages/AboutApp";
 
 import MobilePageNavigation from "./components/Navigations/MobilePageNavigation";
 import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
@@ -161,6 +162,10 @@ const App = () => {
                      </Route>
                      <Route path="/bookmarks">
                         <Bookmarks />
+                     </Route>
+
+                     <Route path="/about">
+                        <AboutApp />
                      </Route>
                      <Route path="/boardinghouse/:bhId">
                         <BoardingHouseProfile />
