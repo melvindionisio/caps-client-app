@@ -112,6 +112,8 @@ const About = ({ boardinghouse }) => {
             setStars(data.totalStars);
 
             //SET BOARDINGHOUSE POPULARITY HERE
+            //Update
+            //(`${domain}/api/boarding-houses/update-popularity/${boardinghouse.id}`)
          })
          .catch((err) => {
             if (err.name === "AbortError") {
