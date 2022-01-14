@@ -19,40 +19,12 @@ const Map = () => {
    const map = useRef(null);
    const [lng, setLng] = useState(124.665);
    const [lat, setLat] = useState(12.5096);
-   const [zoom, setZoom] = useState(16.1);
+   const [zoom, setZoom] = useState(15.25);
 
    const BOUNDS = [
       [124.2389, 11.8762], // southwest coordinates
       [125.368, 12.9979], //northeast coordinates
    ];
-
-   // const geojson = {
-   //   type: "FeatureCollection",
-   //   features: [
-   //     {
-   //       type: "Feature",
-   //       geometry: {
-   //         type: "Point",
-   //         coordinates: [124.6652, 12.5111],
-   //       },
-   //       properties: {
-   //         title: "Boarding House",
-   //         description: "UEP Men's Dorm",
-   //       },
-   //     },
-   //     {
-   //       type: "Feature",
-   //       geometry: {
-   //         type: "Point",
-   //         coordinates: [124.665, 12.5109],
-   //       },
-   //       properties: {
-   //         title: "Boarding House",
-   //         description: "UEP Women's Dorm",
-   //       },
-   //     },
-   //   ],
-   // };
 
    useEffect(() => {
       if (map.current) return; // initialize map only once
@@ -103,10 +75,12 @@ const Map = () => {
                      })
                         .setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
             <h5>${marker.properties.description}</h5>
+
            `)
                   )
                   .addTo(map.current);
-               // <button id="visit-btn" onclick="visit">VIEW</button>
+
+               //<button id="visit-btn" onclick="console.log("i am clicked")">VIEW</button>
             });
          })
          .catch((err) => {

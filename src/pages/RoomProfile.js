@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
-import useFetch from "../hooks/useFetch";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import {
    Slide,
@@ -42,34 +41,51 @@ const InfoItem = ({ icon, primaryText, secondaryText }) => {
 };
 const RoomProfile = (props) => {
    const { roomId } = useParams();
+   const [room, setRoom] = useState(null);
+   const [isPending, setIsPending] = useState(true);
+   const [error, setError] = useState(null);
+   const [isBookmarked, setIsBookmarked] = useState(false);
+   const [boardinghouse, setBoardinghouse] = useState();
 
-   const {
-      data: room,
-      isPending,
-      error,
-   } = useFetch(`${domain}/api/rooms/${roomId}`);
+   useEffect(() => {
+      const abortCont = new AbortController();
+      fetch(`${domain}/api/rooms/${roomId}`, { signal: abortCont.signal })
+         .then((res) => res.json())
+         .then((data) => {
+            setRoom(data);
+            setIsPending(false);
+            setError(null);
+            fetch(`${domain}/api/boarding-houses/${data.boardinghouseId}`)
+               .then((res) => res.json())
+               .then((data) => {
+                  setBoardinghouse(data);
+               })
+               .catch((err) => console.log(err));
+         })
+         .catch((err) => {
+            console.log(err);
+            setError(err);
+            setIsPending(false);
+            setRoom(null);
+         });
+   }, [roomId]);
 
-   //async function getBoardinghouse(abortCont) {
-   //const bhId = await room.boardinghouseId;
-   //fetch(`${domain}/api/boarding-houses/${bhId}`, {
-   //signal: abortCont.signal,
-   //})
-   //.then((res) => res.json())
-   //.then((data) => {
-   //console.log(data);
-   //})
-   //.catch((err) => console.log(err));
-   //}
-
-   //useEffect(() => {
-   //const abortCont = new AbortController();
-   //getBoardinghouse(abortCont);
-   //console.log("effect fired");
-
-   //return () => {
-   //abortCont.abort();
-   //};
-   //});
+   useEffect(() => {
+      const abortCont = new AbortController();
+      //CHECK IF THE BOARDINGHOUSE IS EXISTING IN BOOKMARKS
+      fetch(`${domain}/api/bookmarks/room/isbookmarked/${roomId}`, {
+         signal: abortCont.signal,
+      })
+         .then((res) => res.json())
+         .then((data) => {
+            setIsBookmarked(data.isBookmarked);
+            console.log("Fetch bookmark status");
+         })
+         .catch((err) => console.log(err));
+      return () => {
+         abortCont.abort();
+      };
+   }, [roomId]);
 
    return (
       <Slide in={true} direction="up">
@@ -93,7 +109,13 @@ const RoomProfile = (props) => {
                      <Typography variant="body1" align="center">
                         {room.name}
                      </Typography>
-                     <AddBookmarkButton />
+                     <AddBookmarkButton
+                        roomId={room.id}
+                        roomName={room.name}
+                        bookmarkType={"room"}
+                        isBookmarked={isBookmarked}
+                        setIsBookmarked={setIsBookmarked}
+                     />
                   </ReusableNavigation>
                   <Box
                      sx={{
@@ -143,12 +165,7 @@ const RoomProfile = (props) => {
                            paddingBottom: "8rem",
                         }}
                      >
-                        <Typography
-                           variant="body1"
-                           sx={{
-                              marginBottom: 1,
-                           }}
-                        >
+                        <Typography variant="body1">
                            STATUS:{" "}
                            <Typography
                               variant="caption"
@@ -162,6 +179,44 @@ const RoomProfile = (props) => {
                               Available
                            </Typography>
                         </Typography>
+                        {boardinghouse && (
+                           <>
+                              <Typography variant="body1">
+                                 Boardinghouse:{" "}
+                                 <Typography
+                                    variant="caption"
+                                    sx={{
+                                       color: green[500],
+                                       fontWeight: "bold",
+                                       fontSize: 16,
+                                       textTransform: "uppercase",
+                                    }}
+                                 >
+                                    {boardinghouse.name}
+                                 </Typography>
+                              </Typography>
+                              <Typography
+                                 variant="body1"
+                                 sx={{
+                                    marginBottom: 1,
+                                 }}
+                              >
+                                 Address:{" "}
+                                 <Typography
+                                    variant="caption"
+                                    sx={{
+                                       color: green[500],
+                                       fontWeight: "bold",
+                                       fontSize: 16,
+                                       textTransform: "uppercase",
+                                    }}
+                                 >
+                                    {boardinghouse.completeAddress}
+                                 </Typography>
+                              </Typography>
+                           </>
+                        )}
+
                         <Grid container spacing={1}>
                            <Grid item xs={4}>
                               <DetailsCard title="Beds" colors="blue">

@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { grey, pink } from "@mui/material/colors";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Slide from "@mui/material/Slide";
 import Container from "@mui/material/Container";
@@ -7,9 +6,6 @@ import Typography from "@mui/material/Typography";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import useFetch from "../hooks/useFetch";
 import LoadingState from "../components/LoadingState";
-import IconButton from "@mui/material/IconButton";
-import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
-import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
@@ -29,6 +25,7 @@ import { domain } from "../fetch-url/fetchUrl";
 import InfoIcon from "@mui/icons-material/Info";
 import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import ReviewsIcon from "@mui/icons-material/Reviews";
+import AddBookmarkButton from "../components/AddBookmarkButton";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -78,6 +75,20 @@ const BoardingHouseProfile = () => {
    const handleChangeIndex = (index) => {
       setValue(index);
    };
+
+   useEffect(() => {
+      const abortCont = new AbortController();
+      //CHECK IF THE BOARDINGHOUSE IS EXISTING IN BOOKMARKS
+      fetch(`${domain}/api/bookmarks/boardinghouse/isbookmarked/${bhId}`)
+         .then((res) => res.json())
+         .then((data) => {
+            setIsBookmarked(data.isBookmarked);
+         })
+         .catch((err) => console.log(err));
+      return () => {
+         abortCont.abort();
+      };
+   }, [bhId]);
 
    function NavigationTabs() {
       return (
@@ -139,29 +150,13 @@ const BoardingHouseProfile = () => {
                      <Typography variant="body1" align="center">
                         {boardinghouse.name}
                      </Typography>
-                     {isBookmarked ? (
-                        <IconButton
-                           size="medium"
-                           sx={{
-                              background: grey[100],
-                              color: pink[500],
-                           }}
-                           onClick={() => setIsBookmarked(!isBookmarked)}
-                        >
-                           <BookmarkAddedIcon fontSize="medium" />
-                        </IconButton>
-                     ) : (
-                        <IconButton
-                           size="medium"
-                           sx={{
-                              background: grey[100],
-                              color: grey[500],
-                           }}
-                           onClick={() => setIsBookmarked(!isBookmarked)}
-                        >
-                           <BookmarkAddIcon fontSize="medium" />
-                        </IconButton>
-                     )}
+                     <AddBookmarkButton
+                        boardinghouseId={boardinghouse.id}
+                        boardinghouseName={boardinghouse.name}
+                        bookmarkType={"boardinghouse"}
+                        isBookmarked={isBookmarked}
+                        setIsBookmarked={setIsBookmarked}
+                     />
                   </ReusableNavigation>
 
                   <SwipeableViews
