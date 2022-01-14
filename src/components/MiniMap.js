@@ -1,7 +1,8 @@
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-import { Typography, Container } from "@mui/material";
-import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState } from "react";
+import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
+import Box from "@mui/material/Box";
 import MarkerLogo from "../marker-logo.png";
 import { domain } from "../fetch-url/fetchUrl";
 
@@ -22,8 +23,9 @@ const MiniMap = ({ ownerId }) => {
    ];
 
    useEffect(() => {
-      if (map.current) return; // initialize map only once
+      const controller = new AbortController();
 
+      if (map.current) return; // initialize map only once
       map.current = new mapboxgl.Map({
          container: mapContainer.current,
          style: "mapbox://styles/melsio/ckxh2zv6w0izd14npfm5p9cn5",
@@ -143,8 +145,12 @@ const MiniMap = ({ ownerId }) => {
             container: mapContainer.current,
          })
       );
-
       map.current.addControl(controls, "bottom-right");
+
+      return () => {
+         // cancel the request before component unmounts
+         controller.abort();
+      };
    });
 
    useEffect(() => {

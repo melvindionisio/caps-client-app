@@ -21,10 +21,9 @@ import PersonPinIcon from "@mui/icons-material/PersonPin";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import { Link as Nlink } from "@mui/material";
 import MiniMap from "../MiniMap";
-//import {useEffect, useContext} from "react"
-//import useFetch from "../../hooks/useFetch";
-//import { LoginContext } from "../../contexts/LoginContext";
-//import { domain } from "../../fetch-url/fetchUrl";
+import { useEffect, useContext } from "react";
+import { LoginContext } from "../../contexts/LoginContext";
+import { domain } from "../../fetch-url/fetchUrl";
 
 const useStyles = makeStyles({
    avatar: {
@@ -93,30 +92,66 @@ const InfoItem = ({ icon, primaryText, secondaryText }) => {
 
 const About = ({ boardinghouse }) => {
    const classes = useStyles();
-   const [starred, setStarred] = useState(false);
+   const [isStarred, setIsStarred] = useState(false);
    const [stars, setStars] = useState(null);
-   //  const { currentUser } = useContext(LoginContext);
-
-   /*const { data: isStarred, error } = useFetch(
-      `${domain}/api/${boardinghouse.id}/${currentUser.id}`
-   );
+   const { currentUser } = useContext(LoginContext);
+   const [reloader, setReloader] = useState(0);
 
    useEffect(() => {
-      if (isStarred.isStarred === true) {
-         setStarred(true);
-      } else {
-         setStarred(false);
-      }
-   }, [isStarred]);
-   */
+      const abortCont = new AbortController();
+      fetch(`${domain}/api/stars/${boardinghouse.id}`, {
+         signal: abortCont.signal,
+      })
+         .then((res) => {
+            if (!res.ok) {
+               throw Error("Something went wrong!");
+            }
+            return res.json();
+         })
+         .then((data) => {
+            setStars(data.totalStars);
 
-   const addStar = () => {
-      setStarred(!starred);
-      setStars(boardinghouse && boardinghouse.popularity);
-      if (!starred) setStars(boardinghouse.popularity + 1);
+            //SET BOARDINGHOUSE POPULARITY HERE
+         })
+         .catch((err) => {
+            if (err.name === "AbortError") {
+               console.log("fetch aborted");
+            } else {
+               setStars(0);
+            }
+         });
+      return () => {
+         abortCont.abort();
+      };
+   }, [boardinghouse, reloader]);
 
-      /*
-      fetch(`${domain}/api/add/${boardinghouse.id}/${currentUser.id}`, {
+   useEffect(() => {
+      const abortCont = new AbortController();
+      fetch(
+         `${domain}/api/stars/isstarred/${boardinghouse.id}/${currentUser.id}`,
+         {
+            signal: abortCont.signal,
+         }
+      )
+         .then((res) => res.json())
+         .then((data) => {
+            console.log(data);
+            setIsStarred(data.isStarred);
+         })
+         .catch((err) => {
+            if (err.name === "AbortError") {
+               console.log("fetch aborted");
+            } else {
+               console.log(err);
+            }
+         });
+      return () => {
+         abortCont.abort();
+      };
+   }, [currentUser, boardinghouse]);
+
+   const handleAddStar = () => {
+      fetch(`${domain}/api/stars/add/${boardinghouse.id}/${currentUser.id}`, {
          method: "POST",
          body: JSON.stringify({
             seekerName: currentUser.name,
@@ -130,9 +165,28 @@ const About = ({ boardinghouse }) => {
          })
          .then((data) => {
             console.log(data.message);
+            setIsStarred(true);
+            setReloader((prevCount) => prevCount + 1);
          })
          .catch((err) => console.log(err));
-         */
+   };
+
+   const handleRemoveStar = () => {
+      fetch(
+         `${domain}/api/stars/delete/${boardinghouse.id}/${currentUser.id}`,
+         {
+            method: "DELETE",
+         }
+      )
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            console.log(data.message);
+            setIsStarred(false);
+            setReloader((prevCount) => prevCount + 1);
+         })
+         .catch((err) => console.log(err));
    };
 
    return (
@@ -189,24 +243,36 @@ const About = ({ boardinghouse }) => {
             >
                {boardinghouse.tagline}
             </Typography>
-
-            <IconButton
-               size="large"
-               onClick={addStar}
-               sx={{
-                  // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
-                  position: "absolute",
-                  top: ".5rem",
-                  right: ".5rem",
-               }}
-            >
-               <GradeIcon
-                  fontSize="large"
-                  className={
-                     starred ? classes.gradeIconActive : classes.gradeIcon
-                  }
-               />
-            </IconButton>
+            {isStarred ? (
+               <IconButton
+                  size="large"
+                  onClick={handleRemoveStar}
+                  sx={{
+                     // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+                     position: "absolute",
+                     top: ".5rem",
+                     right: ".5rem",
+                  }}
+               >
+                  <GradeIcon
+                     fontSize="large"
+                     className={classes.gradeIconActive}
+                  />
+               </IconButton>
+            ) : (
+               <IconButton
+                  size="large"
+                  onClick={handleAddStar}
+                  sx={{
+                     // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+                     position: "absolute",
+                     top: ".5rem",
+                     right: ".5rem",
+                  }}
+               >
+                  <GradeIcon fontSize="large" className={classes.gradeIcon} />
+               </IconButton>
+            )}
          </Card>
          <Divider />
 

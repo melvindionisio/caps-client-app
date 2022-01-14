@@ -3,14 +3,14 @@ import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
-import ReviewCard from "../cards/ReviewCard";
 import TextField from "@mui/material/TextField";
+import { grey } from "@mui/material/colors";
+import ReviewCard from "../cards/ReviewCard";
 import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
 import { useHistory, useParams } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import LoadingState from "../LoadingState";
-import { grey } from "@mui/material/colors";
 
 const Reviews = () => {
    const { currentUser, isLoggedIn } = useContext(LoginContext);
@@ -25,7 +25,7 @@ const Reviews = () => {
    const [isPending, setIsPending] = useState(true);
 
    const handleAddReview = () => {
-      if (reviewText) {
+      if (reviewText !== "") {
          fetch(`${domain}/api/reviews/add/${bhId}`, {
             method: "POST",
             body: JSON.stringify({
@@ -73,7 +73,6 @@ const Reviews = () => {
 
    useEffect(() => {
       const abortCont = new AbortController();
-      console.log("useeffect fired");
 
       setTimeout(() => {
          fetch(`${domain}/api/reviews/bh/${bhId}`, {
