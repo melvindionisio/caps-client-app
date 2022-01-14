@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardHeader from "@mui/material/CardHeader";
@@ -15,18 +15,23 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useHistory, Link } from "react-router-dom";
 import AddBookmarkButton from "../../components/AddBookmarkButton";
 import { domain } from "../../fetch-url/fetchUrl";
+import { LoginContext } from "../../contexts/LoginContext";
 
 const SimpleRoomCard = ({ room }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
    const history = useHistory();
    const [houseName, setHouseName] = useState("");
+   const { currentUser } = useContext(LoginContext);
 
    useEffect(() => {
       const abortCont = new AbortController();
       //CHECK IF THE BOARDINGHOUSE IS EXISTING IN BOOKMARKS
-      fetch(`${domain}/api/bookmarks/room/isbookmarked/${room.id}`, {
-         signal: abortCont.signal,
-      })
+      fetch(
+         `${domain}/api/bookmarks/room/isbookmarked/${room.id}/${currentUser.id}`,
+         {
+            signal: abortCont.signal,
+         }
+      )
          .then((res) => res.json())
          .then((data) => {
             setIsBookmarked(data.isBookmarked);
@@ -45,7 +50,7 @@ const SimpleRoomCard = ({ room }) => {
       return () => {
          abortCont.abort();
       };
-   }, [room]);
+   }, [room, currentUser]);
 
    return (
       <>

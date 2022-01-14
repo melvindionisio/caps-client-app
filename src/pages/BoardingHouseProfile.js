@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Slide from "@mui/material/Slide";
 import Container from "@mui/material/Container";
@@ -26,6 +26,7 @@ import InfoIcon from "@mui/icons-material/Info";
 import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import AddBookmarkButton from "../components/AddBookmarkButton";
+import { LoginContext } from "../contexts/LoginContext";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -58,6 +59,7 @@ function a11yProps(index) {
 const BoardingHouseProfile = () => {
    const { bhId } = useParams();
    const [isBookmarked, setIsBookmarked] = useState(false);
+   const { currentUser } = useContext(LoginContext);
 
    const {
       data: boardinghouse,
@@ -79,7 +81,9 @@ const BoardingHouseProfile = () => {
    useEffect(() => {
       const abortCont = new AbortController();
       //CHECK IF THE BOARDINGHOUSE IS EXISTING IN BOOKMARKS
-      fetch(`${domain}/api/bookmarks/boardinghouse/isbookmarked/${bhId}`)
+      fetch(
+         `${domain}/api/bookmarks/boardinghouse/isbookmarked/${bhId}/${currentUser.id}`
+      )
          .then((res) => res.json())
          .then((data) => {
             setIsBookmarked(data.isBookmarked);
@@ -88,7 +92,7 @@ const BoardingHouseProfile = () => {
       return () => {
          abortCont.abort();
       };
-   }, [bhId]);
+   }, [bhId, currentUser]);
 
    function NavigationTabs() {
       return (

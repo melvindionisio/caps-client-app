@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
    Card,
    CardHeader,
@@ -18,15 +18,17 @@ import { Link } from "react-router-dom";
 import { Link as Nlink } from "@mui/material";
 import AddBookmarkButton from "../../components/AddBookmarkButton";
 import { domain } from "../../fetch-url/fetchUrl";
+import { LoginContext } from "../../contexts/LoginContext";
 
 const BoardingHouseCard = ({ boardinghouse }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
+   const { currentUser } = useContext(LoginContext);
 
    useEffect(() => {
       const abortCont = new AbortController();
       //CHECK IF THE BOARDINGHOUSE IS EXISTING IN BOOKMARKS
       fetch(
-         `${domain}/api/bookmarks/boardinghouse/isbookmarked/${boardinghouse.id}`
+         `${domain}/api/bookmarks/boardinghouse/isbookmarked/${boardinghouse.id}/${currentUser.id}`
       )
          .then((res) => res.json())
          .then((data) => {
@@ -36,7 +38,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
       return () => {
          abortCont.abort();
       };
-   }, [boardinghouse]);
+   }, [boardinghouse, currentUser]);
 
    return (
       <Grid item lg={6} md={4} sm={6} xs={12}>

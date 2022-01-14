@@ -72,6 +72,14 @@ const Bookmarks = () => {
          .catch((err) => console.log(err));
    };
 
+   useEffect(() => {
+      if (bookmarks.length <= 0) {
+         setIsEmpty(true);
+      } else {
+         setIsEmpty(false);
+      }
+   }, [bookmarks]);
+
    return (
       <Slide in={true} direction="left">
          <Container maxWidth="lg" disableGutters>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
@@ -20,6 +20,7 @@ import { lightBlue, green } from "@mui/material/colors";
 import AddBookmarkButton from "../components/AddBookmarkButton";
 import LoadingState from "../components/LoadingState";
 import DetailsCard from "../components/cards/DetailsCard";
+import { LoginContext } from "../contexts/LoginContext";
 
 const InfoItem = ({ icon, primaryText, secondaryText }) => {
    return (
@@ -46,6 +47,7 @@ const RoomProfile = (props) => {
    const [error, setError] = useState(null);
    const [isBookmarked, setIsBookmarked] = useState(false);
    const [boardinghouse, setBoardinghouse] = useState();
+   const { currentUser } = useContext(LoginContext);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -73,9 +75,12 @@ const RoomProfile = (props) => {
    useEffect(() => {
       const abortCont = new AbortController();
       //CHECK IF THE BOARDINGHOUSE IS EXISTING IN BOOKMARKS
-      fetch(`${domain}/api/bookmarks/room/isbookmarked/${roomId}`, {
-         signal: abortCont.signal,
-      })
+      fetch(
+         `${domain}/api/bookmarks/room/isbookmarked/${roomId}/${currentUser.id}`,
+         {
+            signal: abortCont.signal,
+         }
+      )
          .then((res) => res.json())
          .then((data) => {
             setIsBookmarked(data.isBookmarked);
@@ -85,7 +90,7 @@ const RoomProfile = (props) => {
       return () => {
          abortCont.abort();
       };
-   }, [roomId]);
+   }, [roomId, currentUser]);
 
    return (
       <Slide in={true} direction="up">
