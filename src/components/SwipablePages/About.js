@@ -110,10 +110,23 @@ const About = ({ boardinghouse }) => {
          })
          .then((data) => {
             setStars(data.totalStars);
-
-            //SET BOARDINGHOUSE POPULARITY HERE
-            //Update
-            //(`${domain}/api/boarding-houses/update-popularity/${boardinghouse.id}`)
+            fetch(
+               `${domain}/api/boarding-houses/update-popularity/${boardinghouse.id}`,
+               {
+                  method: "PUT",
+                  body: JSON.stringify({
+                     stars: stars,
+                  }),
+                  headers: {
+                     "Content-Type": "application/json",
+                  },
+               }
+            )
+               .then((res) => res.json())
+               .then((data) => {
+                  console.log(data.message);
+               })
+               .catch((err) => console.log(err));
          })
          .catch((err) => {
             if (err.name === "AbortError") {
@@ -125,7 +138,7 @@ const About = ({ boardinghouse }) => {
       return () => {
          abortCont.abort();
       };
-   }, [boardinghouse, reloader]);
+   }, [boardinghouse, reloader, stars]);
 
    useEffect(() => {
       const abortCont = new AbortController();

@@ -25,7 +25,7 @@ import { useHistory } from "react-router";
 import { domain } from "../fetch-url/fetchUrl";
 
 const Login = () => {
-   const { clientId, setIsLoggedIn, setCurrentUser, setIsSuccess } =
+   const { clientId, setIsSuccess, setIsLoggedIn, setCurrentUser } =
       useContext(LoginContext);
 
    const [username, setUsername] = useState("");
@@ -90,18 +90,23 @@ const Login = () => {
       setIsError(false);
    }, [username, password]);
 
-   const loginGoogle = (response) => {
-      setIsLoggedIn(true);
+   const handleGoogleLogin = (response) => {
+      setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
       setCurrentUser({
          googleId: response.profileObj.googleId,
-         email: response.profileObj.email,
+         facebookId: null,
          name: response.profileObj.name,
+         email: response.profileObj.email,
          picture: response.profileObj.imageUrl,
+         //username: response.profileObj
       });
-      console.log(response);
-      history.push("/home");
+      //console.log(response);
       setIsSuccess(true);
+      history.push("/home");
+
+      //CHECK if the user google id is existing if not, store to db, if yes, get userId
    };
+
    const responseFacebook = (response) => {
       console.log(response);
    };
@@ -242,7 +247,7 @@ const Login = () => {
                                  <Typography>Google</Typography>
                               </Box>
                            )}
-                           onSuccess={loginGoogle}
+                           onSuccess={handleGoogleLogin}
                            onFailure={() => console.log("Google login failed.")}
                            cookiePolicy={"single_host_origin"}
                            isSignedIn={true}

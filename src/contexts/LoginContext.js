@@ -29,7 +29,6 @@ function LoginContextProvider(props) {
          picture: null,
          username: null,
       });
-      console.log(isLoggedIn);
    };
 
    const handleGoogleLogin = (response) => {
@@ -42,7 +41,7 @@ function LoginContextProvider(props) {
          picture: response.profileObj.imageUrl,
          //username: response.profileObj
       });
-      console.log(response);
+      //console.log(response);
       setIsSuccess(true);
 
       //CHECK if the user google id is existing if not, store to db, if yes, get userId
