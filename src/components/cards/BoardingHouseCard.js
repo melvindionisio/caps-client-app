@@ -80,7 +80,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                subheader={
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                      <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
-                     <Typography variant="caption">
+                     <Typography variant="body2">
                         {boardinghouse.popularity ?? 0} stars
                      </Typography>
                   </Box>

@@ -91,20 +91,36 @@ const Login = () => {
    }, [username, password]);
 
    const handleGoogleLogin = (response) => {
-      setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
-      setCurrentUser({
-         googleId: response.profileObj.googleId,
-         facebookId: null,
-         name: response.profileObj.name,
-         email: response.profileObj.email,
-         picture: response.profileObj.imageUrl,
-         //username: response.profileObj
-      });
-      //console.log(response);
-      setIsSuccess(true);
-      history.push("/home");
-
       //CHECK if the user google id is existing if not, store to db, if yes, get userId
+      fetch(`${domain}/api/seekers/google-signin`, {
+         method: "POST",
+         body: JSON.stringify({
+            googleId: response.profileObj.googleId,
+            name: response.profileObj.name,
+            email: response.profileObj.email,
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
+            setCurrentUser({
+               id: data.id,
+               googleId: response.profileObj.googleId,
+               facebookId: null,
+               name: response.profileObj.name,
+               username: response.profileObj.email,
+               picture: response.profileObj.imageUrl,
+            });
+            console.log(response);
+            setIsSuccess(true);
+            history.push("/home");
+         })
+         .catch((err) => console.log(err));
    };
 
    const responseFacebook = (response) => {

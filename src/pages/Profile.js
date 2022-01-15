@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 
 const Profile = () => {
-   const { currentUser, setCurrentUser } = useContext(LoginContext);
+   const { isLoggedIn, currentUser, setCurrentUser } = useContext(LoginContext);
    const [passwordEditable, setPasswordEditable] = useState(!false);
    const [profileEditable, setProfileEditable] = useState(!false);
 
@@ -126,7 +126,8 @@ const Profile = () => {
             setIsPasswordErrorShow(false);
          }
       }, 3000);
-   }, [isProfileErrorShow, isPasswordErrorShow]);
+      console.log(isLoggedIn);
+   }, [isProfileErrorShow, isLoggedIn, isPasswordErrorShow]);
 
    return (
       <Slide in={true} direction="left">
@@ -141,7 +142,28 @@ const Profile = () => {
                      Profile
                   </Typography>
                </ReusableNavigation>
-               <Box sx={{ p: 2, px: 5 }}>
+               <Box sx={{ p: 3, px: 5 }}>
+                  {isLoggedIn.loginType === "google-login" && (
+                     <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        align="center"
+                        sx={{ mb: 3 }}
+                     >
+                        You are logged in using Google.
+                     </Typography>
+                  )}
+
+                  {isLoggedIn.loginType === "facebook-login" && (
+                     <Typography
+                        variant="body1"
+                        color="text.secondary"
+                        align="center"
+                        sx={{ mb: 3 }}
+                     >
+                        You are logged in using Facebook.
+                     </Typography>
+                  )}
                   <Card
                      sx={{
                         borderRadius: 2,
@@ -205,187 +227,190 @@ const Profile = () => {
                         }
                      />
                   </Card>
-
-                  <Grid container spacing={2}>
-                     <Grid item sm={12} md={6} lg={12}>
-                        <Card
-                           sx={{
-                              borderRadius: 2,
-                           }}
-                           elevation={0}
-                        >
-                           <CardHeader
-                              title={
-                                 <Typography
-                                    align="center"
-                                    color="inherit"
-                                    variant="body1"
-                                    sx={{
-                                       textTransform: "uppercase",
-                                       fontFamily: "Quicksand",
-                                    }}
-                                 >
-                                    Change Profile
-                                 </Typography>
-                              }
-                              sx={{ pb: 0 }}
-                              action={
-                                 <IconButton
-                                    onClick={() =>
-                                       setProfileEditable(!profileEditable)
-                                    }
-                                 >
-                                    <EditIcon />
-                                 </IconButton>
-                              }
-                           />
-                           <CardContent>
-                              <TextField
-                                 label="Name"
-                                 value={name}
-                                 onChange={(e) => setName(e.target.value)}
-                                 size="small"
-                                 margin="dense"
-                                 fullWidth
-                                 variant="outlined"
-                                 disabled={profileEditable}
-                              />
-                              <TextField
-                                 label="Username"
-                                 value={username}
-                                 onChange={(e) => setUsername(e.target.value)}
-                                 size="small"
-                                 margin="dense"
-                                 fullWidth
-                                 variant="outlined"
-                                 disabled={profileEditable}
-                              />
-                           </CardContent>
-                           <CardActions>
-                              <Button
-                                 variant="contained"
-                                 fullWidth
-                                 disableElevation
-                                 disabled={profileEditable}
-                                 onClick={handleUpdateProfile}
-                              >
-                                 Update Profile
-                              </Button>
-                           </CardActions>
-                           <Alert
-                              sx={
-                                 isProfileErrorShow
-                                    ? { display: "flex" }
-                                    : { display: "none" }
-                              }
-                              severity={profileErrorLevel}
+                  {isLoggedIn.loginType === "normal" && (
+                     <Grid container spacing={2}>
+                        <Grid item sm={12} md={6} lg={12}>
+                           <Card
+                              sx={{
+                                 borderRadius: 2,
+                              }}
+                              elevation={0}
                            >
-                              {profileMessage}
-                           </Alert>
-                        </Card>
-                     </Grid>
+                              <CardHeader
+                                 title={
+                                    <Typography
+                                       align="center"
+                                       color="inherit"
+                                       variant="body1"
+                                       sx={{
+                                          textTransform: "uppercase",
+                                          fontFamily: "Quicksand",
+                                       }}
+                                    >
+                                       Change Profile
+                                    </Typography>
+                                 }
+                                 sx={{ pb: 0 }}
+                                 action={
+                                    <IconButton
+                                       onClick={() =>
+                                          setProfileEditable(!profileEditable)
+                                       }
+                                    >
+                                       <EditIcon />
+                                    </IconButton>
+                                 }
+                              />
+                              <CardContent>
+                                 <TextField
+                                    label="Name"
+                                    value={name}
+                                    onChange={(e) => setName(e.target.value)}
+                                    size="small"
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    disabled={profileEditable}
+                                 />
+                                 <TextField
+                                    label="Username"
+                                    value={username}
+                                    onChange={(e) =>
+                                       setUsername(e.target.value)
+                                    }
+                                    size="small"
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    disabled={profileEditable}
+                                 />
+                              </CardContent>
+                              <CardActions>
+                                 <Button
+                                    variant="contained"
+                                    fullWidth
+                                    disableElevation
+                                    disabled={profileEditable}
+                                    onClick={handleUpdateProfile}
+                                 >
+                                    Update Profile
+                                 </Button>
+                              </CardActions>
+                              <Alert
+                                 sx={
+                                    isProfileErrorShow
+                                       ? { display: "flex" }
+                                       : { display: "none" }
+                                 }
+                                 severity={profileErrorLevel}
+                              >
+                                 {profileMessage}
+                              </Alert>
+                           </Card>
+                        </Grid>
 
-                     <Grid item sm={12} md={6} lg={12}>
-                        <Card
-                           sx={{
-                              //width: "80%",
-                              //margin: "0 auto",
-                              //marginTop: 2,
-                              borderRadius: 2,
-                              marginBottom: 4,
-                           }}
-                           elevation={0}
-                        >
-                           <CardHeader
-                              title={
-                                 <Typography
-                                    align="center"
-                                    color="inherit"
-                                    variant="body1"
-                                    sx={{
-                                       textTransform: "uppercase",
-                                       fontFamily: "Quicksand",
-                                    }}
+                        <Grid item sm={12} md={6} lg={12}>
+                           <Card
+                              sx={{
+                                 //width: "80%",
+                                 //margin: "0 auto",
+                                 //marginTop: 2,
+                                 borderRadius: 2,
+                                 marginBottom: 4,
+                              }}
+                              elevation={0}
+                           >
+                              <CardHeader
+                                 title={
+                                    <Typography
+                                       align="center"
+                                       color="inherit"
+                                       variant="body1"
+                                       sx={{
+                                          textTransform: "uppercase",
+                                          fontFamily: "Quicksand",
+                                       }}
+                                    >
+                                       Change Password
+                                    </Typography>
+                                 }
+                                 sx={{ pb: 0 }}
+                                 action={
+                                    <IconButton
+                                       onClick={() =>
+                                          setPasswordEditable(!passwordEditable)
+                                       }
+                                    >
+                                       <EditIcon />
+                                    </IconButton>
+                                 }
+                              />
+                              <CardContent>
+                                 <TextField
+                                    label="Current Password"
+                                    size="small"
+                                    value={currentPassword}
+                                    onChange={(e) =>
+                                       setCurrentPassword(e.target.value)
+                                    }
+                                    type="password"
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    disabled={passwordEditable}
+                                 />
+                                 <TextField
+                                    label="New Password"
+                                    size="small"
+                                    value={newPassword}
+                                    onChange={(e) =>
+                                       setNewPassword(e.target.value)
+                                    }
+                                    type="password"
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    disabled={passwordEditable}
+                                 />
+                                 <TextField
+                                    label="Repeat Password"
+                                    size="small"
+                                    value={repeatPassword}
+                                    onChange={(e) =>
+                                       setRepeatPassword(e.target.value)
+                                    }
+                                    type="password"
+                                    margin="dense"
+                                    fullWidth
+                                    variant="outlined"
+                                    disabled={passwordEditable}
+                                 />
+                              </CardContent>
+                              <CardActions>
+                                 <Button
+                                    variant="contained"
+                                    fullWidth
+                                    disableElevation
+                                    disabled={passwordEditable}
+                                    onClick={handleChangePassword}
                                  >
                                     Change Password
-                                 </Typography>
-                              }
-                              sx={{ pb: 0 }}
-                              action={
-                                 <IconButton
-                                    onClick={() =>
-                                       setPasswordEditable(!passwordEditable)
-                                    }
-                                 >
-                                    <EditIcon />
-                                 </IconButton>
-                              }
-                           />
-                           <CardContent>
-                              <TextField
-                                 label="Current Password"
-                                 size="small"
-                                 value={currentPassword}
-                                 onChange={(e) =>
-                                    setCurrentPassword(e.target.value)
+                                 </Button>
+                              </CardActions>
+                              <Alert
+                                 sx={
+                                    isPasswordErrorShow
+                                       ? { display: "flex" }
+                                       : { display: "none" }
                                  }
-                                 type="password"
-                                 margin="dense"
-                                 fullWidth
-                                 variant="outlined"
-                                 disabled={passwordEditable}
-                              />
-                              <TextField
-                                 label="New Password"
-                                 size="small"
-                                 value={newPassword}
-                                 onChange={(e) =>
-                                    setNewPassword(e.target.value)
-                                 }
-                                 type="password"
-                                 margin="dense"
-                                 fullWidth
-                                 variant="outlined"
-                                 disabled={passwordEditable}
-                              />
-                              <TextField
-                                 label="Repeat Password"
-                                 size="small"
-                                 value={repeatPassword}
-                                 onChange={(e) =>
-                                    setRepeatPassword(e.target.value)
-                                 }
-                                 type="password"
-                                 margin="dense"
-                                 fullWidth
-                                 variant="outlined"
-                                 disabled={passwordEditable}
-                              />
-                           </CardContent>
-                           <CardActions>
-                              <Button
-                                 variant="contained"
-                                 fullWidth
-                                 disableElevation
-                                 disabled={passwordEditable}
-                                 onClick={handleChangePassword}
+                                 severity={passwordErrorLevel}
                               >
-                                 Change Password
-                              </Button>
-                           </CardActions>
-                           <Alert
-                              sx={
-                                 isPasswordErrorShow
-                                    ? { display: "flex" }
-                                    : { display: "none" }
-                              }
-                              severity={passwordErrorLevel}
-                           >
-                              {passwordMessage}
-                           </Alert>
-                        </Card>
+                                 {passwordMessage}
+                              </Alert>
+                           </Card>
+                        </Grid>
                      </Grid>
-                  </Grid>
+                  )}
                </Box>
             </Box>
          </Container>
