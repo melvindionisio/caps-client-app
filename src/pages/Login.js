@@ -270,7 +270,7 @@ const Login = () => {
                         />
 
                         <FacebookLogin
-                           appId="1088597931155576"
+                           appId="248288863983296"
                            // autoLoad={true}
                            fields="name,email,picture"
                            callback={responseFacebook}
@@ -286,8 +286,8 @@ const Login = () => {
                                  <IconButton
                                     color="primary"
                                     size="large"
-                                    // onClick={renderProps.onClick}
-                                    // disabled={renderProps.disabled}
+                                    onClick={renderProps.onClick}
+                                    disabled={renderProps.disabled}
                                  >
                                     <FacebookIcon fontSize="large" />
                                  </IconButton>
