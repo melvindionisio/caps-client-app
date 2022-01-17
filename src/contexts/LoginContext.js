@@ -31,7 +31,6 @@ function LoginContextProvider(props) {
          picture: null,
          username: null,
       });
-      //bug here
       console.log("User Logged Out");
    }
 
