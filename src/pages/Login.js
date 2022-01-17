@@ -125,6 +125,16 @@ const Login = () => {
 
    const responseFacebook = (response) => {
       console.log(response);
+      setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
+      setCurrentUser({
+         id: response.id,
+         googleId: null,
+         facebookId: response.id,
+         name: response.name,
+         username: response.email,
+         picture: response.picture.data.url,
+      });
+      console.log(response);
    };
 
    return (
