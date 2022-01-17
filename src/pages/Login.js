@@ -107,6 +107,7 @@ const Login = () => {
             return res.json();
          })
          .then((data) => {
+            console.log(data.message);
             setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
             setCurrentUser({
                id: data.id,
@@ -122,7 +123,8 @@ const Login = () => {
          .catch((err) => console.log(err));
    };
 
-   const responseFacebook = (response) => {
+   const handleLoginFacebook = (response) => {
+      //CHECK IF FACEBOOK ALREADY IN THE DATABASE
       fetch(`${domain}/api/seekers/facebook-signin`, {
          method: "POST",
          body: JSON.stringify({
@@ -138,6 +140,7 @@ const Login = () => {
             return res.json();
          })
          .then((data) => {
+            console.log(data.message);
             setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
             setCurrentUser({
                id: data.id,
@@ -304,7 +307,7 @@ const Login = () => {
                               appId={appId}
                               autoLoad={false}
                               fields="name,email,picture"
-                              callback={responseFacebook}
+                              callback={handleLoginFacebook}
                               render={(renderProps) => (
                                  <Box
                                     style={{

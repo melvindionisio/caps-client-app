@@ -364,7 +364,10 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                               }}
                               size="large"
                               fullWidth
-                              onClick={handleLogout}
+                              onClick={() => {
+                                 handleLogout();
+                                 window.FB.logout();
+                              }}
                            >
                               Logout Facebook
                            </Button>

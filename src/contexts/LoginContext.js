@@ -32,7 +32,6 @@ function LoginContextProvider(props) {
          username: null,
       });
       //bug here
-      window.FB.logout();
       console.log("User Logged Out");
    }
 
