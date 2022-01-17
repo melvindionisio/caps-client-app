@@ -17,9 +17,10 @@ function LoginContextProvider(props) {
    );
    const [isSuccess, setIsSuccess] = useState(false);
    const clientId =
-      "1088575893079-uuebeab7q5261f16gufrvs5no25dotlr.apps.googleusercontent.com";
+      "1088575893079-bcep4fpqnck34dc7jbk6o4a2ua01srrp.apps.googleusercontent.com";
+   const appId = "248288863983296";
 
-   const handleLogout = () => {
+   function handleLogout() {
       setIsLoggedIn(false);
       setCurrentUser({
          id: null,
@@ -30,7 +31,10 @@ function LoginContextProvider(props) {
          picture: null,
          username: null,
       });
-   };
+      //bug here
+      window.FB.logout();
+      console.log("User Logged Out");
+   }
 
    const handleGoogleLogin = (response) => {
       setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
@@ -44,7 +48,6 @@ function LoginContextProvider(props) {
       });
       //console.log(response);
       setIsSuccess(true);
-
       //CHECK if the user google id is existing if not, store to db, if yes, get userId
    };
 
@@ -58,14 +61,13 @@ function LoginContextProvider(props) {
          picture: response.profileObj.imageUrl,
          //username: response.profileObj
       });
-      console.log(response);
       setIsSuccess(true);
-
       //CHECK if the user google id is existing if not, store to db, if yes, get userId
    };
 
    const value = {
       clientId,
+      appId,
       isLoggedIn,
       setIsLoggedIn,
       currentUser,

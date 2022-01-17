@@ -25,7 +25,7 @@ import { useHistory } from "react-router";
 import { domain } from "../fetch-url/fetchUrl";
 
 const Login = () => {
-   const { clientId, setIsSuccess, setIsLoggedIn, setCurrentUser } =
+   const { clientId, appId, setIsSuccess, setIsLoggedIn, setCurrentUser } =
       useContext(LoginContext);
 
    const [username, setUsername] = useState("");
@@ -116,7 +116,6 @@ const Login = () => {
                username: response.profileObj.email,
                picture: response.profileObj.imageUrl,
             });
-            console.log(response);
             setIsSuccess(true);
             history.push("/home");
          })
@@ -124,17 +123,34 @@ const Login = () => {
    };
 
    const responseFacebook = (response) => {
-      console.log(response);
-      setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
-      setCurrentUser({
-         id: response.id,
-         googleId: null,
-         facebookId: response.id,
-         name: response.name,
-         username: response.email,
-         picture: response.picture.data.url,
-      });
-      console.log(response);
+      fetch(`${domain}/api/seekers/facebook-signin`, {
+         method: "POST",
+         body: JSON.stringify({
+            facebookId: response.id,
+            name: response.name,
+            email: response.email,
+         }),
+         headers: {
+            "Content-Type": "application/json",
+         },
+      })
+         .then((res) => {
+            return res.json();
+         })
+         .then((data) => {
+            setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
+            setCurrentUser({
+               id: data.id,
+               googleId: null,
+               facebookId: response.id,
+               name: response.name,
+               username: response.email,
+               picture: response.picture.data.url,
+            });
+            setIsSuccess(true);
+            history.push("/home");
+         })
+         .catch((err) => console.log(err));
    };
 
    return (
@@ -251,60 +267,70 @@ const Login = () => {
                            paddingBottom: "1rem",
                         }}
                      >
-                        <GoogleLogin
-                           clientId={clientId}
-                           render={(renderProps) => (
-                              <Box
-                                 style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    flexDirection: "column",
-                                 }}
-                              >
-                                 <IconButton
-                                    size="large"
-                                    style={{ color: amber[400] }}
-                                    onClick={renderProps.onClick}
-                                    disabled={renderProps.disabled}
+                        <Box>
+                           <GoogleLogin
+                              clientId={clientId}
+                              render={(renderProps) => (
+                                 <Box
+                                    style={{
+                                       display: "flex",
+                                       justifyContent: "center",
+                                       alignItems: "center",
+                                       flexDirection: "column",
+                                    }}
                                  >
-                                    <GoogleIcon fontSize="large" />
-                                 </IconButton>
-                                 <Typography>Google</Typography>
-                              </Box>
-                           )}
-                           onSuccess={handleGoogleLogin}
-                           onFailure={() => console.log("Google login failed.")}
-                           cookiePolicy={"single_host_origin"}
-                           isSignedIn={true}
-                        />
-
-                        <FacebookLogin
-                           appId="248288863983296"
-                           // autoLoad={true}
-                           fields="name,email,picture"
-                           callback={responseFacebook}
-                           render={(renderProps) => (
-                              <Box
-                                 style={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    flexDirection: "column",
-                                 }}
-                              >
-                                 <IconButton
-                                    color="primary"
-                                    size="large"
-                                    onClick={renderProps.onClick}
-                                    disabled={renderProps.disabled}
+                                    <IconButton
+                                       size="large"
+                                       style={{ color: amber[400] }}
+                                       onClick={renderProps.onClick}
+                                       disabled={renderProps.disabled}
+                                    >
+                                       <GoogleIcon fontSize="large" />
+                                    </IconButton>
+                                    <Typography>Google</Typography>
+                                 </Box>
+                              )}
+                              onSuccess={handleGoogleLogin}
+                              onFailure={(response) => {
+                                 console.log("Google login failed.");
+                                 console.log(response);
+                              }}
+                              cookiePolicy={"single_host_origin"}
+                              isSignedIn={true}
+                           />
+                        </Box>
+                        <Box>
+                           <FacebookLogin
+                              appId={appId}
+                              autoLoad={false}
+                              fields="name,email,picture"
+                              callback={responseFacebook}
+                              render={(renderProps) => (
+                                 <Box
+                                    style={{
+                                       display: "flex",
+                                       justifyContent: "center",
+                                       alignItems: "center",
+                                       flexDirection: "column",
+                                    }}
                                  >
-                                    <FacebookIcon fontSize="large" />
-                                 </IconButton>
-                                 <Typography as="label">Facebook</Typography>
-                              </Box>
-                           )}
-                        />
+                                    <IconButton
+                                       color="primary"
+                                       size="large"
+                                       onClick={renderProps.onClick}
+                                       disabled={renderProps.disabled}
+                                    >
+                                       <FacebookIcon fontSize="large" />
+                                    </IconButton>
+                                    <Typography as="label">Facebook</Typography>
+                                 </Box>
+                              )}
+                              onFailure={(response) => {
+                                 console.log("Facebook login failed.");
+                                 console.log(response);
+                              }}
+                           />
+                        </Box>
                      </CardContent>
                   </Card>
                </form>
