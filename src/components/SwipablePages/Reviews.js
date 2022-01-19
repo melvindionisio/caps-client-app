@@ -197,7 +197,7 @@ const Reviews = () => {
                justifyContent: "center",
             }}
          >
-            {isLoggedIn ? (
+            {isLoggedIn.isLoggedIn ? (
                <Box
                   sx={{
                      display: "flex",
