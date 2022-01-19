@@ -22,7 +22,7 @@ import { LoginContext } from "../../contexts/LoginContext";
 
 const BoardingHouseCard = ({ boardinghouse }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
-   const { currentUser } = useContext(LoginContext);
+   const { currentUser, isLoggedIn } = useContext(LoginContext);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -86,13 +86,15 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                   </Box>
                }
                action={
-                  <AddBookmarkButton
-                     boardinghouseId={boardinghouse.id}
-                     boardinghouseName={boardinghouse.name}
-                     bookmarkType={"boardinghouse"}
-                     isBookmarked={isBookmarked}
-                     setIsBookmarked={setIsBookmarked}
-                  />
+                  isLoggedIn.isLoggedIn && (
+                     <AddBookmarkButton
+                        boardinghouseId={boardinghouse.id}
+                        boardinghouseName={boardinghouse.name}
+                        bookmarkType={"boardinghouse"}
+                        isBookmarked={isBookmarked}
+                        setIsBookmarked={setIsBookmarked}
+                     />
+                  )
                }
             />
             <CardContent sx={{ paddingBottom: 0, paddingTop: 0 }}>

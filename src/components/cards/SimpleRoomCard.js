@@ -21,7 +21,7 @@ const SimpleRoomCard = ({ room }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
    const history = useHistory();
    const [houseName, setHouseName] = useState("");
-   const { currentUser } = useContext(LoginContext);
+   const { currentUser, isLoggedIn } = useContext(LoginContext);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -109,13 +109,15 @@ const SimpleRoomCard = ({ room }) => {
                         </Link>
                      }
                      action={
-                        <AddBookmarkButton
-                           roomId={room.id}
-                           roomName={room.name}
-                           bookmarkType={"room"}
-                           isBookmarked={isBookmarked}
-                           setIsBookmarked={setIsBookmarked}
-                        />
+                        isLoggedIn.isLoggedIn && (
+                           <AddBookmarkButton
+                              roomId={room.id}
+                              roomName={room.name}
+                              bookmarkType={"room"}
+                              isBookmarked={isBookmarked}
+                              setIsBookmarked={setIsBookmarked}
+                           />
+                        )
                      }
                      sx={{ pt: 1, pb: 0 }}
                   />
