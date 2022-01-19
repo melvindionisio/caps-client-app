@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { IconButton } from "@mui/material";
 import { grey, pink } from "@mui/material/colors";
 import BookmarkAddIcon from "@mui/icons-material/BookmarkAdd";
@@ -17,9 +17,11 @@ const AddBookmarkButton = ({
    setIsBookmarked,
 }) => {
    const dateTime = useCurrentTimeDate();
+   const [isPending, setIsPending] = useState(false);
    const { currentUser } = useContext(LoginContext);
 
    const handleAddBookmark = () => {
+      setIsPending(true);
       fetch(`${domain}/api/bookmarks/add/${currentUser.id}`, {
          method: "POST",
          body: JSON.stringify({
@@ -39,12 +41,14 @@ const AddBookmarkButton = ({
          .then((data) => {
             console.log(data.message);
             setIsBookmarked(true);
+            setIsPending(false);
          })
          .catch((err) => console.log(err));
    };
 
    const handleRemoveBookmark = () => {
       setIsBookmarked(false);
+      setIsPending(true);
 
       // WORK HERE BUKAS
       if (bookmarkType === "room") {
@@ -57,6 +61,7 @@ const AddBookmarkButton = ({
             .then((data) => {
                console.log(data.message);
                setIsBookmarked(false);
+               setIsPending(false);
                // window.location.reload(false);
             })
             .catch((err) => console.log(err));
@@ -73,6 +78,7 @@ const AddBookmarkButton = ({
             .then((data) => {
                console.log(data.message);
                setIsBookmarked(false);
+               setIsPending(false);
             })
             .catch((err) => console.log(err));
       } else {
@@ -85,6 +91,7 @@ const AddBookmarkButton = ({
          {isBookmarked ? (
             <IconButton
                size="medium"
+               disabled={isPending}
                sx={{
                   background: grey[100],
                   color: pink[500],

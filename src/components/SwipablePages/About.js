@@ -96,6 +96,7 @@ const About = ({ boardinghouse }) => {
    const [stars, setStars] = useState(null);
    const { currentUser } = useContext(LoginContext);
    const [reloader, setReloader] = useState(0);
+   const [isStarPending, setIsStarPending] = useState(true);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -152,6 +153,7 @@ const About = ({ boardinghouse }) => {
          .then((data) => {
             console.log(data);
             setIsStarred(data.isStarred);
+            setIsStarPending(false);
          })
          .catch((err) => {
             if (err.name === "AbortError") {
@@ -166,6 +168,7 @@ const About = ({ boardinghouse }) => {
    }, [currentUser, boardinghouse]);
 
    const handleAddStar = () => {
+      setIsStarPending(true);
       fetch(`${domain}/api/stars/add/${boardinghouse.id}/${currentUser.id}`, {
          method: "POST",
          body: JSON.stringify({
@@ -182,11 +185,14 @@ const About = ({ boardinghouse }) => {
             console.log(data.message);
             setIsStarred(true);
             setReloader((prevCount) => prevCount + 1);
+
+            setIsStarPending(false);
          })
          .catch((err) => console.log(err));
    };
 
    const handleRemoveStar = () => {
+      setIsStarPending(false);
       fetch(
          `${domain}/api/stars/delete/${boardinghouse.id}/${currentUser.id}`,
          {
@@ -200,6 +206,7 @@ const About = ({ boardinghouse }) => {
             console.log(data.message);
             setIsStarred(false);
             setReloader((prevCount) => prevCount + 1);
+            setIsStarPending(false);
          })
          .catch((err) => console.log(err));
    };
@@ -262,6 +269,7 @@ const About = ({ boardinghouse }) => {
                <IconButton
                   size="large"
                   onClick={handleRemoveStar}
+                  disabled={isStarPending}
                   sx={{
                      // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
                      position: "absolute",

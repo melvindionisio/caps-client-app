@@ -16,6 +16,7 @@ const Bookmarks = () => {
    const [bookmarks, setBookmarks] = useState([]);
    const [isPending, setIsPending] = useState(true);
    const [error, setError] = useState("");
+   const [isDeletePending, setIsDeletePending] = useState(false);
 
    const [isEmpty, setIsEmpty] = useState(false);
 
@@ -56,6 +57,7 @@ const Bookmarks = () => {
    }, [currentUser]);
 
    const handleDeleteBookmark = async (bookmarkId) => {
+      setIsDeletePending(true);
       setBookmarks(() =>
          bookmarks.filter((bookmark) => bookmark.id !== bookmarkId)
       );
@@ -67,6 +69,7 @@ const Bookmarks = () => {
          })
          .then((data) => {
             console.log(data.message);
+            setIsDeletePending(false);
             // window.location.reload(false);
          })
          .catch((err) => console.log(err));
@@ -103,6 +106,7 @@ const Bookmarks = () => {
                               key={bookmark.id}
                               bookmark={bookmark}
                               handleDeleteBookmark={handleDeleteBookmark}
+                              isDeletePending={isDeletePending}
                            />
                         ))
                         .reverse()}

@@ -6,7 +6,7 @@ import { useHistory } from "react-router-dom";
 import HouseIcon from "@mui/icons-material/House";
 import BedroomParentIcon from "@mui/icons-material/BedroomParent";
 
-const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
+const BookmarkCard = ({ bookmark, handleDeleteBookmark, isDeletePending }) => {
    const history = useHistory();
 
    const visitBookmark = (id) => {
@@ -61,6 +61,7 @@ const BookmarkCard = ({ bookmark, handleDeleteBookmark }) => {
                      <IconButton
                         aria-label="delete-bookmark"
                         size="large"
+                        disabled={isDeletePending}
                         onClick={() => handleDeleteBookmark(bookmark.id)}
                      >
                         <Delete sx={{ color: pink[500] }} />
