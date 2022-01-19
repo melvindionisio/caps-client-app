@@ -1,9 +1,15 @@
-import { Paper, Avatar, Typography, Box, Button } from "@mui/material";
+import { Paper, Avatar, Typography, Box } from "@mui/material";
 import { red, lightBlue, green } from "@mui/material/colors";
 import React from "react";
 import { Delete } from "@mui/icons-material";
+import LoadingButton from "@mui/lab/LoadingButton";
 
-const ReviewCard = ({ review, isCurrentUserReview, handleDeleteReview }) => {
+const ReviewCard = ({
+   review,
+   isCurrentUserReview,
+   handleDeleteReview,
+   isDeleteReview,
+}) => {
    return (
       <Box
          sx={
@@ -86,11 +92,12 @@ const ReviewCard = ({ review, isCurrentUserReview, handleDeleteReview }) => {
                   </Typography>
                </Box>
                {isCurrentUserReview && (
-                  <Button
+                  <LoadingButton
                      size="small"
                      onClick={() => handleDeleteReview(review.id)}
                      variant="contained"
                      disableElevation
+                     loading={isDeleteReview}
                      sx={{
                         position: "absolute",
                         top: 1,
@@ -106,7 +113,7 @@ const ReviewCard = ({ review, isCurrentUserReview, handleDeleteReview }) => {
                      }
                   >
                      delete
-                  </Button>
+                  </LoadingButton>
                )}
             </Box>
             <Typography variant="body1" color="initial" sx={{ px: 5 }}>

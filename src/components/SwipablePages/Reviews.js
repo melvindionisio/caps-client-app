@@ -2,6 +2,7 @@ import React, { useState, useContext, useEffect, useRef } from "react";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { grey } from "@mui/material/colors";
@@ -23,9 +24,12 @@ const Reviews = () => {
    const [reviews, setReviews] = useState([]);
    const [isEmpty, setIsEmpty] = useState(false);
    const [isPending, setIsPending] = useState(true);
+   const [isSendingReview, setIsSendingReview] = useState(false);
+   const [isDeleteReview, setIsDeleteReview] = useState(false);
 
    const handleAddReview = () => {
       if (reviewText !== "") {
+         setIsSendingReview(true);
          fetch(`${domain}/api/reviews/add/${bhId}`, {
             method: "POST",
             body: JSON.stringify({
@@ -45,6 +49,7 @@ const Reviews = () => {
             .then((data) => {
                //window.location.reload(false);
                console.log(data.message);
+               setIsSendingReview(false);
                setIsPending(true);
                setReviewText("");
                fetch(`${domain}/api/reviews/bh/${bhId}`)
@@ -109,6 +114,7 @@ const Reviews = () => {
 
    const handleDeleteReview = async (reviewId) => {
       setReviews(() => reviews.filter((review) => review.id !== reviewId));
+      setIsDeleteReview(true);
       fetch(`${domain}/api/reviews/${reviewId}`, {
          method: "DELETE",
       })
@@ -117,6 +123,7 @@ const Reviews = () => {
          })
          .then((data) => {
             console.log(data.message);
+            setIsDeleteReview(false);
          })
          .catch((err) => console.log(err));
    };
@@ -156,6 +163,7 @@ const Reviews = () => {
                         review.reviewerId === currentUser.id ? true : false
                      }
                      handleDeleteReview={handleDeleteReview}
+                     isDeleteReview={isDeleteReview}
                   />
                ))}
 
@@ -219,13 +227,14 @@ const Reviews = () => {
                      value={reviewText}
                      onChange={(e) => setReviewText(e.target.value)}
                   />
-                  <Button
+                  <LoadingButton
                      size="small"
                      variant="contained"
                      onClick={handleAddReview}
+                     loading={isSendingReview}
                   >
                      Send
-                  </Button>
+                  </LoadingButton>
                </Box>
             ) : (
                <Box
