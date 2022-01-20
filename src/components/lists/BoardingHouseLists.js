@@ -88,92 +88,103 @@ const BoardingHouseLists = () => {
 
    return (
       <Box sx={{ width: "100%" }}>
-         <Box
-            sx={{
-               display: "flex",
-               justifyContent: "space-between",
-               mb: 1,
-            }}
-         >
-            <ToggleButtonGroup
-               color="primary"
-               aria-label="sort"
-               value={sort}
-               size="small"
-               exclusive
-               onChange={handleChangeSort}
-            >
-               <ToggleButton
-                  value="bh_popularity"
-                  aria-label="sortbypopularity"
+         <Grid container spacing={1}>
+            <Grid item xs={12} sm={12} md={6}>
+               <Box
+                  sx={{
+                     display: "flex",
+                     justifyContent: "space-between",
+                  }}
                >
-                  Popularity
-               </ToggleButton>
-               <ToggleButton value="bh_name" aria-label="sortbyname">
-                  Name
-               </ToggleButton>
-               <ToggleButton value="price_range" aria-label="sortbyprice">
-                  Price
-               </ToggleButton>
-            </ToggleButtonGroup>
-            <ToggleButtonGroup
-               color="primary"
-               aria-label="sort"
-               value={sortType}
-               size="small"
-               exclusive
-               onChange={handleChangeSortType}
-            >
-               <ToggleButton value="asc" aria-label="sortbystar">
-                  ASC
-               </ToggleButton>
-               <ToggleButton value="desc" aria-label="sortbyname">
-                  DESC
-               </ToggleButton>
-            </ToggleButtonGroup>
-         </Box>
-         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
-            <ToggleButtonGroup
-               color="primary"
-               aria-label="gender-sort"
-               value={genderFilter}
-               size="small"
-               exclusive
-               onChange={handleChangeGenderFilter}
-            >
-               <ToggleButton value="All" aria-label="sortbyall">
-                  All
-               </ToggleButton>
-               <ToggleButton value="Male" aria-label="sortbymale">
-                  <MaleIcon />
-               </ToggleButton>
-               <ToggleButton value="Female" aria-label="sortbyfemale">
-                  <FemaleIcon />
-               </ToggleButton>
-            </ToggleButtonGroup>
+                  <ToggleButtonGroup
+                     color="primary"
+                     aria-label="sort"
+                     value={sort}
+                     size="small"
+                     exclusive
+                     onChange={handleChangeSort}
+                  >
+                     <ToggleButton
+                        value="bh_popularity"
+                        aria-label="sortbypopularity"
+                     >
+                        Popularity
+                     </ToggleButton>
+                     <ToggleButton value="bh_name" aria-label="sortbyname">
+                        Name
+                     </ToggleButton>
+                     <ToggleButton value="price_range" aria-label="sortbyprice">
+                        Price
+                     </ToggleButton>
+                  </ToggleButtonGroup>
+                  <ToggleButtonGroup
+                     color="primary"
+                     aria-label="sort"
+                     value={sortType}
+                     size="small"
+                     exclusive
+                     onChange={handleChangeSortType}
+                  >
+                     <ToggleButton value="asc" aria-label="sortbystar">
+                        ASC
+                     </ToggleButton>
+                     <ToggleButton value="desc" aria-label="sortbyname">
+                        DESC
+                     </ToggleButton>
+                  </ToggleButtonGroup>
+               </Box>
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+               <Box
+                  sx={{
+                     display: "flex",
+                     justifyContent: "space-between",
+                     mb: 1,
+                  }}
+               >
+                  <ToggleButtonGroup
+                     color="primary"
+                     aria-label="gender-sort"
+                     value={genderFilter}
+                     size="small"
+                     exclusive
+                     onChange={handleChangeGenderFilter}
+                  >
+                     <ToggleButton value="All" aria-label="sortbyall">
+                        All
+                     </ToggleButton>
+                     <ToggleButton value="Male" aria-label="sortbymale">
+                        <MaleIcon />
+                     </ToggleButton>
+                     <ToggleButton value="Female" aria-label="sortbyfemale">
+                        <FemaleIcon />
+                     </ToggleButton>
+                  </ToggleButtonGroup>
 
-            <ToggleButtonGroup
-               color="primary"
-               aria-label="gender-sort"
-               value={zoneFilter}
-               size="small"
-               exclusive
-               onChange={handleChangeZoneFilter}
-            >
-               <ToggleButton value="All" aria-label="all-zone">
-                  All
-               </ToggleButton>
-               <ToggleButton value="Zone 1" aria-label="zone1">
-                  Zone 1
-               </ToggleButton>
-               <ToggleButton value="Zone 2" aria-label="zone2">
-                  Zone 2
-               </ToggleButton>
-               <ToggleButton value="Zone 3" aria-label="zone3">
-                  Zone 3
-               </ToggleButton>
-            </ToggleButtonGroup>
-         </Box>
+                  <ToggleButtonGroup
+                     color="primary"
+                     aria-label="gender-sort"
+                     value={zoneFilter}
+                     size="small"
+                     exclusive
+                     onChange={handleChangeZoneFilter}
+                  >
+                     <ToggleButton value="All" aria-label="all-zone">
+                        All
+                     </ToggleButton>
+                     <ToggleButton value="Zone 1" aria-label="zone1">
+                        Zone 1
+                     </ToggleButton>
+                     <ToggleButton value="Zone 2" aria-label="zone2">
+                        Zone 2
+                     </ToggleButton>
+                     <ToggleButton value="Zone 3" aria-label="zone3">
+                        Zone 3
+                     </ToggleButton>
+                  </ToggleButtonGroup>
+               </Box>
+            </Grid>
+         </Grid>
          <Divider sx={{ mb: 1 }} />
          <Grid container spacing={2}>
             {error && (
