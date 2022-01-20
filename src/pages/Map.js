@@ -38,7 +38,7 @@ const Map = () => {
          // style: "mapbox://styles/melsio/ckxh1gtia1zp614oa0dlp8ow1",
          // style: "mapbox://styles/mapbox/streets-v11",
          // style: "mapbox://styles/mapbox/outdoors-v11",
-         // style: "mapbox://styles/mapbox/satellite-streets-v11",
+         //style: "mapbox://styles/mapbox/satellite-streets-v11",
          // style: "mapbox://styles/melsio/ckxfpxxz40k3r15o5aszjz3nd",
          // style: "mapbox://styles/melsio/ckxfq49zf03hg14qlylrabt35",
          // style: "mapbox://styles/mapbox/light-v10?optimize=true",

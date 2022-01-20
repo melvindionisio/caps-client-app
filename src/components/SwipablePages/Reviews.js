@@ -113,6 +113,10 @@ const Reviews = () => {
       };
    }, [bhId]);
 
+   //useEffect(() => {
+   //scroller.current.scrollIntoView();
+   //}, [reviews]);
+
    const handleDeleteReview = async (reviewId) => {
       setIsDeleteReview(true);
       fetch(`${domain}/api/reviews/${reviewId}`, {
