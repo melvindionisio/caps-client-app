@@ -82,9 +82,6 @@ const BoardingHouseLists = () => {
                exclusive
                onChange={handleChangeSort}
             >
-               <ToggleButton value="none" disabled aria-label="sortby">
-                  Sort By
-               </ToggleButton>
                <ToggleButton
                   value="bh_popularity"
                   aria-label="sortbypopularity"
@@ -95,7 +92,7 @@ const BoardingHouseLists = () => {
                   Name
                </ToggleButton>
                <ToggleButton value="price_range" aria-label="sortbyprice">
-                  Price Range
+                  Price
                </ToggleButton>
             </ToggleButtonGroup>
             <ToggleButtonGroup
