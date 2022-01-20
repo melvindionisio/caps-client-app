@@ -189,7 +189,6 @@ const Search = () => {
                                     style={{
                                        margin: "0 auto",
                                        maxWidth: "30rem",
-                                       minWidth: "29rem",
                                     }}
                                     key={boardinghouse.id}
                                  >

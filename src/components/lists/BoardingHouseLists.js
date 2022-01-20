@@ -4,6 +4,9 @@ import BoardingHouseCard from "../cards/BoardingHouseCard";
 import LoadingState from "../../components/LoadingState";
 import Typography from "@mui/material/Typography";
 //import Masonry from "@mui/lab/Masonry";
+import MaleIcon from "@mui/icons-material/Male";
+import FemaleIcon from "@mui/icons-material/Female";
+//import WcIcon from "@mui/icons-material/Wc";
 import { domain } from "../../fetch-url/fetchUrl";
 import {
    ToggleButton,
@@ -25,7 +28,15 @@ const BoardingHouseLists = () => {
    const [error, setError] = useState(null);
    const [sort, setSort] = useState("bh_popularity");
    const [sortType, setSortType] = useState("desc");
+   const [genderSort, setGenderSort] = useState("all");
+   const [zoneSort, setZoneSort] = useState("all");
 
+   const handleChangeZoneSort = (event, newZoneSort) => {
+      setZoneSort(newZoneSort);
+   };
+   const handleChangeGenderSort = (event, newGenderSort) => {
+      setGenderSort(newGenderSort);
+   };
    const handleChangeSort = (event, newSort) => {
       setSort(newSort);
    };
@@ -73,7 +84,13 @@ const BoardingHouseLists = () => {
 
    return (
       <Box sx={{ width: "100%" }}>
-         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+         <Box
+            sx={{
+               display: "flex",
+               justifyContent: "space-between",
+               mb: 1,
+            }}
+         >
             <ToggleButtonGroup
                color="primary"
                aria-label="sort"
@@ -108,6 +125,48 @@ const BoardingHouseLists = () => {
                </ToggleButton>
                <ToggleButton value="desc" aria-label="sortbyname">
                   DESC
+               </ToggleButton>
+            </ToggleButtonGroup>
+         </Box>
+         <Box sx={{ display: "flex", justifyContent: "space-between", mb: 1 }}>
+            <ToggleButtonGroup
+               color="primary"
+               aria-label="gender-sort"
+               value={genderSort}
+               size="small"
+               exclusive
+               onChange={handleChangeGenderSort}
+            >
+               <ToggleButton value="all" aria-label="sortbyall">
+                  All
+               </ToggleButton>
+               <ToggleButton value="male" aria-label="sortbymale">
+                  <MaleIcon />
+               </ToggleButton>
+               <ToggleButton value="female" aria-label="sortbyfemale">
+                  <FemaleIcon />
+               </ToggleButton>
+            </ToggleButtonGroup>
+
+            <ToggleButtonGroup
+               color="primary"
+               aria-label="gender-sort"
+               value={zoneSort}
+               size="small"
+               exclusive
+               onChange={handleChangeZoneSort}
+            >
+               <ToggleButton value="all" aria-label="all-zone">
+                  All
+               </ToggleButton>
+               <ToggleButton value="zone1" aria-label="zone1">
+                  Zone 1
+               </ToggleButton>
+               <ToggleButton value="zone2" aria-label="zone2">
+                  Zone 2
+               </ToggleButton>
+               <ToggleButton value="zone3" aria-label="zone3">
+                  Zone 3
                </ToggleButton>
             </ToggleButtonGroup>
          </Box>
