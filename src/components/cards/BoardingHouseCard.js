@@ -81,7 +81,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                   <Box sx={{ display: "flex", alignItems: "center" }}>
                      <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
                      <Typography variant="body2">
-                        {boardinghouse.popularity ?? 0} stars
+                        {boardinghouse.popularity} stars
                      </Typography>
                   </Box>
                }

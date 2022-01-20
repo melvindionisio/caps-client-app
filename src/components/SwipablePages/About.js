@@ -94,7 +94,7 @@ const About = ({ boardinghouse }) => {
    const classes = useStyles();
    const [isStarred, setIsStarred] = useState(false);
    const [stars, setStars] = useState(null);
-   const { currentUser } = useContext(LoginContext);
+   const { currentUser, isLoggedIn } = useContext(LoginContext);
    const [reloader, setReloader] = useState(0);
    const [isStarPending, setIsStarPending] = useState(true);
 
@@ -270,12 +270,24 @@ const About = ({ boardinghouse }) => {
                   size="large"
                   onClick={handleRemoveStar}
                   disabled={isStarPending}
-                  sx={{
-                     // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
-                     position: "absolute",
-                     top: ".5rem",
-                     right: ".5rem",
-                  }}
+                  sx={
+                     isLoggedIn.isLoggedIn
+                        ? {
+                             // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+                             position: "absolute",
+                             top: ".5rem",
+                             right: ".5rem",
+                             display: "block",
+                          }
+                        : {
+                             // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+                             position: "absolute",
+                             top: ".5rem",
+                             right: ".5rem",
+
+                             display: "none",
+                          }
+                  }
                >
                   <GradeIcon
                      fontSize="large"
@@ -286,12 +298,24 @@ const About = ({ boardinghouse }) => {
                <IconButton
                   size="large"
                   onClick={handleAddStar}
-                  sx={{
-                     // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
-                     position: "absolute",
-                     top: ".5rem",
-                     right: ".5rem",
-                  }}
+                  sx={
+                     isLoggedIn.isLoggedIn
+                        ? {
+                             // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+                             position: "absolute",
+                             top: ".5rem",
+                             right: ".5rem",
+                             display: "block",
+                          }
+                        : {
+                             // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
+                             position: "absolute",
+                             top: ".5rem",
+                             right: ".5rem",
+
+                             display: "none",
+                          }
+                  }
                >
                   <GradeIcon fontSize="large" className={classes.gradeIcon} />
                </IconButton>
