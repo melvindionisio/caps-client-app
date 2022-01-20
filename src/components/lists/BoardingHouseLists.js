@@ -24,18 +24,19 @@ const BoardingHouseLists = () => {
    //} = useFetch(`${domain}/api/boarding-houses`);
 
    const [boardinghouses, setBoardinghouses] = useState([]);
+   const [isEmpty, setIsEmpty] = useState(false);
    const [isPending, setIsPending] = useState(true);
    const [error, setError] = useState(null);
    const [sort, setSort] = useState("bh_popularity");
    const [sortType, setSortType] = useState("desc");
-   const [genderSort, setGenderSort] = useState("all");
-   const [zoneSort, setZoneSort] = useState("all");
+   const [genderFilter, setGenderFilter] = useState("All");
+   const [zoneFilter, setZoneFilter] = useState("All");
 
-   const handleChangeZoneSort = (event, newZoneSort) => {
-      setZoneSort(newZoneSort);
+   const handleChangeZoneFilter = (event, newZoneFilter) => {
+      setZoneFilter(newZoneFilter);
    };
-   const handleChangeGenderSort = (event, newGenderSort) => {
-      setGenderSort(newGenderSort);
+   const handleChangeGenderFilter = (event, newGenderFilter) => {
+      setGenderFilter(newGenderFilter);
    };
    const handleChangeSort = (event, newSort) => {
       setSort(newSort);
@@ -52,7 +53,7 @@ const BoardingHouseLists = () => {
          setBoardinghouses(null);
          setTimeout(() => {
             fetch(
-               `${domain}/api/boarding-houses/?sort=${sort}&sortType=${sortType}`,
+               `${domain}/api/boarding-houses/?sort=${sort}&sortType=${sortType}&gender=${genderFilter}&zone=${zoneFilter}`,
                { signal: abortCont.signal }
             )
                .then((res) => {
@@ -62,6 +63,9 @@ const BoardingHouseLists = () => {
                   return res.json();
                })
                .then((data) => {
+                  if (data.length <= 0) {
+                     setIsEmpty(true);
+                  }
                   setBoardinghouses(data);
                   setIsPending(false);
                   setError(null);
@@ -80,7 +84,7 @@ const BoardingHouseLists = () => {
             abortCont.abort();
          };
       }
-   }, [sort, sortType]);
+   }, [sort, sortType, genderFilter, zoneFilter]);
 
    return (
       <Box sx={{ width: "100%" }}>
@@ -132,18 +136,18 @@ const BoardingHouseLists = () => {
             <ToggleButtonGroup
                color="primary"
                aria-label="gender-sort"
-               value={genderSort}
+               value={genderFilter}
                size="small"
                exclusive
-               onChange={handleChangeGenderSort}
+               onChange={handleChangeGenderFilter}
             >
-               <ToggleButton value="all" aria-label="sortbyall">
+               <ToggleButton value="All" aria-label="sortbyall">
                   All
                </ToggleButton>
-               <ToggleButton value="male" aria-label="sortbymale">
+               <ToggleButton value="Male" aria-label="sortbymale">
                   <MaleIcon />
                </ToggleButton>
-               <ToggleButton value="female" aria-label="sortbyfemale">
+               <ToggleButton value="Female" aria-label="sortbyfemale">
                   <FemaleIcon />
                </ToggleButton>
             </ToggleButtonGroup>
@@ -151,21 +155,21 @@ const BoardingHouseLists = () => {
             <ToggleButtonGroup
                color="primary"
                aria-label="gender-sort"
-               value={zoneSort}
+               value={zoneFilter}
                size="small"
                exclusive
-               onChange={handleChangeZoneSort}
+               onChange={handleChangeZoneFilter}
             >
-               <ToggleButton value="all" aria-label="all-zone">
+               <ToggleButton value="All" aria-label="all-zone">
                   All
                </ToggleButton>
-               <ToggleButton value="zone1" aria-label="zone1">
+               <ToggleButton value="Zone 1" aria-label="zone1">
                   Zone 1
                </ToggleButton>
-               <ToggleButton value="zone2" aria-label="zone2">
+               <ToggleButton value="Zone 2" aria-label="zone2">
                   Zone 2
                </ToggleButton>
-               <ToggleButton value="zone3" aria-label="zone3">
+               <ToggleButton value="Zone 3" aria-label="zone3">
                   Zone 3
                </ToggleButton>
             </ToggleButtonGroup>
@@ -186,6 +190,16 @@ const BoardingHouseLists = () => {
                      boardinghouse={boardinghouse}
                   />
                ))}
+            {isEmpty && (
+               <Typography
+                  variant="body2"
+                  color="text.secondary"
+                  align="center"
+                  sx={{ width: "100%", mt: 4 }}
+               >
+                  {zoneFilter} is Empty!
+               </Typography>
+            )}
             {/*</Masonry>*/}
          </Grid>
       </Box>
