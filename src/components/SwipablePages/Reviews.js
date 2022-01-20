@@ -113,7 +113,6 @@ const Reviews = () => {
    }, [bhId]);
 
    const handleDeleteReview = async (reviewId) => {
-      setReviews(() => reviews.filter((review) => review.id !== reviewId));
       setIsDeleteReview(true);
       fetch(`${domain}/api/reviews/${reviewId}`, {
          method: "DELETE",
@@ -122,6 +121,9 @@ const Reviews = () => {
             return res.json();
          })
          .then((data) => {
+            setReviews(() =>
+               reviews.filter((review) => review.id !== reviewId)
+            );
             console.log(data.message);
             setIsDeleteReview(false);
          })
