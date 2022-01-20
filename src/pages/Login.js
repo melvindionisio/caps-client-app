@@ -62,9 +62,9 @@ const Login = () => {
                      history.push("/");
                      setIsLoggedIn({ isLoggedIn: true, loginType: "normal" });
                      setCurrentUser({
-                        id: data.id,
-                        name: data.name,
-                        username: data.username,
+                        id: data.seeker_id,
+                        name: data.seeker_name,
+                        username: data.seeker_username,
                      });
                   } else if (data.status === "incorrect") {
                      setIsPending(false);
