@@ -113,9 +113,6 @@ const BoardingHouseLists = () => {
                      <ToggleButton value="bh_name" aria-label="sortbyname">
                         Name
                      </ToggleButton>
-                     <ToggleButton value="price_range" aria-label="sortbyprice">
-                        Price
-                     </ToggleButton>
                   </ToggleButtonGroup>
                   <ToggleButtonGroup
                      color="primary"

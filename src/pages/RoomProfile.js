@@ -21,6 +21,9 @@ import AddBookmarkButton from "../components/AddBookmarkButton";
 import LoadingState from "../components/LoadingState";
 import DetailsCard from "../components/cards/DetailsCard";
 import { LoginContext } from "../contexts/LoginContext";
+import HouseIcon from "@mui/icons-material/House";
+import BedroomParentIcon from "@mui/icons-material/BedroomParent";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const InfoItem = ({ icon, primaryText, secondaryText }) => {
    return (
@@ -182,91 +185,94 @@ const RoomProfile = (props) => {
                                  textTransform: "uppercase",
                               }}
                            >
-                              Available
+                              {room.status}
                            </Typography>
                         </Typography>
+
+                        <Typography
+                           align="center"
+                           variant="body1"
+                           sx={{ py: 2, fontStyle: "italic" }}
+                        >
+                           {room.description}
+                        </Typography>
+
                         {boardinghouse && (
                            <>
-                              <Typography variant="body1">
-                                 Boardinghouse:{" "}
-                                 <Typography
-                                    variant="caption"
-                                    sx={{
-                                       color: green[500],
-                                       fontWeight: "bold",
-                                       fontSize: 16,
-                                       textTransform: "uppercase",
-                                    }}
-                                 >
-                                    {boardinghouse.name}
-                                 </Typography>
-                              </Typography>
-                              <Typography
-                                 variant="body1"
-                                 sx={{
-                                    marginBottom: 1,
-                                 }}
-                              >
-                                 Address:{" "}
-                                 <Typography
-                                    variant="caption"
-                                    sx={{
-                                       color: green[500],
-                                       fontWeight: "bold",
-                                       fontSize: 16,
-                                       textTransform: "uppercase",
-                                    }}
-                                 >
-                                    {boardinghouse.completeAddress}
-                                 </Typography>
-                              </Typography>
+                              <Grid container spacing={1}>
+                                 <Grid item xs={4}>
+                                    <DetailsCard title="Beds" colors="blue">
+                                       <Typography
+                                          variant="body1"
+                                          color="text.secondary"
+                                          align="center"
+                                          sx={{
+                                             fontSize: 45,
+                                             fontWeight: "bold",
+                                          }}
+                                       >
+                                          {room.totalSlots}
+                                       </Typography>
+                                    </DetailsCard>
+                                 </Grid>
+                                 <Grid item xs={4}>
+                                    <DetailsCard title="Occupied">
+                                       <Typography
+                                          variant="body1"
+                                          color="text.secondary"
+                                          align="center"
+                                          sx={{
+                                             fontSize: 45,
+                                             fontWeight: "bold",
+                                          }}
+                                       >
+                                          {room.occupiedSlots}
+                                       </Typography>
+                                    </DetailsCard>
+                                 </Grid>
+                                 <Grid item xs={4}>
+                                    <DetailsCard
+                                       title="Available"
+                                       colors="green"
+                                    >
+                                       <Typography
+                                          variant="body1"
+                                          color="text.secondary"
+                                          align="center"
+                                          sx={{
+                                             fontSize: 45,
+                                             fontWeight: "bold",
+                                          }}
+                                       >
+                                          {room.totalSlots - room.occupiedSlots}
+                                       </Typography>
+                                    </DetailsCard>
+                                 </Grid>
+                              </Grid>
+
+                              <DetailsCard title="Boarding house">
+                                 <InfoItem
+                                    primaryText={boardinghouse.name}
+                                    icon={<HouseIcon />}
+                                 />
+                              </DetailsCard>
+                              <DetailsCard title="Address">
+                                 <InfoItem
+                                    primaryText={boardinghouse.completeAddress}
+                                    icon={<LocationOnIcon />}
+                                 />
+                              </DetailsCard>
+                              <DetailsCard title="Room Type">
+                                 <InfoItem
+                                    primaryText={room.type}
+                                    icon={<BedroomParentIcon />}
+                                 />
+                              </DetailsCard>
+                              <DetailsCard title="Gender Allowed">
+                                 <InfoItem primaryText={room.genderAllowed} />
+                              </DetailsCard>
                            </>
                         )}
-
-                        <Grid container spacing={1}>
-                           <Grid item xs={4}>
-                              <DetailsCard title="Beds" colors="blue">
-                                 <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    align="center"
-                                    sx={{ fontSize: 45, fontWeight: "bold" }}
-                                 >
-                                    {room.totalSlots}
-                                 </Typography>
-                              </DetailsCard>
-                           </Grid>
-                           <Grid item xs={4}>
-                              <DetailsCard title="Occupied">
-                                 <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    align="center"
-                                    sx={{ fontSize: 45, fontWeight: "bold" }}
-                                 >
-                                    {room.occupiedSlots}
-                                 </Typography>
-                              </DetailsCard>
-                           </Grid>
-                           <Grid item xs={4}>
-                              <DetailsCard title="Available" colors="green">
-                                 <Typography
-                                    variant="body1"
-                                    color="text.secondary"
-                                    align="center"
-                                    sx={{ fontSize: 45, fontWeight: "bold" }}
-                                 >
-                                    {room.totalSlots - room.occupiedSlots}
-                                 </Typography>
-                              </DetailsCard>
-                           </Grid>
-                        </Grid>
-                        <DetailsCard title="Room Type">
-                           <InfoItem primaryText={room.type} />
-                        </DetailsCard>
-                        <DetailsCard title="Gender Allowed">
-                           <InfoItem primaryText={room.genderAllowed} />
-                        </DetailsCard>
                      </Container>
                   </Box>
                </>

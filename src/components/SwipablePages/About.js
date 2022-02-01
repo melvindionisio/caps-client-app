@@ -277,7 +277,6 @@ const About = ({ boardinghouse }) => {
                              position: "absolute",
                              top: ".5rem",
                              right: ".5rem",
-                             display: "block",
                           }
                         : {
                              // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
