@@ -63,7 +63,9 @@ const Reviews = () => {
                      setIsPending(false);
                      if (data) {
                         setReviews(data);
-                        scroller.current.scrollIntoView();
+                        setTimeout(() => {
+                           scroller.current.scrollIntoView();
+                        }, 3000);
                      }
                   })
                   .catch((err) => {

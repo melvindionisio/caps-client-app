@@ -6,7 +6,6 @@ import {
    Typography,
    Card,
    CardContent,
-   CardHeader,
    AppBar,
    Toolbar,
    IconButton,
@@ -17,7 +16,6 @@ import SearchOutlined from "@mui/icons-material/SearchOutlined";
 
 import { Box } from "@mui/system";
 import { useHistory } from "react-router-dom";
-import CheckOutlined from "@mui/icons-material/CheckOutlined";
 import { domain } from "../fetch-url/fetchUrl";
 import BoardingHouseCard from "../components/cards/BoardingHouseCard";
 import LoadingState from "../components/LoadingState";

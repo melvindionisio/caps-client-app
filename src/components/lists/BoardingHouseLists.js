@@ -34,6 +34,7 @@ const BoardingHouseLists = () => {
 
    const handleChangeZoneFilter = (event, newZoneFilter) => {
       setZoneFilter(newZoneFilter);
+      setIsEmpty(false);
    };
    const handleChangeGenderFilter = (event, newGenderFilter) => {
       setGenderFilter(newGenderFilter);
