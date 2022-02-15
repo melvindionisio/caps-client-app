@@ -15,6 +15,7 @@ import {
    CardHeader,
    Grid,
    Box,
+   IconButton,
 } from "@mui/material";
 import { lightBlue, green } from "@mui/material/colors";
 import AddBookmarkButton from "../components/AddBookmarkButton";
@@ -50,7 +51,7 @@ const RoomProfile = (props) => {
    const [error, setError] = useState(null);
    const [isBookmarked, setIsBookmarked] = useState(false);
    const [boardinghouse, setBoardinghouse] = useState();
-   const { currentUser } = useContext(LoginContext);
+   const { isLoggedIn, currentUser } = useContext(LoginContext);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -64,6 +65,7 @@ const RoomProfile = (props) => {
                .then((res) => res.json())
                .then((data) => {
                   setBoardinghouse(data);
+                  console.log(data);
                })
                .catch((err) => console.log(err));
          })
@@ -114,16 +116,34 @@ const RoomProfile = (props) => {
             {room && (
                <>
                   <ReusableNavigation spaceCenter={true}>
-                     <Typography variant="body1" align="center">
-                        {room.name}
-                     </Typography>
-                     <AddBookmarkButton
-                        roomId={room.id}
-                        roomName={room.name}
-                        bookmarkType={"room"}
-                        isBookmarked={isBookmarked}
-                        setIsBookmarked={setIsBookmarked}
-                     />
+                     <Box
+                        sx={{
+                           display: "flex",
+                           flexDirection: "column",
+                           alignItems: "center",
+                        }}
+                     >
+                        <Typography variant="body1" align="center">
+                           {room.name}
+                        </Typography>
+                        <Typography variant="subtitle1" sx={{ fontSize: 12 }}>
+                           {boardinghouse && boardinghouse.name}
+                        </Typography>
+                     </Box>
+
+                     {isLoggedIn ? (
+                        <AddBookmarkButton
+                           roomId={room.id}
+                           roomName={room.name}
+                           bookmarkType={"room"}
+                           isBookmarked={isBookmarked}
+                           setIsBookmarked={setIsBookmarked}
+                        />
+                     ) : (
+                        <IconButton sx={{ opacity: 0 }}>
+                           <LocationOnIcon />
+                        </IconButton>
+                     )}
                   </ReusableNavigation>
                   <Box
                      sx={{

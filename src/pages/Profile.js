@@ -167,7 +167,7 @@ const Profile = () => {
                   <Card
                      sx={{
                         borderRadius: 2,
-                        width: "80%",
+                        maxWidth: "600px",
                         background: `linear-gradient(to bottom right, ${cyan[300]}, ${lightBlue[400]}, ${blue[500]})`,
                         margin: "0 auto",
                         position: "relative",

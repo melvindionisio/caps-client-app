@@ -27,6 +27,7 @@ import BedroomChildIcon from "@mui/icons-material/BedroomChild";
 import ReviewsIcon from "@mui/icons-material/Reviews";
 import AddBookmarkButton from "../components/AddBookmarkButton";
 import { LoginContext } from "../contexts/LoginContext";
+import { IconButton } from "@mui/material";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -59,7 +60,7 @@ function a11yProps(index) {
 const BoardingHouseProfile = () => {
    const { bhId } = useParams();
    const [isBookmarked, setIsBookmarked] = useState(false);
-   const { currentUser } = useContext(LoginContext);
+   const { isLoggedIn, currentUser } = useContext(LoginContext);
 
    const {
       data: boardinghouse,
@@ -154,13 +155,19 @@ const BoardingHouseProfile = () => {
                      <Typography variant="body1" align="center">
                         {boardinghouse.name}
                      </Typography>
-                     <AddBookmarkButton
-                        boardinghouseId={boardinghouse.id}
-                        boardinghouseName={boardinghouse.name}
-                        bookmarkType={"boardinghouse"}
-                        isBookmarked={isBookmarked}
-                        setIsBookmarked={setIsBookmarked}
-                     />
+                     {isLoggedIn ? (
+                        <AddBookmarkButton
+                           boardinghouseId={boardinghouse.id}
+                           boardinghouseName={boardinghouse.name}
+                           bookmarkType={"boardinghouse"}
+                           isBookmarked={isBookmarked}
+                           setIsBookmarked={setIsBookmarked}
+                        />
+                     ) : (
+                        <IconButton sx={{ opacity: 0 }}>
+                           <InfoIcon />
+                        </IconButton>
+                     )}
                   </ReusableNavigation>
 
                   <SwipeableViews

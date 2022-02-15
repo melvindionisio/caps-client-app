@@ -18,6 +18,7 @@ import GoogleLogin from "react-google-login";
 import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
+import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
 import { useContext } from "react";
@@ -202,6 +203,12 @@ export default function AccountMenu({ currentUser }) {
                </div>
             ) : (
                <React.Fragment>
+                  <MenuItem onClick={() => history.push("/register")}>
+                     <ListItemIcon>
+                        <PersonAddIcon fontSize="small" />
+                     </ListItemIcon>
+                     Register
+                  </MenuItem>
                   <MenuItem onClick={() => history.push("/login")}>
                      <ListItemIcon>
                         <Login fontSize="small" />
