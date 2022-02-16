@@ -136,7 +136,7 @@ const BoardingHouseProfile = () => {
    return (
       <Slide in={true} direction="up">
          <Container
-            maxWidth="lg"
+            maxWidth="xl"
             disableGutters
             sx={{ height: "100vh", overflow: "hidden" }}
          >

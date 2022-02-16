@@ -85,7 +85,7 @@ const Bookmarks = () => {
 
    return (
       <Slide in={true} direction="left">
-         <Container maxWidth="lg" disableGutters>
+         <Container maxWidth="xl" disableGutters>
             <ReusableNavigation center={true}>
                <Typography variant="body1" align="center">
                   Bookmarks

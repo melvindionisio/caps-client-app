@@ -24,6 +24,7 @@ import MiniMap from "../MiniMap";
 import { useEffect, useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
+import useFetch from "../../hooks/useFetch";
 
 const useStyles = makeStyles({
    avatar: {
@@ -97,6 +98,10 @@ const About = ({ boardinghouse }) => {
    const { currentUser, isLoggedIn } = useContext(LoginContext);
    const [reloader, setReloader] = useState(0);
    const [isStarPending, setIsStarPending] = useState(true);
+
+   const { data: totalRoom } = useFetch(
+      `${domain}/api/rooms/total/${boardinghouse.id}`
+   );
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -382,17 +387,27 @@ const About = ({ boardinghouse }) => {
                />
             </DetailsCard>
 
-            <DetailsCard title="House Protocols">Do's and Dont's</DetailsCard>
-            <DetailsCard title="We Offer">Offers</DetailsCard>
+            <DetailsCard title="House Protocols">
+               {boardinghouse.houseProtocols}
+            </DetailsCard>
+            <DetailsCard title="We Offer">{boardinghouse.offers}</DetailsCard>
             <DetailsCard title="Gender/s Allowed">
                <InfoItem
                   icon={<LocationOnIcon />}
                   primaryText={boardinghouse.genderAllowed}
                />
             </DetailsCard>
-            <DetailsCard title="Water source">Bombahan</DetailsCard>
-            <DetailsCard title="Price Range">Price</DetailsCard>
-            <DetailsCard title="Total Rooms">n Rooms</DetailsCard>
+            <DetailsCard title="Water source">
+               {boardinghouse.waterSource}
+            </DetailsCard>
+            <DetailsCard title="Price Range">
+               {boardinghouse.priceRange}
+            </DetailsCard>
+            {totalRoom && (
+               <DetailsCard title="Total Rooms">
+                  {totalRoom.total} rooms
+               </DetailsCard>
+            )}
 
             <Box sx={{ mb: 2, mt: 4 }}>
                <Typography
