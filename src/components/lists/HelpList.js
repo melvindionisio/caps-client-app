@@ -49,7 +49,7 @@ export default function HelpList() {
          ],
       },
       {
-         title: "How to activated real-time locator?",
+         title: "How to activate real-time locator?",
          summary: `You can locate your current location to see whether you are near the target destination (boarding house) that you are looking for. first you should go to the maps page where you see the marks of boarding houses available and then on top-left-side of the page you should see a location icon and upon clicking the permission to access location will appear and as soon as it loads, you location will be hovered in the map (refer to the photos below).`,
          details: [
             {

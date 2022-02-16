@@ -8,7 +8,7 @@ import {
 import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Hidden from "@mui/material/Hidden";
-import { Drawer } from "@mui/material";
+//import { Drawer } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import { blueGrey, blue, amber } from "@mui/material/colors";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
@@ -114,7 +114,9 @@ const App = () => {
             >
                {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
                <Router>
+                  {/*
                   <Hidden lgDown>
+
                      <Drawer
                         variant="permanent"
                         anchor="left"
@@ -124,7 +126,9 @@ const App = () => {
                            paper: classes.drawerPaper,
                         }}
                      >
-                        {/* <Typography>BookMarks</Typography>
+                            */}
+
+                  {/* <Typography>BookMarks</Typography>
               <Hidden lgDown>
                 <Typography>LG</Typography>
               </Hidden>
@@ -132,9 +136,12 @@ const App = () => {
                 <Typography>MD</Typography>
               </Hidden> */}
 
+                  {/*
                         <Map />
                      </Drawer>
                   </Hidden>
+
+                            */}
                   <Switch>
                      <Route exact path="/">
                         <Redirect to="/home" />

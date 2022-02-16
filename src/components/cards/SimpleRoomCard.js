@@ -55,7 +55,7 @@ const SimpleRoomCard = ({ room }) => {
    return (
       <>
          {room && (
-            <Grid item xl={6} lg={6} md={4} sm={6} xs={12}>
+            <Grid item xl={4} lg={4} md={4} sm={6} xs={12}>
                <Card
                   sx={{
                      overflow: "hidden",

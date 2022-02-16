@@ -5,23 +5,23 @@ import HomeIcon from "@mui/icons-material/Home";
 import HelpOutlinedIcon from "@mui/icons-material/HelpOutlined";
 import HelpOutlineIcon from "@mui/icons-material/HelpOutline";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
-// import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
-// import LocationOnIcon from "@mui/icons-material/LocationOn";
+import LocationOnOutlinedIcon from "@mui/icons-material/LocationOnOutlined";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
 const DeskPageNavigation = () => {
    const history = useHistory();
    const location = useLocation();
    const navItems = [
-      // {
-      //   label: "Map",
-      //   value: "map",
-      //   icons: {
-      //     inactive: <LocationOnOutlinedIcon fontSize="medium" />,
-      //     active: <LocationOnIcon />,
-      //   },
-      //   path: "/map",
-      //   index: 0,
-      // },
+      {
+         label: "Map",
+         value: "map",
+         icons: {
+            inactive: <LocationOnOutlinedIcon fontSize="medium" />,
+            active: <LocationOnIcon />,
+         },
+         path: "/map",
+         index: 0,
+      },
       {
          label: "Home",
          value: "home",
