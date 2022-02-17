@@ -125,7 +125,7 @@ const SimpleRoomCard = ({ room }) => {
                            />
                         )
                      }
-                     sx={{ py: 0 }}
+                     sx={{ py: 0, pt: 1 }}
                   />
                   <CardContent
                      sx={{ p: 2, py: 1, flexGrow: 2, display: "flex", gap: 1 }}

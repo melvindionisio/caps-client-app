@@ -32,7 +32,7 @@ import SearchOutlinedIcon from "@mui/icons-material/SearchOutlined";
 import Logout from "@mui/icons-material/Logout";
 import PersonIcon from "@mui/icons-material/Person";
 
-import { blue, cyan, lightBlue, red } from "@mui/material/colors";
+import { blue, cyan, lightBlue, red, purple } from "@mui/material/colors";
 import { GoogleLogout } from "react-google-login";
 import { LoginContext } from "../../contexts/LoginContext";
 import { useContext } from "react";
@@ -109,9 +109,14 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                         style={{
                            outline: "1px solid rgba(25, 118, 210, 0.5)",
                            outlineOffset: "2px",
+                           background: purple[300],
                         }}
                         src={currentUser.picture ?? null}
-                     />
+                     >
+                        {currentUser.picture
+                           ? " "
+                           : currentUser.name.charAt(0).toUpperCase()}
+                     </Avatar>
                   </IconButton>
                </Hidden>
 

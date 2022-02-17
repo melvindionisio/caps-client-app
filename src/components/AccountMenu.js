@@ -24,7 +24,7 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 
-import { amber, grey } from "@mui/material/colors";
+import { amber, grey, purple } from "@mui/material/colors";
 import { domain } from "../fetch-url/fetchUrl";
 
 export default function AccountMenu({ currentUser }) {
@@ -122,9 +122,14 @@ export default function AccountMenu({ currentUser }) {
                   style={{
                      outline: "1px solid rgba(25, 118, 210, 0.5)",
                      outlineOffset: "2px",
+                     background: purple[300],
                   }}
-                  src={currentUser.picture}
-               />
+                  src={currentUser.picture ?? "none"}
+               >
+                  {currentUser.picture
+                     ? ""
+                     : currentUser.name.charAt(0).toUpperCase()}
+               </Avatar>
             </IconButton>
          </Tooltip>
          <Menu

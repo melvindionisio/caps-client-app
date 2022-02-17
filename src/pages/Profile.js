@@ -126,7 +126,6 @@ const Profile = () => {
             setIsPasswordErrorShow(false);
          }
       }, 3000);
-      console.log(isLoggedIn);
    }, [isProfileErrorShow, isLoggedIn, isPasswordErrorShow]);
 
    return (
@@ -192,12 +191,16 @@ const Profile = () => {
                               sx={{
                                  height: "8rem",
                                  width: "8rem",
-                                 background: "#lightgrey",
                                  border: "3px solid",
                                  borderColor: "background.default",
+                                 fontSize: 40,
                               }}
                               src={currentUser.picture ?? "none"}
-                           />
+                           >
+                              {currentUser.picture
+                                 ? ""
+                                 : currentUser.name.charAt(0).toUpperCase()}
+                           </Avatar>
                         </Box>
                         <CardHeader
                            sx={{ m: 0, p: 0, pb: 2 }}
