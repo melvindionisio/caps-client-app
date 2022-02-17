@@ -16,6 +16,7 @@ import { useHistory, Link } from "react-router-dom";
 import AddBookmarkButton from "../../components/AddBookmarkButton";
 import { domain } from "../../fetch-url/fetchUrl";
 import { LoginContext } from "../../contexts/LoginContext";
+import { blue, orange, green } from "@mui/material/colors";
 
 const SimpleRoomCard = ({ room }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
@@ -86,7 +87,10 @@ const SimpleRoomCard = ({ room }) => {
                      title={
                         <Typography
                            variant="h6"
-                           sx={{ fontFamily: "Quicksand" }}
+                           sx={{
+                              fontFamily: "Quicksand",
+                              padding: 0,
+                           }}
                         >
                            {room.name}
                         </Typography>
@@ -100,12 +104,13 @@ const SimpleRoomCard = ({ room }) => {
                               variant="body2"
                               sx={{
                                  color: "#2C2C2C",
-                                 "&:hover": {
-                                    textDecoration: "underline",
-                                 },
+
+                                 textDecoration: "underline",
+                                 mt: -0.5,
+                                 mb: "3px",
                               }}
                            >
-                              {houseName}
+                              Room by {houseName}
                            </Typography>
                         </Link>
                      }
@@ -120,15 +125,29 @@ const SimpleRoomCard = ({ room }) => {
                            />
                         )
                      }
-                     sx={{ pt: 1, pb: 0 }}
+                     sx={{ py: 0 }}
                   />
-                  <CardContent sx={{ p: 2, pt: 1, flexGrow: 2 }}>
-                     <Typography variant="body1">
-                        {`${room.occupiedSlots}/${room.totalSlots}`}
+                  <CardContent
+                     sx={{ p: 2, py: 1, flexGrow: 2, display: "flex", gap: 1 }}
+                  >
+                     <Typography
+                        variant="caption"
+                        sx={{ px: 1, background: blue[200], borderRadius: 1 }}
+                     >
+                        Total: {`${room.totalSlots}`}
+                     </Typography>
+                     <Typography
+                        variant="caption"
+                        sx={{ px: 1, background: orange[200], borderRadius: 1 }}
+                     >
+                        Occupied: {`${room.occupiedSlots}`}
                      </Typography>
 
-                     <Typography variant="body1">
-                        Available {`${room.totalSlots - room.occupiedSlots}`}
+                     <Typography
+                        variant="caption"
+                        sx={{ px: 1, background: green[200], borderRadius: 1 }}
+                     >
+                        Available: {`${room.totalSlots - room.occupiedSlots}`}
                      </Typography>
                   </CardContent>
                   <CardActions>
@@ -141,7 +160,7 @@ const SimpleRoomCard = ({ room }) => {
                         endIcon={<ArrowForwardIosIcon fontSize="small" />}
                         onClick={() => history.push(`/rooms/${room.id}`)}
                      >
-                        Visit
+                        View
                      </Button>
                   </CardActions>
                </Card>

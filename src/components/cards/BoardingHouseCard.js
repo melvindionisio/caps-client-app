@@ -106,7 +106,6 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                   >
                      <PhoneOutlinedIcon sx={{ mr: 1 }} fontSize="small" />
                      <Nlink
-                        underline="hover"
                         color="primary"
                         href={`tel: ${boardinghouse.contacts}`}
                      >

@@ -13,9 +13,13 @@ import {
    CardMedia,
    Card,
    CardHeader,
+   CardActionArea,
    Grid,
    Box,
    IconButton,
+   Modal,
+   Backdrop,
+   Fade,
 } from "@mui/material";
 import { lightBlue, green } from "@mui/material/colors";
 import AddBookmarkButton from "../components/AddBookmarkButton";
@@ -25,6 +29,7 @@ import { LoginContext } from "../contexts/LoginContext";
 import HouseIcon from "@mui/icons-material/House";
 import BedroomParentIcon from "@mui/icons-material/BedroomParent";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import CloseOutlined from "@mui/icons-material/CloseOutlined";
 
 const InfoItem = ({ icon, primaryText, secondaryText }) => {
    return (
@@ -53,6 +58,11 @@ const RoomProfile = (props) => {
    const [boardinghouse, setBoardinghouse] = useState();
    const { isLoggedIn, currentUser } = useContext(LoginContext);
 
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const handleModalClose = () => {
+      setIsModalOpen(false);
+   };
+
    useEffect(() => {
       const abortCont = new AbortController();
       fetch(`${domain}/api/rooms/${roomId}`, { signal: abortCont.signal })
@@ -65,7 +75,6 @@ const RoomProfile = (props) => {
                .then((res) => res.json())
                .then((data) => {
                   setBoardinghouse(data);
-                  console.log(data);
                })
                .catch((err) => console.log(err));
          })
@@ -115,6 +124,59 @@ const RoomProfile = (props) => {
             {isPending && <LoadingState loadWhat="Room" />}
             {room && (
                <>
+                  <Modal
+                     closeAfterTransition
+                     BackdropComponent={Backdrop}
+                     BackdropProps={{
+                        timeout: 500,
+                     }}
+                     open={isModalOpen}
+                     onClose={handleModalClose}
+                  >
+                     <Fade in={isModalOpen}>
+                        <Container
+                           maxWidth="xl"
+                           disableGutters
+                           sx={{
+                              display: "flex",
+                              justifyContent: "center",
+                              alignItems: "center",
+                              height: "100%",
+                              mt: -7,
+                              px: 2,
+                           }}
+                        >
+                           <Box
+                              sx={{
+                                 zIndex: 100,
+                                 bgcolor: "background.paper",
+                                 width: 400,
+                                 borderRadius: ".5rem",
+                                 boxShadow: 10,
+                                 p: 1,
+                                 height: "max-content",
+                                 flexDirection: "column",
+                                 display: "flex",
+                                 gap: 1,
+                              }}
+                           >
+                              <CloseOutlined
+                                 sx={{ alignSelf: "flex-end" }}
+                                 onClick={handleModalClose}
+                                 color="warning"
+                              />
+                              <Card>
+                                 <CardMedia
+                                    component="img"
+                                    width="400"
+                                    alt="room-image"
+                                    image={room.picture}
+                                 />
+                              </Card>
+                           </Box>
+                        </Container>
+                     </Fade>
+                  </Modal>
                   <ReusableNavigation spaceCenter={true}>
                      <Box
                         sx={{
@@ -152,14 +214,20 @@ const RoomProfile = (props) => {
                         paddingBottom: "5rem",
                      }}
                   >
-                     <Card sx={{ borderRadius: 0, position: "relative" }}>
-                        <CardMedia
-                           component="img"
-                           height="250"
-                           alt="room-image"
-                           //image="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2057&q=80"
-                           image={room.picture}
-                        />
+                     <Card
+                        sx={{ borderRadius: 0, position: "relative" }}
+                        onClick={() => setIsModalOpen(true)}
+                     >
+                        <CardActionArea>
+                           <CardMedia
+                              component="img"
+                              height="250"
+                              alt="room-image"
+                              //image="https://images.unsplash.com/photo-1540518614846-7eded433c457?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2057&q=80"
+                              image={room.picture}
+                           />
+                        </CardActionArea>
+
                         <CardHeader
                            sx={{
                               background: "#fff",

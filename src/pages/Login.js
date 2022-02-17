@@ -107,7 +107,6 @@ const Login = () => {
             return res.json();
          })
          .then((data) => {
-            console.log(data.message);
             setIsLoggedIn({ isLoggedIn: true, loginType: "google-login" });
             setCurrentUser({
                id: data.id,
@@ -140,7 +139,6 @@ const Login = () => {
             return res.json();
          })
          .then((data) => {
-            console.log(data.message);
             setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
             setCurrentUser({
                id: data.id,
@@ -296,7 +294,6 @@ const Login = () => {
                               onSuccess={handleGoogleLogin}
                               onFailure={(response) => {
                                  console.log("Google login failed.");
-                                 console.log(response);
                               }}
                               cookiePolicy={"single_host_origin"}
                               isSignedIn={true}

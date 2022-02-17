@@ -95,7 +95,7 @@ const Reviews = () => {
                if (data) {
                   setReviews(data);
                   setIsPending(false);
-                  scroller.current.scrollIntoView();
+                  //scroller.current.scrollIntoView();
                }
                if (data.length <= 0) {
                   setIsEmpty(true);
