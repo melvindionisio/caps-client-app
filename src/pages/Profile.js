@@ -197,9 +197,11 @@ const Profile = () => {
                               }}
                               src={currentUser.picture ?? "none"}
                            >
+                              {/*
                               {currentUser.picture
                                  ? ""
                                  : currentUser.name.charAt(0).toUpperCase()}
+                              */}
                            </Avatar>
                         </Box>
                         <CardHeader

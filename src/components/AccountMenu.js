@@ -126,9 +126,11 @@ export default function AccountMenu({ currentUser }) {
                   }}
                   src={currentUser.picture ?? "none"}
                >
+                  {/*
                   {currentUser.picture
                      ? ""
                      : currentUser.name.charAt(0).toUpperCase()}
+                  */}
                </Avatar>
             </IconButton>
          </Tooltip>
