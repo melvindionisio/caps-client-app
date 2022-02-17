@@ -113,9 +113,11 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                         }}
                         src={currentUser.picture ?? null}
                      >
+                        {/*
                         {currentUser.picture
                            ? " "
                            : currentUser.name.charAt(0).toUpperCase()}
+                               */}
                      </Avatar>
                   </IconButton>
                </Hidden>
