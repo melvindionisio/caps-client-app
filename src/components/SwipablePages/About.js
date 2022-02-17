@@ -129,9 +129,7 @@ const About = ({ boardinghouse }) => {
                }
             )
                .then((res) => res.json())
-               .then((data) => {
-                  console.log(data.message);
-               })
+               .then((data) => {})
                .catch((err) => console.log(err));
          })
          .catch((err) => {
@@ -156,7 +154,6 @@ const About = ({ boardinghouse }) => {
       )
          .then((res) => res.json())
          .then((data) => {
-            console.log(data);
             setIsStarred(data.isStarred);
             setIsStarPending(false);
          })
@@ -309,7 +306,6 @@ const About = ({ boardinghouse }) => {
                              position: "absolute",
                              top: ".5rem",
                              right: ".5rem",
-                             display: "block",
                           }
                         : {
                              // boxShadow: "inset 0px 0px 10px 1px rgba(0,0,0,0.09)",
