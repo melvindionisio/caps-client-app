@@ -384,9 +384,15 @@ const About = ({ boardinghouse }) => {
             </DetailsCard>
 
             <DetailsCard title="House Protocols">
-               {boardinghouse.houseProtocols}
+               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
+                  {boardinghouse.houseProtocols}
+               </Typography>
             </DetailsCard>
-            <DetailsCard title="We Offer">{boardinghouse.offers}</DetailsCard>
+            <DetailsCard title="We Offer">
+               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
+                  {boardinghouse.offers}
+               </Typography>
+            </DetailsCard>
             <DetailsCard title="Gender/s Allowed">
                <InfoItem
                   icon={<LocationOnIcon />}
@@ -394,14 +400,20 @@ const About = ({ boardinghouse }) => {
                />
             </DetailsCard>
             <DetailsCard title="Water source">
-               {boardinghouse.waterSource}
+               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
+                  {boardinghouse.waterSource}
+               </Typography>
             </DetailsCard>
             <DetailsCard title="Price Range">
-               {boardinghouse.priceRange}
+               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
+                  {boardinghouse.priceRange}
+               </Typography>
             </DetailsCard>
             {totalRoom && (
                <DetailsCard title="Total Rooms">
-                  {totalRoom.total} rooms
+                  <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
+                     {totalRoom.total} rooms
+                  </Typography>
                </DetailsCard>
             )}
 

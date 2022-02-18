@@ -1,5 +1,5 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import {
@@ -339,10 +339,14 @@ const RoomProfile = (props) => {
                               </Grid>
 
                               <DetailsCard title="Boarding house">
-                                 <InfoItem
-                                    primaryText={boardinghouse.name}
-                                    icon={<HouseIcon />}
-                                 />
+                                 <Link
+                                    to={`/boardinghouse/${boardinghouse.id}`}
+                                 >
+                                    <InfoItem
+                                       primaryText={boardinghouse.name}
+                                       icon={<HouseIcon />}
+                                    />
+                                 </Link>
                               </DetailsCard>
                               <DetailsCard title="Address">
                                  <InfoItem
