@@ -56,6 +56,7 @@ const RoomProfile = (props) => {
    const [error, setError] = useState(null);
    const [isBookmarked, setIsBookmarked] = useState(false);
    const [boardinghouse, setBoardinghouse] = useState();
+   const [isBoardinghousePending, setBoardinghouseIsPending] = useState(false);
    const { isLoggedIn, currentUser } = useContext(LoginContext);
 
    const [isModalOpen, setIsModalOpen] = useState(false);
@@ -71,10 +72,12 @@ const RoomProfile = (props) => {
             setRoom(data);
             setIsPending(false);
             setError(null);
+            setBoardinghouseIsPending(true);
             fetch(`${domain}/api/boarding-houses/${data.boardinghouseId}`)
                .then((res) => res.json())
                .then((data) => {
                   setBoardinghouse(data);
+                  setBoardinghouseIsPending(false);
                })
                .catch((err) => console.log(err));
          })
@@ -285,6 +288,7 @@ const RoomProfile = (props) => {
                            {room.description}
                         </Typography>
 
+                        {isBoardinghousePending && <LoadingState />}
                         {boardinghouse && (
                            <>
                               <Grid container spacing={1}>

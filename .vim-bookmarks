@@ -1,3 +1,0 @@
-let l:bm_file_version = 1
-let l:bm_sessions = {'default': {'D:\CAPSTONE\caps-client-app\src\pages\RoomProfile.js': [{'sign_idx': 9500, 'line_nr': 288, 'content': '                        {boardinghouse && ('},],}}
-let l:bm_current_session = 'default'
