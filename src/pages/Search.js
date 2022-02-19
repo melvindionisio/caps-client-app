@@ -1,6 +1,7 @@
 import React from "react";
 import {
    Slide,
+   Grid,
    Container,
    TextField,
    Typography,
@@ -129,41 +130,45 @@ const Search = () => {
                      justifyContent: "space-between",
                   }}
                ></Box>
-               <Card variant="outlined" sx={{ minHeight: "80vh" }}>
-                  <CardContent
-                     sx={{ display: "flex", flexDirection: "column", gap: 2 }}
-                  >
-                     <Typography sx={{ fontStyle: "italic" }} variant="body1">
-                        Search result of {resultSize}
-                     </Typography>
-                     {error && (
-                        <Typography variant="body1" align="center">
-                           {error}
+               <Container maxWidth="md" disableGutters>
+                  <Card variant="outlined" sx={{ minHeight: "80vh" }}>
+                     <CardContent
+                        sx={{
+                           display: "flex",
+                           flexDirection: "column",
+                           gap: 2,
+                        }}
+                     >
+                        <Typography
+                           sx={{ fontStyle: "italic" }}
+                           variant="body1"
+                        >
+                           Search result of {resultSize}
                         </Typography>
-                     )}
+                        {error && (
+                           <Typography variant="body1" align="center">
+                              {error}
+                           </Typography>
+                        )}
 
-                     {isPending ? (
-                        <LoadingState />
-                     ) : (
-                        <>
-                           {queryResult &&
-                              queryResult.map((boardinghouse) => (
-                                 <div
-                                    style={{
-                                       //margin: "0 auto",
-                                       maxWidth: "30rem",
-                                    }}
-                                    key={boardinghouse.id}
-                                 >
-                                    <BoardingHouseCard
-                                       boardinghouse={boardinghouse}
-                                    />
-                                 </div>
-                              ))}
-                        </>
-                     )}
-                  </CardContent>
-               </Card>
+                        {isPending ? (
+                           <LoadingState />
+                        ) : (
+                           <>
+                              <Grid container spacing={2}>
+                                 {queryResult &&
+                                    queryResult.map((boardinghouse) => (
+                                       <BoardingHouseCard
+                                          key={boardinghouse.id}
+                                          boardinghouse={boardinghouse}
+                                       />
+                                    ))}
+                              </Grid>
+                           </>
+                        )}
+                     </CardContent>
+                  </Card>
+               </Container>
             </Box>
          </Slide>
       </Container>
