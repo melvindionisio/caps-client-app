@@ -17,7 +17,7 @@ import {
    Box,
    Grid,
    ToggleButtonGroup,
-   Slide,
+   Zoom,
 } from "@mui/material";
 
 const BoardingHouseLists = () => {
@@ -133,7 +133,7 @@ const BoardingHouseLists = () => {
          <Grid container spacing={1}>
             <Grid item xs={12} sm={12} md={6}>
                {isSortActive && (
-                  <Slide in={true} direction="right">
+                  <Zoom in={true}>
                      <Box
                         sx={{
                            display: "flex",
@@ -177,12 +177,12 @@ const BoardingHouseLists = () => {
                            </ToggleButton>
                         </ToggleButtonGroup>
                      </Box>
-                  </Slide>
+                  </Zoom>
                )}
             </Grid>
             <Grid item xs={12} sm={12} md={6}>
                {isFilterActive && (
-                  <Slide in={true} direction="left">
+                  <Zoom in={true} direction="left">
                      <Box
                         sx={{
                            display: "flex",
@@ -234,7 +234,7 @@ const BoardingHouseLists = () => {
                            </ToggleButton>
                         </ToggleButtonGroup>
                      </Box>
-                  </Slide>
+                  </Zoom>
                )}
             </Grid>
          </Grid>

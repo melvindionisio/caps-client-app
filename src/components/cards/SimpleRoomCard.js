@@ -46,7 +46,11 @@ const SimpleRoomCard = ({ room }) => {
          .then((data) => {
             setHouseName(data.name);
          })
-         .catch((err) => console.log(err));
+         .catch((err) => {
+            if (err.name === "AbortError") {
+               console.log("fetch aborted");
+            }
+         });
 
       return () => {
          abortCont.abort();
