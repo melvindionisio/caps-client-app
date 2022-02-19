@@ -1,4 +1,6 @@
 import React, { useState, useContext, useEffect, useRef } from "react";
+import { useHistory, useParams } from "react-router-dom";
+
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -6,12 +8,16 @@ import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
 import { grey } from "@mui/material/colors";
-import ReviewCard from "../cards/ReviewCard";
+
+import { Modal, Fade, Backdrop } from "@mui/material";
+import CloseOutlined from "@mui/icons-material/CloseOutlined";
+import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+
 import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
-import { useHistory, useParams } from "react-router-dom";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import LoadingState from "../LoadingState";
+import ReviewCard from "../cards/ReviewCard";
 
 const Reviews = () => {
    const { currentUser, isLoggedIn } = useContext(LoginContext);
@@ -26,6 +32,11 @@ const Reviews = () => {
    const [isPending, setIsPending] = useState(true);
    const [isSendingReview, setIsSendingReview] = useState(false);
    const [isDeleteReview, setIsDeleteReview] = useState(false);
+
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const handleModalClose = () => {
+      setIsModalOpen(false);
+   };
 
    const handleAddReview = () => {
       if (reviewText !== "") {
@@ -50,6 +61,7 @@ const Reviews = () => {
                //window.location.reload(false);
                console.log(data.message);
                setIsSendingReview(false);
+               setIsModalOpen(false);
                setIsPending(true);
                setReviewText("");
                fetch(`${domain}/api/reviews/bh/${bhId}`)
@@ -149,6 +161,83 @@ const Reviews = () => {
             position: "relative",
          }}
       >
+         <Modal
+            closeAfterTransition
+            BackdropComponent={Backdrop}
+            BackdropProps={{
+               timeout: 500,
+            }}
+            open={isModalOpen}
+            onClose={handleModalClose}
+         >
+            <Fade in={isModalOpen}>
+               <Container
+                  maxWidth="xl"
+                  disableGutters
+                  sx={{
+                     display: "flex",
+                     justifyContent: "center",
+                     alignItems: "center",
+                     height: "100%",
+                     mt: -7,
+                     px: 2,
+                  }}
+               >
+                  <Box
+                     sx={{
+                        zIndex: 100,
+                        bgcolor: "background.paper",
+                        width: 400,
+                        borderRadius: ".5rem",
+                        boxShadow: 10,
+                        p: 1,
+                        height: "max-content",
+                        flexDirection: "column",
+                        display: "flex",
+                        gap: 1,
+                     }}
+                  >
+                     <CloseOutlined
+                        sx={{ alignSelf: "flex-end" }}
+                        onClick={handleModalClose}
+                        color="warning"
+                     />
+                     <Typography
+                        align="center"
+                        variant="h6"
+                        sx={{
+                           textTransform: "uppercase",
+                           fontFamily: "Quicksand",
+                           mt: -1,
+                        }}
+                     >
+                        Send a review.
+                     </Typography>
+
+                     <TextField
+                        id="review-field"
+                        label="Enter your review..."
+                        size="small"
+                        fullWidth
+                        multiline
+                        rows={3}
+                        variant="filled"
+                        value={reviewText}
+                        onChange={(e) => setReviewText(e.target.value)}
+                     />
+                     <LoadingButton
+                        size="small"
+                        variant="contained"
+                        onClick={handleAddReview}
+                        loading={isSendingReview}
+                     >
+                        Send
+                     </LoadingButton>
+                  </Box>
+               </Container>
+            </Fade>
+         </Modal>
+
          <Box
             sx={{
                display: "flex",
@@ -218,32 +307,23 @@ const Reviews = () => {
                <Box
                   sx={{
                      display: "flex",
+                     justifyContent: "center",
                      gap: 1,
                      width: "100%",
                      padding: 1,
-                     background: "#fff",
                      borderRadius: 1,
                   }}
                >
-                  <TextField
-                     id="review-field"
-                     label="Enter your review..."
-                     size="small"
-                     fullWidth
-                     multiline
-                     rows={3}
-                     variant="filled"
-                     value={reviewText}
-                     onChange={(e) => setReviewText(e.target.value)}
-                  />
-                  <LoadingButton
-                     size="small"
+                  <Button
                      variant="contained"
-                     onClick={handleAddReview}
-                     loading={isSendingReview}
+                     size="medium"
+                     color="success"
+                     startIcon={<AddOutlinedIcon />}
+                     onClick={() => setIsModalOpen(true)}
+                     disableElevation
                   >
-                     Send
-                  </LoadingButton>
+                     Add review
+                  </Button>
                </Box>
             ) : (
                <Box
