@@ -12,6 +12,7 @@ import { grey } from "@mui/material/colors";
 import { Modal, Fade, Backdrop } from "@mui/material";
 import CloseOutlined from "@mui/icons-material/CloseOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
+import RateReviewIcon from "@mui/icons-material/RateReview";
 
 import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
 import { LoginContext } from "../../contexts/LoginContext";
@@ -202,17 +203,34 @@ const Reviews = () => {
                         onClick={handleModalClose}
                         color="warning"
                      />
-                     <Typography
-                        align="center"
-                        variant="h6"
+                     <Box
                         sx={{
-                           textTransform: "uppercase",
-                           fontFamily: "Quicksand",
-                           mt: -1,
+                           display: "flex",
+                           flexDirection: "column",
+                           alignItems: "center",
+                           gap: 1,
                         }}
                      >
-                        Send a review.
-                     </Typography>
+                        <RateReviewIcon
+                           sx={{
+                              height: "3rem",
+                              width: "3rem",
+                              color: "text.secondary",
+                           }}
+                        />
+                        <Typography
+                           align="center"
+                           variant="h6"
+                           sx={{
+                              textTransform: "uppercase",
+                              fontFamily: "Quicksand",
+                              mt: -1,
+                              color: "text.secondary",
+                           }}
+                        >
+                           Send a review
+                        </Typography>
+                     </Box>
 
                      <TextField
                         id="review-field"
