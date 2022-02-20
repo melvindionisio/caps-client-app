@@ -265,6 +265,21 @@ const About = ({ boardinghouse }) => {
             >
                {boardinghouse.tagline}
             </Typography>
+            <Typography
+               variant="body1"
+               color="text.secondary"
+               sx={{
+                  mt: 2,
+                  fontWeight: "bold",
+                  border: "1px solid gold",
+                  px: 2,
+                  py: 1,
+                  borderRadius: 1,
+               }}
+            >
+               Price Range:{"  "}
+               {boardinghouse.priceRange}
+            </Typography>
             {isStarred ? (
                <IconButton
                   size="large"
@@ -400,11 +415,6 @@ const About = ({ boardinghouse }) => {
             <DetailsCard title="Water source">
                <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
                   {boardinghouse.waterSource}
-               </Typography>
-            </DetailsCard>
-            <DetailsCard title="Price Range">
-               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
-                  {boardinghouse.priceRange}
                </Typography>
             </DetailsCard>
             {totalRoom && (
