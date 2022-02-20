@@ -22,6 +22,7 @@ import { LoginContext } from "../../contexts/LoginContext";
 
 const BoardingHouseCard = ({ boardinghouse }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
+   const [stars, setStars] = useState(0);
    const { currentUser, isLoggedIn } = useContext(LoginContext);
 
    useEffect(() => {
@@ -33,6 +34,20 @@ const BoardingHouseCard = ({ boardinghouse }) => {
          .then((res) => res.json())
          .then((data) => {
             setIsBookmarked(data.isBookmarked);
+         })
+         .catch((err) => console.log(err));
+
+      fetch(`${domain}/api/stars/${boardinghouse.id}`, {
+         signal: abortCont.signal,
+      })
+         .then((res) => {
+            if (!res.ok) {
+               throw Error("Something went wrong!");
+            }
+            return res.json();
+         })
+         .then((data) => {
+            setStars(data.totalStars);
          })
          .catch((err) => console.log(err));
       return () => {
@@ -82,7 +97,7 @@ const BoardingHouseCard = ({ boardinghouse }) => {
                      <Box sx={{ display: "flex", alignItems: "center" }}>
                         <GradeIcon sx={{ mr: 0.5, color: amber[600] }} />
                         <Typography variant="body2">
-                           {boardinghouse.popularity} stars
+                           {stars && stars} stars
                         </Typography>
                      </Box>
                   }

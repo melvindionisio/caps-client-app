@@ -135,8 +135,6 @@ const About = ({ boardinghouse }) => {
          .catch((err) => {
             if (err.name === "AbortError") {
                console.log("fetch aborted");
-            } else {
-               setStars(0);
             }
          });
       return () => {

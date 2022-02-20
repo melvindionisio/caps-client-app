@@ -15,11 +15,11 @@ import Tooltip from "@mui/material/Tooltip";
 import Zoom from "@mui/material/Zoom";
 
 import { useTheme } from "@mui/styles";
-import { useState } from "react";
 import { useStyles } from "./styles/Home.styles";
 import HomeNavigation from "../components/Navigations/HomeNavigation";
 import RoomLists from "../components/lists/RoomLists";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -76,7 +76,7 @@ const SwipeableWrapper = ({ children }) => {
 
 const Home = () => {
    const classes = useStyles();
-   const [value, setValue] = useState(0);
+   const [value, setValue] = useLocalStorage("home-tab", 0);
    const theme = useTheme();
 
    const handleChange = (event, newValue) => {

@@ -3,6 +3,7 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
 import { LoginContext } from "../contexts/LoginContext";
@@ -86,10 +87,13 @@ const Bookmarks = () => {
    return (
       <Slide in={true} direction="left">
          <Container maxWidth="xl" disableGutters>
-            <ReusableNavigation center={true}>
+            <ReusableNavigation spaceCenter={true}>
                <Typography variant="body1" align="center">
                   Bookmarks
                </Typography>
+               <Button variant="contained" disableElevation size="small">
+                  Compare
+               </Button>
             </ReusableNavigation>
             <Container disableGutters maxWidth="md" sx={{ padding: 2 }}>
                {error && (

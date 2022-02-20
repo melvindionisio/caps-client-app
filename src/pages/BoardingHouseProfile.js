@@ -28,6 +28,7 @@ import ReviewsIcon from "@mui/icons-material/Reviews";
 import AddBookmarkButton from "../components/AddBookmarkButton";
 import { LoginContext } from "../contexts/LoginContext";
 import { IconButton } from "@mui/material";
+import useLocalStorage from "../hooks/useLocalStorage";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -69,7 +70,7 @@ const BoardingHouseProfile = () => {
    } = useFetch(`${domain}/api/boarding-houses/${bhId}`);
 
    const theme = useTheme();
-   const [value, setValue] = useState(0);
+   const [value, setValue] = useLocalStorage("boardinghouse-profile-tab", 0);
 
    const handleChange = (event, newValue) => {
       setValue(newValue);
@@ -152,9 +153,27 @@ const BoardingHouseProfile = () => {
                      navigationTabs={<NavigationTabs />}
                      spaceCenter={true}
                   >
-                     <Typography variant="body1" align="center">
-                        {boardinghouse.name}
-                     </Typography>
+                     <Box
+                        sx={{
+                           display: "flex",
+                           flexDirection: "column",
+                           alignItems: "center",
+                        }}
+                     >
+                        <Typography variant="body1" align="center">
+                           {boardinghouse.name}
+                        </Typography>
+                        <Typography
+                           variant="caption"
+                           align="center"
+                           sx={{
+                              color: "text.secondary",
+                              textTransform: "uppercase",
+                           }}
+                        >
+                           Boarding house
+                        </Typography>
+                     </Box>
                      {isLoggedIn ? (
                         <AddBookmarkButton
                            boardinghouseId={boardinghouse.id}
