@@ -37,7 +37,9 @@ const SimpleRoomCard = ({ room }) => {
          .then((data) => {
             setIsBookmarked(data.isBookmarked);
          })
-         .catch((err) => console.log(err));
+         .catch((err) => {
+            //console.log(err);
+         });
 
       fetch(`${domain}/api/boarding-houses/${room.boardinghouseId}`, {
          signal: abortCont.signal,
@@ -48,7 +50,7 @@ const SimpleRoomCard = ({ room }) => {
          })
          .catch((err) => {
             if (err.name === "AbortError") {
-               console.log("fetch aborted");
+               //console.log("fetch aborted");
             }
          });
 
