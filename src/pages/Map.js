@@ -1,5 +1,5 @@
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-import { Typography, AppBar, Toolbar, Hidden } from "@mui/material";
+import { Typography, AppBar, Toolbar, Hidden, InputBase } from "@mui/material";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState, useContext } from "react";
@@ -7,12 +7,19 @@ import { LoginContext } from "../contexts/LoginContext";
 import AccountMenu from "../components/AccountMenu";
 import MarkerLogo from "../marker-logo.png";
 import { domain } from "../fetch-url/fetchUrl";
+//import * as MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
+import { useTheme } from "@mui/styles";
+import SearchIcon from "@mui/icons-material/Search";
+import { lightBlue } from "@mui/material/colors";
 
 mapboxgl.accessToken =
    "pk.eyJ1IjoibWVsc2lvIiwiYSI6ImNrdXF1ZnE3ZTFscTIzMXAxMXNrczJrdjAifQ.9nE1j10j1hd4EWXc6kGlRQ";
 
 const Map = () => {
+   const theme = useTheme();
    const { currentUser } = useContext(LoginContext);
+   const [boardingHouseLocations, setBoardingHouseLocations] = useState([]);
 
    const controls = new mapboxgl.NavigationControl();
    const mapContainer = useRef(null);
@@ -20,11 +27,56 @@ const Map = () => {
    const [lng, setLng] = useState(124.665);
    const [lat, setLat] = useState(12.5096);
    const [zoom, setZoom] = useState(15.25);
+   const [isNotFound, setIsNotFound] = useState(false);
+
+   const handleSearch = (query) => {
+      setIsNotFound(false);
+      console.log(query);
+      if (boardingHouseLocations) {
+         boardingHouseLocations.forEach(function (boardinghouse) {
+            if (
+               boardinghouse.properties.title
+                  .toLowerCase()
+                  .includes(query.toLowerCase())
+            ) {
+               if (
+                  query === "" ||
+                  boardinghouse.geometry.coordinates[0] === 0 ||
+                  boardinghouse.geometry.coordinates[1] === 0
+               ) {
+                  map.current.flyTo({
+                     center: [124.665, 12.5096],
+                     zoom: 15.25,
+                  });
+                  setIsNotFound(true);
+               } else {
+                  map.current.flyTo({
+                     center: boardinghouse.geometry.coordinates,
+                     zoom: 19.0,
+                  });
+               }
+            }
+         });
+      }
+   };
 
    const BOUNDS = [
       [124.2389, 11.8762], // southwest coordinates
       [125.368, 12.9979], //northeast coordinates
    ];
+
+   const geocoder = new MapboxGeocoder({
+      // Initialize the geocoder
+      accessToken: mapboxgl.accessToken, // Set the access token
+      mapboxgl: mapboxgl, // Set the mapbox-gl instance
+      marker: true, // Do not use the default marker style
+      placeholder: "Search for places in University of Eastern Philippines", // Placeholder text for the search bar
+      bbox: [124.2389, 11.8762, 125.368, 12.9979], // Boundary for Berkeley
+      proximity: {
+         longitude: 124.6649,
+         latitude: 12.5094,
+      }, // Coordinates of UC Berkeley
+   });
 
    useEffect(() => {
       if (map.current) return; // initialize map only once
@@ -61,6 +113,7 @@ const Map = () => {
             return res.json();
          })
          .then((data) => {
+            setBoardingHouseLocations(data.features);
             data.features.forEach(function (marker) {
                const el = document.createElement("div");
                el.innerHTML = `<img src="${MarkerLogo}"/>`;
@@ -86,12 +139,40 @@ const Map = () => {
          .catch((err) => {
             if (err.name === "AbortError") {
                console.log("fetch aborted");
+               setBoardingHouseLocations([]);
             } else {
                console.log("ready");
             }
          });
 
       map.current.on("load", () => {
+         map.current.addSource("single-point", {
+            type: "geojson",
+            data: {
+               type: "FeatureCollection",
+               features: [],
+            },
+         });
+
+         map.current.addLayer({
+            id: "point",
+            source: "single-point",
+            type: "circle",
+            paint: {
+               "circle-radius": 10,
+               "circle-color": "#448ee4",
+            },
+         });
+
+         // Listen for the `result` event from the Geocoder
+         // `result` event is triggered when a user makes a selection
+         //  Add a marker at the result's coordinates
+         geocoder.on("result", (event) => {
+            map.current
+               .getSource("single-point")
+               .setData(event.result.geometry);
+         });
+
          // Insert the layer beneath any symbol layer.
          const layers = map.current.getStyle().layers;
          const labelLayerId = layers.find(
@@ -154,6 +235,9 @@ const Map = () => {
             showUserHeading: true,
          })
       );
+
+      //map.current.addControl(geocoder);
+
       map.current.addControl(
          new mapboxgl.FullscreenControl({
             container: mapContainer.current,
@@ -161,6 +245,7 @@ const Map = () => {
       );
 
       map.current.addControl(controls, "bottom-right");
+      //return () => map.current.remove();
    });
 
    useEffect(() => {
@@ -230,6 +315,86 @@ const Map = () => {
                </Toolbar>
                <Box></Box>
             </AppBar>
+
+            <Box
+               sx={{
+                  padding: ".6rem",
+                  px: 0,
+                  zIndex: "1",
+                  position: "absolute",
+                  top: "4.5rem",
+                  left: ".5rem",
+                  borderRadius: ".5rem",
+                  minWidth: "300px",
+               }}
+            >
+               <Box
+                  sx={{
+                     position: "relative",
+                     borderRadius: theme.shape.borderRadius,
+                     backdropFilter: "blur(1.5rem)",
+                     backgroundColor: "rgba(255, 255, 255, 0.5)",
+                     "&:hover": {
+                        backgroundColor: "rgba(255, 255, 255, 0.25)",
+                        border: `1px solid ${lightBlue[500]}`,
+                     },
+                     width: "100%",
+                     [theme.breakpoints.up("sm")]: {
+                        marginLeft: theme.spacing(3),
+                        width: "auto",
+                     },
+                  }}
+               >
+                  <Box
+                     sx={{
+                        padding: theme.spacing(0, 2),
+                        height: "100%",
+                        position: "absolute",
+                        pointerEvents: "none",
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                     }}
+                  >
+                     <SearchIcon />
+                  </Box>
+                  <InputBase
+                     placeholder="Search boarding house…"
+                     onKeyUp={(e) => {
+                        if (e.key === "Enter") {
+                           handleSearch(e.target.value);
+                        }
+                     }}
+                     onKeyDown={(e) => {
+                        if (e.keyCode === 8) {
+                           map.current.flyTo({
+                              center: [124.665, 12.5096],
+                              zoom: 15.25,
+                           });
+                        }
+                     }}
+                     sx={{
+                        color: "inherit",
+                        "& .MuiInputBase-input": {
+                           padding: theme.spacing(1, 1, 1, 0),
+                           // vertical padding + font size from searchIcon
+                           paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+                           transition: theme.transitions.create("width"),
+                           width: "100%",
+                           [theme.breakpoints.up("md")]: {
+                              width: "20ch",
+                           },
+                        },
+                     }}
+                  />
+               </Box>
+               {isNotFound && (
+                  <Typography variant="body1" color="warning">
+                     Not Found.
+                  </Typography>
+               )}
+            </Box>
+            {/*
             <Box
                sx={{
                   backgroundColor: "rgba(255,255,255, 0.6)",
@@ -248,6 +413,8 @@ const Map = () => {
                   Longitude: {lng} | Latitude: {lat} | Zoom: {zoom}
                </Typography>
             </Box>
+
+                */}
          </Box>
       </Slide>
    );
