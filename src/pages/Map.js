@@ -1,5 +1,14 @@
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
-import { Typography, AppBar, Toolbar, Hidden, InputBase } from "@mui/material";
+import {
+   List,
+   ListItemButton,
+   ListItemText,
+   Typography,
+   AppBar,
+   Toolbar,
+   Hidden,
+   InputBase,
+} from "@mui/material";
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState, useContext } from "react";
@@ -21,6 +30,8 @@ const Map = () => {
    const { currentUser } = useContext(LoginContext);
    const [boardingHouseLocations, setBoardingHouseLocations] = useState([]);
    const [isShowResult, setIsShowResult] = useState(false);
+   const [result, setResult] = useState([]);
+   const [query, setQuery] = useState("");
 
    const controls = new mapboxgl.NavigationControl();
    const mapContainer = useRef(null);
@@ -30,35 +41,58 @@ const Map = () => {
    const [zoom, setZoom] = useState(15.25);
    const [isNotFound, setIsNotFound] = useState(false);
 
-   const handleSearch = (query) => {
-      setIsNotFound(false);
-      console.log(query);
-      if (boardingHouseLocations) {
-         boardingHouseLocations.forEach(function (boardinghouse) {
-            if (
-               boardinghouse.properties.title
-                  .toLowerCase()
-                  .includes(query.toLowerCase())
-            ) {
-               if (
-                  query === "" ||
-                  boardinghouse.geometry.coordinates[0] === 0 ||
-                  boardinghouse.geometry.coordinates[1] === 0
-               ) {
-                  map.current.flyTo({
-                     center: [124.665, 12.5096],
-                     zoom: 15.25,
-                  });
-                  setIsNotFound(true);
-               } else {
-                  map.current.flyTo({
-                     center: boardinghouse.geometry.coordinates,
-                     zoom: 19.0,
-                  });
-               }
-            }
-         });
+   useEffect(() => {
+      if (result) {
+         if (result.length <= 0) {
+            setIsNotFound(true);
+         }
       }
+   }, [result]);
+
+   const handleSearch = () => {
+      setIsNotFound(false);
+      let res;
+      if (boardingHouseLocations) {
+         res = boardingHouseLocations.filter((boardinghouse) => {
+            return boardinghouse.properties.title
+               .toLowerCase()
+               .includes(query.toLowerCase());
+         });
+         setResult(
+            Array.from(res, (house) => {
+               return {
+                  name: house.properties.title,
+                  address: house.properties.description,
+                  coordinates: house.geometry.coordinates,
+               };
+            })
+         );
+
+         //if (
+         //query === "" ||
+         //boardinghouse.geometry.coordinates[0] === 0 ||
+         //boardinghouse.geometry.coordinates[1] === 0
+         //) {
+         //map.current.flyTo({
+         //center: [124.665, 12.5096],
+         //zoom: 15.25,
+         //});
+         //setIsNotFound(true);
+         //} else {
+         //map.current.flyTo({
+         //center: boardinghouse.geometry.coordinates,
+         //zoom: 19.0,
+         //});
+         //}
+      }
+   };
+   const locateSearch = (coordinates) => {
+      map.current.flyTo({
+         center: coordinates,
+         zoom: 19.0,
+      });
+      setQuery("");
+      setIsShowResult(false);
    };
 
    const BOUNDS = [
@@ -358,11 +392,6 @@ const Map = () => {
                   </Box>
                   <InputBase
                      placeholder="Search boarding house…"
-                     onKeyUp={(e) => {
-                        if (e.key === "Enter") {
-                           handleSearch(e.target.value);
-                        }
-                     }}
                      onKeyDown={(e) => {
                         if (e.keyCode === 8) {
                            map.current.flyTo({
@@ -372,12 +401,15 @@ const Map = () => {
                         }
                      }}
                      onChange={(e) => {
+                        setQuery(e.target.value);
                         if (e.target.value !== "") {
+                           handleSearch();
                            setIsShowResult(true);
                         } else {
                            setIsShowResult(false);
                         }
                      }}
+                     value={query}
                      sx={{
                         color: "inherit",
                         "& .MuiInputBase-input": {
@@ -398,18 +430,27 @@ const Map = () => {
                      sx={{
                         borderRadius: ".5rem",
                         mt: 1,
-                        minHeight: 100,
+                        maxHeight: 200,
+                        overflowY: "auto",
                         width: 300,
                         ml: 2.5,
                         backgroundColor: "rgba(255,255,255, 0.6)",
                         backdropFilter: "blur(1.5rem)",
                      }}
                   >
-                     {isNotFound && (
-                        <Typography variant="body1" color="warning">
-                           Not Found.
-                        </Typography>
-                     )}
+                     <List component="nav" aria-label="search-results">
+                        {result.map((res) => (
+                           <ListItemButton
+                              key={res.name}
+                              onClick={() => locateSearch(res.coordinates)}
+                           >
+                              <ListItemText primary={res.name} />
+                           </ListItemButton>
+                        ))}
+                        {isNotFound && (
+                           <ListItemText primary="Not found." sx={{ px: 1 }} />
+                        )}
+                     </List>
                   </Box>
                )}
             </Box>
