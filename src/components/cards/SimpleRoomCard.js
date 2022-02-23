@@ -16,7 +16,7 @@ import { useHistory, Link } from "react-router-dom";
 import AddBookmarkButton from "../../components/AddBookmarkButton";
 import { domain } from "../../fetch-url/fetchUrl";
 import { LoginContext } from "../../contexts/LoginContext";
-import { blue, orange, green } from "@mui/material/colors";
+import { blue, orange, green, red } from "@mui/material/colors";
 
 const SimpleRoomCard = ({ room }) => {
    const [isBookmarked, setIsBookmarked] = useState(false);
@@ -91,15 +91,49 @@ const SimpleRoomCard = ({ room }) => {
                   </Box>
                   <CardHeader
                      title={
-                        <Typography
-                           variant="h6"
-                           sx={{
-                              fontFamily: "Quicksand",
-                              padding: 0,
-                           }}
-                        >
-                           {room.name}
-                        </Typography>
+                        room.status === "Available" ? (
+                           <Typography
+                              variant="h6"
+                              sx={{
+                                 fontFamily: "Quicksand",
+                                 padding: 0,
+                                 "&::before": {
+                                    content: '" "',
+                                    height: 10,
+                                    mr: 1.5,
+                                    mb: 0.3,
+                                    borderRadius: "50%",
+                                    display: "inline-block",
+                                    width: 10,
+                                    background: green[500],
+                                    boxShadow: `0px 0px 3px 3px ${green[100]}`,
+                                 },
+                              }}
+                           >
+                              {room.name}
+                           </Typography>
+                        ) : (
+                           <Typography
+                              variant="h6"
+                              sx={{
+                                 fontFamily: "Quicksand",
+                                 padding: 0,
+                                 "&::before": {
+                                    content: '" "',
+                                    height: 10,
+                                    mr: 1.5,
+                                    mb: 0.3,
+                                    borderRadius: "50%",
+                                    display: "inline-block",
+                                    width: 10,
+                                    background: red[500],
+                                    boxShadow: `0px 0px 3px 3px ${red[100]}`,
+                                 },
+                              }}
+                           >
+                              {room.name}
+                           </Typography>
+                        )
                      }
                      subheader={
                         <Link

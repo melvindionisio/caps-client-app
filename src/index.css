@@ -52,6 +52,20 @@ code {
    filter: brightness(1.2);
    pointer-events: none;
 }
+#total-rooms {
+   position: absolute;
+   top: -5px;
+   left: -5px;
+   outline: 3px solid white;
+   background: lightskyblue;
+   border-radius: 50%;
+   height: 20px;
+   width: 20px;
+   font-family: "Quicksand", serif;
+   font-weight: bolder;
+   text-align: center;
+   z-index: 100;
+}
 
 .mapboxgl-popup {
    max-width: 20rem;
@@ -112,6 +126,10 @@ code {
 }
 #visit-btn:hover {
    background-color: rgba(146, 201, 74, 0.75);
+}
+#visit-btn:focus {
+   outline: none;
+   border: none;
 }
 #visit-btn:active {
    transform: scale(1.05);

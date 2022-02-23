@@ -11,7 +11,14 @@ import {
    ListItemText,
    ListItemAvatar,
 } from "@mui/material";
-import { amber, blue, grey, lightBlue, purple } from "@mui/material/colors";
+import {
+   amber,
+   blue,
+   grey,
+   lightBlue,
+   purple,
+   green,
+} from "@mui/material/colors";
 import { makeStyles } from "@mui/styles";
 import GradeIcon from "@mui/icons-material/Grade";
 import DetailsCard from "../cards/DetailsCard";
@@ -265,21 +272,46 @@ const About = ({ boardinghouse }) => {
             >
                {boardinghouse.tagline}
             </Typography>
-            <Typography
-               variant="body1"
-               color="text.secondary"
+            <Box
                sx={{
                   mt: 2,
-                  fontWeight: "bold",
-                  border: "1px solid gold",
-                  px: 2,
-                  py: 1,
-                  borderRadius: 1,
+                  display: "flex",
+                  gap: 1,
                }}
             >
-               Price Range:{"  "}
-               {boardinghouse.priceRange}
-            </Typography>
+               <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{
+                     fontWeight: "bold",
+                     border: `1px solid ${amber[500]}`,
+                     px: 2,
+                     py: 1,
+                     borderRadius: 1,
+                     background: amber[50],
+                  }}
+               >
+                  Price Range:{"  "}
+                  {boardinghouse.priceRange}
+               </Typography>
+               {totalRoom && (
+                  <Typography
+                     variant="caption"
+                     color="text.secondary"
+                     sx={{
+                        fontWeight: "bold",
+                        border: ` 1px solid ${green[500]}`,
+                        background: green[50],
+                        px: 2,
+                        py: 1,
+                        borderRadius: 1,
+                     }}
+                  >
+                     Total rooms: {"  "}
+                     {totalRoom.total}
+                  </Typography>
+               )}
+            </Box>
             {isStarred ? (
                <IconButton
                   size="large"

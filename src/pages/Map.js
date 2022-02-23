@@ -20,6 +20,7 @@ const Map = () => {
    const theme = useTheme();
    const { currentUser } = useContext(LoginContext);
    const [boardingHouseLocations, setBoardingHouseLocations] = useState([]);
+   const [isShowResult, setIsShowResult] = useState(false);
 
    const controls = new mapboxgl.NavigationControl();
    const mapContainer = useRef(null);
@@ -116,7 +117,7 @@ const Map = () => {
             setBoardingHouseLocations(data.features);
             data.features.forEach(function (marker) {
                const el = document.createElement("div");
-               el.innerHTML = `<img src="${MarkerLogo}"/>`;
+               el.innerHTML = `<img src="${MarkerLogo}"/> <span id="total-rooms">${marker.properties.totalRooms}</span>`;
                el.className = "marker";
 
                new mapboxgl.Marker(el)
@@ -127,13 +128,10 @@ const Map = () => {
                         closeButton: false,
                      })
                         .setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
-            <h5>${marker.properties.description}</h5>
-
+            <h5>${marker.properties.description}</h5><a href="/boardinghouse/${marker.properties.id}"><button id="visit-btn">VIEW</button></a>
            `)
                   )
                   .addTo(map.current);
-
-               //<button id="visit-btn" onclick="console.log("i am clicked")">VIEW</button>
             });
          })
          .catch((err) => {
@@ -336,7 +334,7 @@ const Map = () => {
                      backgroundColor: "rgba(255, 255, 255, 0.5)",
                      "&:hover": {
                         backgroundColor: "rgba(255, 255, 255, 0.25)",
-                        border: `1px solid ${lightBlue[500]}`,
+                        outline: `1px solid ${lightBlue[500]}`,
                      },
                      width: "100%",
                      [theme.breakpoints.up("sm")]: {
@@ -373,14 +371,21 @@ const Map = () => {
                            });
                         }
                      }}
+                     onChange={(e) => {
+                        if (e.target.value !== "") {
+                           setIsShowResult(true);
+                        } else {
+                           setIsShowResult(false);
+                        }
+                     }}
                      sx={{
                         color: "inherit",
                         "& .MuiInputBase-input": {
+                           width: "100%",
                            padding: theme.spacing(1, 1, 1, 0),
                            // vertical padding + font size from searchIcon
                            paddingLeft: `calc(1em + ${theme.spacing(4)})`,
                            transition: theme.transitions.create("width"),
-                           width: "100%",
                            [theme.breakpoints.up("md")]: {
                               width: "20ch",
                            },
@@ -388,10 +393,24 @@ const Map = () => {
                      }}
                   />
                </Box>
-               {isNotFound && (
-                  <Typography variant="body1" color="warning">
-                     Not Found.
-                  </Typography>
+               {isShowResult && (
+                  <Box
+                     sx={{
+                        borderRadius: ".5rem",
+                        mt: 1,
+                        minHeight: 100,
+                        width: 300,
+                        ml: 2.5,
+                        backgroundColor: "rgba(255,255,255, 0.6)",
+                        backdropFilter: "blur(1.5rem)",
+                     }}
+                  >
+                     {isNotFound && (
+                        <Typography variant="body1" color="warning">
+                           Not Found.
+                        </Typography>
+                     )}
+                  </Box>
                )}
             </Box>
             {/*
