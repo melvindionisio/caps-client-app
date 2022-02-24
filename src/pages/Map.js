@@ -1,6 +1,7 @@
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import {
    List,
+   ListItem,
    ListItemButton,
    ListItemText,
    Typography,
@@ -8,7 +9,9 @@ import {
    Toolbar,
    Hidden,
    InputBase,
+   IconButton,
 } from "@mui/material";
+
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
 import React, { useRef, useEffect, useState, useContext } from "react";
@@ -20,6 +23,7 @@ import { domain } from "../fetch-url/fetchUrl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import { useTheme } from "@mui/styles";
 import SearchIcon from "@mui/icons-material/Search";
+import DoubleArrowIcon from "@mui/icons-material/DoubleArrow";
 import { lightBlue } from "@mui/material/colors";
 
 mapboxgl.accessToken =
@@ -43,11 +47,11 @@ const Map = () => {
 
    useEffect(() => {
       if (result) {
-         if (result.length <= 0) {
+         if (result.length <= 0 && query !== "") {
             setIsNotFound(true);
          }
       }
-   }, [result]);
+   }, [result, query]);
 
    const handleSearch = () => {
       setIsNotFound(false);
@@ -68,17 +72,12 @@ const Map = () => {
             })
          );
 
-         //if (
-         //query === "" ||
-         //boardinghouse.geometry.coordinates[0] === 0 ||
-         //boardinghouse.geometry.coordinates[1] === 0
-         //) {
-         //map.current.flyTo({
-         //center: [124.665, 12.5096],
-         //zoom: 15.25,
-         //});
-         //setIsNotFound(true);
-         //} else {
+         if (query === "") {
+            map.current.flyTo({
+               center: [124.665, 12.5096],
+               zoom: 15.25,
+            });
+         }
          //map.current.flyTo({
          //center: boardinghouse.geometry.coordinates,
          //zoom: 19.0,
@@ -87,12 +86,20 @@ const Map = () => {
       }
    };
    const locateSearch = (coordinates) => {
-      map.current.flyTo({
-         center: coordinates,
-         zoom: 19.0,
-      });
-      setQuery("");
-      setIsShowResult(false);
+      if (coordinates[0] === 0 && coordinates[1] === 0) {
+         map.current.flyTo({
+            center: [124.665, 12.5096],
+            zoom: 15.25,
+         });
+         setIsNotFound(true);
+      } else {
+         map.current.flyTo({
+            center: coordinates,
+            zoom: 19.0,
+         });
+         setQuery("");
+         setIsShowResult(false);
+      }
    };
 
    const BOUNDS = [
@@ -438,20 +445,34 @@ const Map = () => {
                         backdropFilter: "blur(1.5rem)",
                      }}
                   >
-                     <List component="nav" aria-label="search-results">
+                     <List aria-label="search-results">
                         {result.map((res) => (
-                           <ListItemButton
-                              key={res.name}
-                              onClick={() => locateSearch(res.coordinates)}
+                           <ListItem
+                              divider
+                              disableGutters
+                              disablePadding
+                              secondaryAction={
+                                 <IconButton edge="start">
+                                    <DoubleArrowIcon />
+                                 </IconButton>
+                              }
                            >
-                              <ListItemText primary={res.name} />
-                           </ListItemButton>
+                              <ListItemButton
+                                 key={res.name}
+                                 onClick={() => locateSearch(res.coordinates)}
+                              >
+                                 <ListItemText primary={res.name} />
+                              </ListItemButton>
+                           </ListItem>
                         ))}
-                        {isNotFound && (
-                           <ListItemText primary="Not found." sx={{ px: 1 }} />
-                        )}
                      </List>
                   </Box>
+               )}
+
+               {isNotFound && (
+                  <Typography variant="caption" sx={{ px: 3 }}>
+                     Not Found.
+                  </Typography>
                )}
             </Box>
             {/*

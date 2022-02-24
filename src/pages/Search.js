@@ -105,6 +105,11 @@ const Search = () => {
                         color="secondary"
                         size="small"
                         value={query}
+                        //onKeyUp={(e)=>{
+                        //if(e.key==="enter"){
+
+                        //}
+                        //}}
                         onChange={(e) => setQuery(e.target.value)}
                         sx={{ width: "70%", maxWidth: "50rem" }}
                         autoFocus
