@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
+import Rating from "@mui/material/Rating";
 import { grey } from "@mui/material/colors";
 
 import { Modal, Fade, Backdrop } from "@mui/material";
@@ -34,6 +35,8 @@ const Reviews = () => {
    const [isSendingReview, setIsSendingReview] = useState(false);
    const [isDeleteReview, setIsDeleteReview] = useState(false);
 
+   const [rating, setRating] = useState(0);
+
    const [isModalOpen, setIsModalOpen] = useState(false);
    const handleModalClose = () => {
       setIsModalOpen(false);
@@ -50,6 +53,7 @@ const Reviews = () => {
                reviewDate: dateTime,
                reviewerName: currentUser.name,
                reviewText: reviewText,
+               //rating: rating,
             }),
             headers: {
                "Content-Type": "application/json",
@@ -243,6 +247,25 @@ const Reviews = () => {
                         value={reviewText}
                         onChange={(e) => setReviewText(e.target.value)}
                      />
+                     <Box
+                        sx={{
+                           display: "flex",
+                           justifyContent: "flex-end",
+                           gap: 2,
+                           alignItems: "center",
+                        }}
+                     >
+                        <Typography component="legend" variant="caption">
+                           Rating
+                        </Typography>
+                        <Rating
+                           name="bh-rating"
+                           value={rating}
+                           onChange={(event, newValue) => {
+                              setRating(newValue);
+                           }}
+                        />
+                     </Box>
                      <LoadingButton
                         size="small"
                         variant="contained"

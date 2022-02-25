@@ -36,13 +36,17 @@ const DetailsCard = ({ title, children, colors }) => {
                      ? lime[500]
                      : colors === "blue"
                      ? lightBlue[300]
-                     : yellow[400]
+                     : colors === "yellow"
+                     ? yellow[400]
+                     : orange[100]
                }, ${
                   colors === "green"
                      ? green[500]
                      : colors === "blue"
                      ? blue[500]
-                     : orange[500]
+                     : colors === "yellow"
+                     ? orange[500]
+                     : orange[100]
                })`,
                padding: ".2rem .4rem",
                borderRadius: 1,

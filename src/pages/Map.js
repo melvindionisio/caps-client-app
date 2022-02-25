@@ -113,11 +113,11 @@ const Map = () => {
       mapboxgl: mapboxgl, // Set the mapbox-gl instance
       marker: true, // Do not use the default marker style
       placeholder: "Search for places in University of Eastern Philippines", // Placeholder text for the search bar
-      bbox: [124.2389, 11.8762, 125.368, 12.9979], // Boundary for Berkeley
+      bbox: [124.2389, 11.8762, 125.368, 12.9979], // Boundary
       proximity: {
          longitude: 124.6649,
          latitude: 12.5094,
-      }, // Coordinates of UC Berkeley
+      }, // Coordinates
    });
 
    useEffect(() => {

@@ -10,6 +10,7 @@ import {
    Divider,
    ListItemText,
    ListItemAvatar,
+   Chip,
 } from "@mui/material";
 import {
    amber,
@@ -26,6 +27,7 @@ import LocationOnIcon from "@mui/icons-material/LocationOn";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
 import PersonPinIcon from "@mui/icons-material/PersonPin";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Link as Nlink } from "@mui/material";
 import MiniMap from "../MiniMap";
 import { useEffect, useContext } from "react";
@@ -109,6 +111,27 @@ const About = ({ boardinghouse }) => {
    const { data: totalRoom } = useFetch(
       `${domain}/api/rooms/total/${boardinghouse.id}`
    );
+
+   const [offers, setOffers] = useState(null);
+   const [waterSource, setWaterSource] = useState(null);
+   const [houseProtocols, setHouseProtocols] = useState(null);
+
+   useEffect(() => {
+      if (boardinghouse) {
+         let offers = boardinghouse.offers;
+         let offersArr = offers.split("/");
+
+         let waterSource = boardinghouse.waterSource;
+         let waterSourceArr = waterSource.split("/");
+
+         let houseProtocols = boardinghouse.houseProtocols;
+         let houseProtocolsArr = houseProtocols.split("/");
+
+         setWaterSource(waterSourceArr);
+         setHouseProtocols(houseProtocolsArr);
+         setOffers(offersArr);
+      }
+   }, [boardinghouse]);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -429,14 +452,48 @@ const About = ({ boardinghouse }) => {
             </DetailsCard>
 
             <DetailsCard title="House Protocols">
-               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
-                  {boardinghouse.houseProtocols}
-               </Typography>
+               <Box
+                  sx={{
+                     py: 1,
+                     fontFamily: "Quicksand",
+                     display: "flex",
+                     flexWrap: "wrap",
+                     gap: 1,
+                  }}
+               >
+                  {houseProtocols &&
+                     houseProtocols.map((protocol, index) => (
+                        <Chip
+                           icon={<CheckCircleIcon />}
+                           label={protocol}
+                           color="primary"
+                           size="medium"
+                           key={index}
+                        />
+                     ))}
+               </Box>
             </DetailsCard>
             <DetailsCard title="We Offer">
-               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
-                  {boardinghouse.offers}
-               </Typography>
+               <Box
+                  sx={{
+                     py: 1,
+                     fontFamily: "Quicksand",
+                     display: "flex",
+                     flexWrap: "wrap",
+                     gap: 1,
+                  }}
+               >
+                  {offers &&
+                     offers.map((offer, index) => (
+                        <Chip
+                           icon={<CheckCircleIcon />}
+                           label={offer}
+                           color="primary"
+                           size="medium"
+                           key={index}
+                        />
+                     ))}
+               </Box>
             </DetailsCard>
             <DetailsCard title="Gender/s Allowed">
                <InfoItem
@@ -445,17 +502,27 @@ const About = ({ boardinghouse }) => {
                />
             </DetailsCard>
             <DetailsCard title="Water source">
-               <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
-                  {boardinghouse.waterSource}
-               </Typography>
+               <Box
+                  sx={{
+                     py: 1,
+                     fontFamily: "Quicksand",
+                     display: "flex",
+                     flexWrap: "wrap",
+                     gap: 1,
+                  }}
+               >
+                  {waterSource &&
+                     waterSource.map((source, index) => (
+                        <Chip
+                           icon={<CheckCircleIcon />}
+                           label={source}
+                           color="primary"
+                           size="medium"
+                           key={index}
+                        />
+                     ))}
+               </Box>
             </DetailsCard>
-            {totalRoom && (
-               <DetailsCard title="Total Rooms">
-                  <Typography sx={{ py: 1, fontFamily: "Quicksand" }}>
-                     {totalRoom.total} rooms
-                  </Typography>
-               </DetailsCard>
-            )}
 
             <Box sx={{ mb: 2, mt: 4 }}>
                <Typography
