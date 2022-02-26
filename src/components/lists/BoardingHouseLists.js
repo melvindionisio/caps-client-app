@@ -138,6 +138,7 @@ const BoardingHouseLists = () => {
                         sx={{
                            display: "flex",
                            justifyContent: "space-between",
+                           mb: 1,
                         }}
                      >
                         <ToggleButtonGroup

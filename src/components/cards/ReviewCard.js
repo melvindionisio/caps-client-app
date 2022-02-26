@@ -3,6 +3,7 @@ import { red, lightBlue, green, deepPurple } from "@mui/material/colors";
 import React from "react";
 import { Delete } from "@mui/icons-material";
 import LoadingButton from "@mui/lab/LoadingButton";
+//import Rating from "@mui/material/Rating";
 
 const ReviewCard = ({
    review,
@@ -92,6 +93,10 @@ const ReviewCard = ({
                   >
                      {review.date}
                   </Typography>
+
+                  {/*
+                  <Rating name="bh-rating" value={2} readOnly size="small" />
+                  */}
                </Box>
                {isCurrentUserReview && (
                   <LoadingButton

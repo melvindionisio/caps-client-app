@@ -115,6 +115,7 @@ const About = ({ boardinghouse }) => {
    const [offers, setOffers] = useState(null);
    const [waterSource, setWaterSource] = useState(null);
    const [houseProtocols, setHouseProtocols] = useState(null);
+   const [genderAllowed, setGenderAllowed] = useState(null);
 
    useEffect(() => {
       if (boardinghouse) {
@@ -127,9 +128,13 @@ const About = ({ boardinghouse }) => {
          let houseProtocols = boardinghouse.houseProtocols;
          let houseProtocolsArr = houseProtocols.split("/");
 
+         let genderAllowed = boardinghouse.genderAllowed;
+         let genderAllowedArr = genderAllowed.split("/");
+
          setWaterSource(waterSourceArr);
          setHouseProtocols(houseProtocolsArr);
          setOffers(offersArr);
+         setGenderAllowed(genderAllowedArr);
       }
    }, [boardinghouse]);
 
@@ -450,6 +455,28 @@ const About = ({ boardinghouse }) => {
                   secondaryText={"Coordinates"}
                />
             </DetailsCard>
+            <DetailsCard title="Gender/s Allowed">
+               <Box
+                  sx={{
+                     py: 1,
+                     fontFamily: "Quicksand",
+                     display: "flex",
+                     flexWrap: "wrap",
+                     gap: 1,
+                  }}
+               >
+                  {genderAllowed &&
+                     genderAllowed.map((gender, index) => (
+                        <Chip
+                           icon={<CheckCircleIcon />}
+                           label={gender}
+                           color="primary"
+                           size="medium"
+                           key={index}
+                        />
+                     ))}
+               </Box>
+            </DetailsCard>
 
             <DetailsCard title="House Protocols">
                <Box
@@ -494,12 +521,6 @@ const About = ({ boardinghouse }) => {
                         />
                      ))}
                </Box>
-            </DetailsCard>
-            <DetailsCard title="Gender/s Allowed">
-               <InfoItem
-                  icon={<LocationOnIcon />}
-                  primaryText={boardinghouse.genderAllowed}
-               />
             </DetailsCard>
             <DetailsCard title="Water source">
                <Box

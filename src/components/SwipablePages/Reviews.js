@@ -7,7 +7,7 @@ import Button from "@mui/material/Button";
 import LoadingButton from "@mui/lab/LoadingButton";
 import Typography from "@mui/material/Typography";
 import TextField from "@mui/material/TextField";
-import Rating from "@mui/material/Rating";
+//import Rating from "@mui/material/Rating";
 import { grey } from "@mui/material/colors";
 
 import { Modal, Fade, Backdrop } from "@mui/material";
@@ -35,7 +35,7 @@ const Reviews = () => {
    const [isSendingReview, setIsSendingReview] = useState(false);
    const [isDeleteReview, setIsDeleteReview] = useState(false);
 
-   const [rating, setRating] = useState(0);
+   //const [rating, setRating] = useState(0);
 
    const [isModalOpen, setIsModalOpen] = useState(false);
    const handleModalClose = () => {
@@ -154,6 +154,22 @@ const Reviews = () => {
          .catch((err) => console.log(err));
    };
 
+   //const __badwords = [
+   //"fuck",
+   //"gago",
+   //"piste",
+   //"hayop",
+   //"haup",
+   //"siraulo",
+   //"animal",
+   //"maraot",
+   //"bwesit",
+   //"tangina",
+   //"demonyo",
+   //"langot",
+   //"yawa",
+   //];
+
    return (
       <Container
          maxWidth="md"
@@ -247,6 +263,7 @@ const Reviews = () => {
                         value={reviewText}
                         onChange={(e) => setReviewText(e.target.value)}
                      />
+                     {/*
                      <Box
                         sx={{
                            display: "flex",
@@ -266,6 +283,7 @@ const Reviews = () => {
                            }}
                         />
                      </Box>
+                     */}
                      <LoadingButton
                         size="small"
                         variant="contained"
@@ -294,6 +312,7 @@ const Reviews = () => {
             {isPending && <LoadingState loadWhat="Reviews" />}
 
             {reviews &&
+               //review.filter(review=>review.text.toLowerCase().includes() )
                reviews.map((review) => (
                   <ReviewCard
                      key={review.id}

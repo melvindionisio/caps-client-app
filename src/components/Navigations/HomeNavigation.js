@@ -127,16 +127,18 @@ const HomeNavigation = ({ children, NavigationTabs }) => {
                      src={logo}
                      style={{ height: "2rem", width: "2rem" }}
                   ></Avatar>
-                  <Hidden mdDown>
-                     <IconButton
-                        size="large"
-                        sx={{ ml: 1 }}
-                        variant="text"
-                        onClick={() => history.push("/bookmarks")}
-                     >
-                        <BookmarksIcon fontSize="medium" />
-                     </IconButton>
-                  </Hidden>
+                  {isLoggedIn.isLoggedIn && (
+                     <Hidden mdDown>
+                        <IconButton
+                           size="large"
+                           sx={{ ml: 1 }}
+                           variant="text"
+                           onClick={() => history.push("/bookmarks")}
+                        >
+                           <BookmarksIcon fontSize="medium" />
+                        </IconButton>
+                     </Hidden>
+                  )}
 
                   <Hidden mdUp>
                      <Typography

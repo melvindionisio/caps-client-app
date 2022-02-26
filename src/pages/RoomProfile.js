@@ -20,7 +20,10 @@ import {
    Modal,
    Backdrop,
    Fade,
+   Chip,
 } from "@mui/material";
+
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { lightBlue, green } from "@mui/material/colors";
 import AddBookmarkButton from "../components/AddBookmarkButton";
 import LoadingState from "../components/LoadingState";
@@ -64,15 +67,22 @@ const RoomProfile = (props) => {
       setIsModalOpen(false);
    };
 
+   const [genderAllowed, setGenderAllowed] = useState(null);
+
    useEffect(() => {
       const abortCont = new AbortController();
       fetch(`${domain}/api/rooms/${roomId}`, { signal: abortCont.signal })
          .then((res) => res.json())
          .then((data) => {
             setRoom(data);
+
             setIsPending(false);
             setError(null);
             setBoardinghouseIsPending(true);
+
+            let genderAllowed = data.genderAllowed;
+            let genderAllowedArr = genderAllowed.split("/");
+            setGenderAllowed(genderAllowedArr);
             fetch(`${domain}/api/boarding-houses/${data.boardinghouseId}`)
                .then((res) => res.json())
                .then((data) => {
@@ -280,13 +290,18 @@ const RoomProfile = (props) => {
                            </Typography>
                         </Typography>
 
-                        <Typography
-                           align="center"
-                           variant="body1"
-                           sx={{ py: 2, fontStyle: "italic" }}
+                        <Card
+                           sx={{ mb: 1, borderRadius: 2 }}
+                           variant="outlined"
                         >
-                           {room.description}
-                        </Typography>
+                           <Typography
+                              align="center"
+                              variant="body1"
+                              sx={{ py: 2, fontStyle: "italic" }}
+                           >
+                              {room.description}
+                           </Typography>
+                        </Card>
 
                         {isBoardinghousePending && <LoadingState />}
                         {boardinghouse && (
@@ -365,7 +380,26 @@ const RoomProfile = (props) => {
                                  />
                               </DetailsCard>
                               <DetailsCard title="Gender Allowed">
-                                 <InfoItem primaryText={room.genderAllowed} />
+                                 <Box
+                                    sx={{
+                                       py: 1,
+                                       fontFamily: "Quicksand",
+                                       display: "flex",
+                                       flexWrap: "wrap",
+                                       gap: 1,
+                                    }}
+                                 >
+                                    {genderAllowed &&
+                                       genderAllowed.map((gender, index) => (
+                                          <Chip
+                                             icon={<CheckCircleIcon />}
+                                             label={gender}
+                                             color="primary"
+                                             size="medium"
+                                             key={index}
+                                          />
+                                       ))}
+                                 </Box>
                               </DetailsCard>
                            </>
                         )}
