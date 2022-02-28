@@ -96,7 +96,6 @@ const Home = () => {
             indicatorColor="secondary"
             textColor="secondary"
             variant="fullWidth"
-            aria-label="full width tabs"
          >
             <Tooltip title="Rooms" TransitionComponent={Zoom} enterDelay={900}>
                <Tab icon={<SingleBedIcon />} label="ROOMS" {...a11yProps(0)} />

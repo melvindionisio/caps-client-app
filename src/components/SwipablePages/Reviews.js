@@ -10,7 +10,7 @@ import TextField from "@mui/material/TextField";
 //import Rating from "@mui/material/Rating";
 import { grey } from "@mui/material/colors";
 
-import { Modal, Fade, Backdrop } from "@mui/material";
+import { Modal, Fade, Backdrop, List } from "@mui/material";
 import CloseOutlined from "@mui/icons-material/CloseOutlined";
 import AddOutlinedIcon from "@mui/icons-material/AddOutlined";
 import RateReviewIcon from "@mui/icons-material/RateReview";
@@ -19,7 +19,7 @@ import useCurrentTimeDate from "../../hooks/useCurrentTimeDate";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import LoadingState from "../LoadingState";
-import ReviewCard from "../cards/ReviewCard";
+import ReviewList from "../lists/ReviewList";
 
 const Reviews = () => {
    const { currentUser, isLoggedIn } = useContext(LoginContext);
@@ -172,7 +172,7 @@ const Reviews = () => {
 
    return (
       <Container
-         maxWidth="md"
+         maxWidth="sm"
          disableGutters
          sx={{
             padding: 2,
@@ -302,7 +302,7 @@ const Reviews = () => {
                display: "flex",
                flexDirection: "column",
                gap: 1,
-               height: "50vh",
+               height: "60vh",
                overflowY: "auto",
                padding: "1rem 5px",
                borderRadius: 1,
@@ -311,19 +311,28 @@ const Reviews = () => {
          >
             {isPending && <LoadingState loadWhat="Reviews" />}
 
-            {reviews &&
-               //review.filter(review=>review.text.toLowerCase().includes() )
-               reviews.map((review) => (
-                  <ReviewCard
-                     key={review.id}
-                     review={review}
-                     isCurrentUserReview={
-                        review.reviewerId === currentUser.id ? true : false
-                     }
-                     handleDeleteReview={handleDeleteReview}
-                     isDeleteReview={isDeleteReview}
-                  />
-               ))}
+            <List
+               disablePadding
+               sx={{
+                  borderRadius: 2,
+                  bgcolor: "background.paper",
+                  overflow: "hidden",
+               }}
+            >
+               {reviews &&
+                  //review.filter(review=>review.text.toLowerCase().includes() )
+                  reviews.map((review) => (
+                     <ReviewList
+                        key={review.id}
+                        review={review}
+                        isCurrentUserReview={
+                           review.reviewerId === currentUser.id ? true : false
+                        }
+                        handleDeleteReview={handleDeleteReview}
+                        isDeleteReview={isDeleteReview}
+                     />
+                  ))}
+            </List>
 
             {isEmpty && (
                <Typography

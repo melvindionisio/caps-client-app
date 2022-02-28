@@ -142,7 +142,7 @@ const Profile = () => {
                   </Typography>
                </ReusableNavigation>
 
-               <Container maxWidth="md">
+               <Container maxWidth="sm">
                   <Box sx={{ p: 3, px: 5 }}>
                      {isLoggedIn.loginType === "google-login" && (
                         <Typography

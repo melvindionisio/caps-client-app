@@ -25,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
    },
    bottomNavigation: {
       boxShadow: "0px 0px 0px 1px rgba(0,0,0,.1)",
+      [theme.breakpoints.down("sm")]: {
+         width: "100%",
+         borderRadius: 0,
+         boxShadow: "0 -1px 5px 0rem rgba(0,0,0,0.5)",
+      },
       width: 270,
       borderRadius: ".5rem .5rem 0rem 0rem",
       overflow: "hidden",

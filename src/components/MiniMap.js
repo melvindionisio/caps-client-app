@@ -150,6 +150,7 @@ const MiniMap = ({ ownerId }) => {
       return () => {
          // cancel the request before component unmounts
          controller.abort();
+         //map.current.remove();
       };
    });
 
