@@ -37,61 +37,102 @@ const Reviews = () => {
 
    //const [rating, setRating] = useState(0);
 
+   const [showBadwordPromptMessage, setShowBadwordPromptMessage] =
+      useState(false);
    const [isModalOpen, setIsModalOpen] = useState(false);
    const handleModalClose = () => {
       setIsModalOpen(false);
    };
 
+   const __badwords = [
+      "fuck",
+      "gago",
+      "piste",
+      "hayop",
+      "haup",
+      "siraulo",
+      "animal",
+      "maraot",
+      "bwesit",
+      "tangina",
+      "demonyo",
+      "langot",
+      "yawa",
+      "bitch",
+      "hamapaslupa",
+      "demonjo",
+      "makalalangot",
+      "bobo",
+      "puta",
+      "tangina",
+      "tanginamo",
+      "putangina",
+   ];
+
+   function hasBadwords(review) {
+      for (let i = 0; i <= __badwords.length; i++) {
+         if (review.toLowerCase().includes(__badwords[i])) {
+            return true;
+         }
+      }
+      return false;
+   }
+
    const handleAddReview = () => {
-      if (reviewText !== "") {
-         setIsSendingReview(true);
-         fetch(`${domain}/api/reviews/add/${bhId}`, {
-            method: "POST",
-            body: JSON.stringify({
-               seekerId: currentUser.id,
-               boardinghouseId: bhId,
-               reviewDate: dateTime,
-               reviewerName: currentUser.name,
-               reviewText: reviewText,
-               //rating: rating,
-            }),
-            headers: {
-               "Content-Type": "application/json",
-            },
-         })
-            .then((res) => {
-               return res.json();
+      if (!hasBadwords(reviewText)) {
+         setShowBadwordPromptMessage(false);
+         if (reviewText !== "") {
+            setIsSendingReview(true);
+            fetch(`${domain}/api/reviews/add/${bhId}`, {
+               method: "POST",
+               body: JSON.stringify({
+                  seekerId: currentUser.id,
+                  boardinghouseId: bhId,
+                  reviewDate: dateTime,
+                  reviewerName: currentUser.name,
+                  reviewText: reviewText,
+                  //rating: rating,
+               }),
+               headers: {
+                  "Content-Type": "application/json",
+               },
             })
-            .then((data) => {
-               //window.location.reload(false);
-               console.log(data.message);
-               setIsSendingReview(false);
-               setIsModalOpen(false);
-               setIsPending(true);
-               setReviewText("");
-               fetch(`${domain}/api/reviews/bh/${bhId}`)
-                  .then((res) => {
-                     if (!res.ok) {
-                        throw Error("Something went wrong!");
-                     }
-                     return res.json();
-                  })
-                  .then((data) => {
-                     setIsPending(false);
-                     if (data) {
-                        setReviews(data);
-                        setTimeout(() => {
-                           scroller.current.scrollIntoView();
-                        }, 3000);
-                     }
-                  })
-                  .catch((err) => {
-                     console.log(err);
-                  });
-            })
-            .catch((err) => console.log(err));
+               .then((res) => {
+                  return res.json();
+               })
+               .then((data) => {
+                  //window.location.reload(false);
+                  console.log(data.message);
+                  setIsSendingReview(false);
+                  setIsModalOpen(false);
+                  setIsPending(true);
+                  setReviewText("");
+                  fetch(`${domain}/api/reviews/bh/${bhId}`)
+                     .then((res) => {
+                        if (!res.ok) {
+                           throw Error("Something went wrong!");
+                        }
+                        return res.json();
+                     })
+                     .then((data) => {
+                        setIsPending(false);
+                        if (data) {
+                           setReviews(data);
+                           setTimeout(() => {
+                              scroller.current.scrollIntoView();
+                           }, 3000);
+                        }
+                     })
+                     .catch((err) => {
+                        console.log(err);
+                     });
+               })
+               .catch((err) => console.log(err));
+         } else {
+            console.log("please fill");
+         }
       } else {
-         console.log("please fill");
+         setShowBadwordPromptMessage(true);
       }
    };
 
@@ -136,6 +177,14 @@ const Reviews = () => {
    //scroller.current.scrollIntoView();
    //}, [reviews]);
 
+   useEffect(() => {
+      if (reviews.length <= 0) {
+         setIsEmpty(true);
+      } else {
+         setIsEmpty(false);
+      }
+   }, [reviews]);
+
    const handleDeleteReview = async (reviewId) => {
       setIsDeleteReview(true);
       fetch(`${domain}/api/reviews/${reviewId}`, {
@@ -153,22 +202,6 @@ const Reviews = () => {
          })
          .catch((err) => console.log(err));
    };
-
-   //const __badwords = [
-   //"fuck",
-   //"gago",
-   //"piste",
-   //"hayop",
-   //"haup",
-   //"siraulo",
-   //"animal",
-   //"maraot",
-   //"bwesit",
-   //"tangina",
-   //"demonyo",
-   //"langot",
-   //"yawa",
-   //];
 
    return (
       <Container
@@ -261,7 +294,16 @@ const Reviews = () => {
                         rows={3}
                         variant="filled"
                         value={reviewText}
-                        onChange={(e) => setReviewText(e.target.value)}
+                        onChange={(e) => {
+                           setReviewText(e.target.value);
+                           setShowBadwordPromptMessage(false);
+                        }}
+                        error={showBadwordPromptMessage}
+                        helperText={
+                           showBadwordPromptMessage
+                              ? "Sorry, bad words are not allowed!"
+                              : ""
+                        }
                      />
                      {/*
                      <Box
@@ -314,9 +356,7 @@ const Reviews = () => {
             <List
                disablePadding
                sx={{
-                  borderRadius: 2,
                   bgcolor: "background.paper",
-                  overflow: "hidden",
                }}
             >
                {reviews &&
@@ -414,7 +454,7 @@ const Reviews = () => {
                         display: "flex",
                         gap: 1,
                         justifyContent: "center",
-                        mt: 2,
+                        mt: 1,
                      }}
                   >
                      <Button

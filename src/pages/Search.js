@@ -31,6 +31,8 @@ const Search = () => {
    const [error, setError] = useState("");
 
    const handleSearch = () => {
+      setError("");
+      setQueryResult(null);
       if (query) {
          setIsPending(true);
          fetch(`${domain}/api/boarding-houses/search`, {
@@ -105,11 +107,11 @@ const Search = () => {
                         color="secondary"
                         size="small"
                         value={query}
-                        //onKeyUp={(e)=>{
-                        //if(e.key==="enter"){
-
-                        //}
-                        //}}
+                        onKeyUp={(e) => {
+                           if (e.key === "Enter") {
+                              handleSearch();
+                           }
+                        }}
                         onChange={(e) => setQuery(e.target.value)}
                         sx={{ width: "70%", maxWidth: "50rem" }}
                         autoFocus

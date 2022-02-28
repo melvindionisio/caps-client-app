@@ -68,6 +68,7 @@ const RoomProfile = (props) => {
    };
 
    const [genderAllowed, setGenderAllowed] = useState(null);
+   const [roomDescription, setRoomDescription] = useState(null);
 
    useEffect(() => {
       const abortCont = new AbortController();
@@ -83,6 +84,11 @@ const RoomProfile = (props) => {
             let genderAllowed = data.genderAllowed;
             let genderAllowedArr = genderAllowed.split("/");
             setGenderAllowed(genderAllowedArr);
+
+            let roomDescription = data.description;
+            let roomDescriptionArr = roomDescription.split("/");
+            setRoomDescription(roomDescriptionArr);
+
             fetch(`${domain}/api/boarding-houses/${data.boardinghouseId}`)
                .then((res) => res.json())
                .then((data) => {
@@ -291,16 +297,29 @@ const RoomProfile = (props) => {
                         </Typography>
 
                         <Card
-                           sx={{ mb: 1, borderRadius: 2 }}
+                           sx={{ mb: 1, borderRadius: 2, p: 1 }}
                            variant="outlined"
                         >
-                           <Typography
-                              align="center"
-                              variant="body1"
-                              sx={{ py: 2, fontStyle: "italic" }}
+                           <Box
+                              sx={{
+                                 py: 1,
+                                 fontFamily: "Quicksand",
+                                 display: "flex",
+                                 flexWrap: "wrap",
+                                 gap: 1,
+                              }}
                            >
-                              {room.description}
-                           </Typography>
+                              {roomDescription &&
+                                 roomDescription.map((description, index) => (
+                                    <Chip
+                                       icon={<CheckCircleIcon />}
+                                       label={description}
+                                       color="primary"
+                                       size="medium"
+                                       key={index}
+                                    />
+                                 ))}
+                           </Box>
                         </Card>
 
                         {isBoardinghousePending && <LoadingState />}

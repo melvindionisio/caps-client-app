@@ -136,7 +136,7 @@ const Profile = () => {
             sx={{ minHeight: "100vh", pb: 2 }}
          >
             <Box sx={{ overflowY: "auto", height: "100vh" }}>
-               <ReusableNavigation>
+               <ReusableNavigation spaceCenter={true} center={true}>
                   <Typography variant="body1" align="center">
                      Profile
                   </Typography>

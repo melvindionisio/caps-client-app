@@ -45,7 +45,11 @@ const ReusableNavigation = ({
                   <ArrowBackIosIcon />
                </IconButton>
                {children}
-               {center && <IconButton></IconButton>}
+               {center && (
+                  <IconButton sx={{ opacity: 0 }}>
+                     <ArrowBackIosIcon />
+                  </IconButton>
+               )}
             </Toolbar>
          </AppBar>
          {navigationTabs && (
