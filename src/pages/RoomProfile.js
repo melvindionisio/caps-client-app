@@ -82,11 +82,11 @@ const RoomProfile = (props) => {
             setBoardinghouseIsPending(true);
 
             let genderAllowed = data.genderAllowed;
-            let genderAllowedArr = genderAllowed.split("/");
+            let genderAllowedArr = genderAllowed?.split("/");
             setGenderAllowed(genderAllowedArr);
 
             let roomDescription = data.description;
-            let roomDescriptionArr = roomDescription.split("/");
+            let roomDescriptionArr = roomDescription?.split("/");
             setRoomDescription(roomDescriptionArr);
 
             fetch(`${domain}/api/boarding-houses/${data.boardinghouseId}`)

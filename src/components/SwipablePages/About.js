@@ -120,16 +120,16 @@ const About = ({ boardinghouse }) => {
    useEffect(() => {
       if (boardinghouse) {
          let offers = boardinghouse.offers;
-         let offersArr = offers.split("/");
+         let offersArr = offers?.split("/");
 
          let waterSource = boardinghouse.waterSource;
-         let waterSourceArr = waterSource.split("/");
+         let waterSourceArr = waterSource?.split("/");
 
          let houseProtocols = boardinghouse.houseProtocols;
-         let houseProtocolsArr = houseProtocols.split("/");
+         let houseProtocolsArr = houseProtocols?.split("/");
 
          let genderAllowed = boardinghouse.genderAllowed;
-         let genderAllowedArr = genderAllowed.split("/");
+         let genderAllowedArr = genderAllowed?.split("/");
 
          setWaterSource(waterSourceArr);
          setHouseProtocols(houseProtocolsArr);
