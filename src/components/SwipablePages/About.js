@@ -15,6 +15,7 @@ import {
 import {
    amber,
    blue,
+   red,
    grey,
    lightBlue,
    purple,
@@ -34,6 +35,7 @@ import { useEffect, useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import useFetch from "../../hooks/useFetch";
+import CancelIcon from "@mui/icons-material/Cancel";
 
 const useStyles = makeStyles({
    avatar: {
@@ -135,6 +137,7 @@ const About = ({ boardinghouse }) => {
          setHouseProtocols(houseProtocolsArr);
          setOffers(offersArr);
          setGenderAllowed(genderAllowedArr);
+         //console.log(boardinghouse);
       }
    }, [boardinghouse]);
 
@@ -305,6 +308,8 @@ const About = ({ boardinghouse }) => {
                   mt: 2,
                   display: "flex",
                   gap: 1,
+                  flexWrap: "wrap",
+                  justifyContent: "center",
                }}
             >
                <Typography
@@ -317,28 +322,72 @@ const About = ({ boardinghouse }) => {
                      py: 1,
                      borderRadius: 1,
                      background: amber[50],
+                     fontFamily: "Quicksand",
                   }}
                >
                   Price Range:{"  "}
                   {boardinghouse.priceRange}
                </Typography>
-               {totalRoom && (
+               <Typography
+                  variant="caption"
+                  color="text.secondary"
+                  sx={{
+                     fontWeight: "bold",
+                     border: ` 1px solid ${green[500]}`,
+                     background: green[50],
+                     px: 2,
+                     py: 1,
+                     borderRadius: 1,
+                     fontFamily: "Quicksand",
+                  }}
+               >
+                  Total rooms: {"  "}
+                  {totalRoom?.total}
+               </Typography>
+               <Box
+                  variant="caption"
+                  color="text.secondary"
+                  sx={
+                     boardinghouse.acceptingTransient === "yes"
+                        ? {
+                             border: `1px solid ${blue[500]}`,
+                             background: blue[50],
+                             px: 2,
+                             py: 1,
+                             borderRadius: 1,
+                             display: "flex",
+                             gap: 1,
+                             alignItems: "center",
+                          }
+                        : {
+                             border: `1px solid ${red[500]}`,
+                             background: red[50],
+                             px: 2,
+                             py: 1,
+                             borderRadius: 1,
+                             display: "flex",
+                             gap: 1,
+                             alignItems: "center",
+                          }
+                  }
+               >
+                  {boardinghouse.acceptingTransient === "yes" ? (
+                     <CheckCircleIcon />
+                  ) : (
+                     <CancelIcon />
+                  )}
                   <Typography
                      variant="caption"
-                     color="text.secondary"
                      sx={{
                         fontWeight: "bold",
-                        border: ` 1px solid ${green[500]}`,
-                        background: green[50],
-                        px: 2,
-                        py: 1,
-                        borderRadius: 1,
+                        fontFamily: "Quicksand",
                      }}
                   >
-                     Total rooms: {"  "}
-                     {totalRoom.total}
+                     {boardinghouse.acceptingTransient === "yes"
+                        ? "Accepting termporary stay"
+                        : "Not accepting termporary stay"}
                   </Typography>
-               )}
+               </Box>
             </Box>
             {isStarred ? (
                <IconButton

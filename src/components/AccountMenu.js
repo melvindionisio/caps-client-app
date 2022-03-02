@@ -209,7 +209,7 @@ export default function AccountMenu({ currentUser }) {
                   )}
                </div>
             ) : (
-               <React.Fragment>
+               <div>
                   <MenuItem onClick={() => history.push("/register")}>
                      <ListItemIcon>
                         <PersonAddIcon fontSize="small" />
@@ -266,7 +266,7 @@ export default function AccountMenu({ currentUser }) {
                         console.log(response);
                      }}
                   />
-               </React.Fragment>
+               </div>
             )}
          </Menu>
       </React.Fragment>
