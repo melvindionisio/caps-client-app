@@ -45,11 +45,11 @@ const Rooms = ({ bhName }) => {
       >
          {isRoomsEmpty && (
             <Typography
-               variant="body1"
+               variant="body2"
                align="center"
                sx={{ py: 3, color: "text.secondary" }}
             >
-               Rooms is empty!
+               No Available Rooms!
             </Typography>
          )}
          <Grid container spacing={2}>

@@ -466,7 +466,7 @@ const Reviews = () => {
                   align="center"
                   sx={{ mt: 4 }}
                >
-                  Reviews is empty!
+                  No Reviews yet.
                </Typography>
             )}
             <Typography

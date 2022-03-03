@@ -314,9 +314,10 @@ const RoomProfile = (props) => {
                                     <Chip
                                        icon={<CheckCircleIcon />}
                                        label={description}
-                                       color="primary"
                                        size="medium"
                                        key={index}
+                                       color="primary"
+                                       variant="outlined"
                                     />
                                  ))}
                            </Box>

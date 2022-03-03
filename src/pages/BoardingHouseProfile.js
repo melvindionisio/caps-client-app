@@ -28,7 +28,7 @@ import ReviewsIcon from "@mui/icons-material/Reviews";
 import AddBookmarkButton from "../components/AddBookmarkButton";
 import { LoginContext } from "../contexts/LoginContext";
 import { IconButton } from "@mui/material";
-import useLocalStorage from "../hooks/useLocalStorage";
+import useSessionStorage from "../hooks/useSessionStorage";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -70,7 +70,7 @@ const BoardingHouseProfile = () => {
    } = useFetch(`${domain}/api/boarding-houses/${bhId}`);
 
    const theme = useTheme();
-   const [value, setValue] = useLocalStorage("boardinghouse-profile-tab", 0);
+   const [value, setValue] = useSessionStorage("boardinghouse-profile-tab", 0);
 
    const handleChange = (event, newValue) => {
       setValue(newValue);
