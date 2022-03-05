@@ -118,14 +118,14 @@ code {
 #visit-btn {
    padding: 0.4rem 2rem;
    margin-bottom: 0.5rem;
-   background-color: rgba(146, 201, 74, 1);
+   background-color: rgba(254, 201, 40, 1);
    border: none;
    outline: none;
    border-radius: 0.2rem;
    transition: 250ms ease;
 }
 #visit-btn:hover {
-   background-color: rgba(146, 201, 74, 0.75);
+   background-color: rgba(254, 201, 40, 0.6);
 }
 #visit-btn:focus {
    outline: none;

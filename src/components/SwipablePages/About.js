@@ -110,9 +110,9 @@ const About = ({ boardinghouse }) => {
    const [reloader, setReloader] = useState(0);
    const [isStarPending, setIsStarPending] = useState(true);
 
-   const { data: totalRoom } = useFetch(
-      `${domain}/api/rooms/total/${boardinghouse.id}`
-   );
+   //const { data: totalRoom } = useFetch(
+   //`${domain}/api/rooms/total/${boardinghouse.id}`
+   //);
 
    const [offers, setOffers] = useState(null);
    const [waterSource, setWaterSource] = useState(null);
@@ -342,7 +342,7 @@ const About = ({ boardinghouse }) => {
                   }}
                >
                   Total rooms: {"  "}
-                  {totalRoom?.total}
+                  {boardinghouse.totalRooms}
                </Typography>
                <Box
                   variant="caption"

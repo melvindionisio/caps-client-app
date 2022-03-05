@@ -33,7 +33,7 @@ const BoardingHouseLists = () => {
    const [error, setError] = useState(null);
    const [sort, setSort] = useState("bh_popularity");
    const [sortType, setSortType] = useState("desc");
-   const [genderFilter, setGenderFilter] = useState("All");
+   const [genderFilter, setGenderFilter] = useState("Male/Female");
    const [zoneFilter, setZoneFilter] = useState("All");
 
    const [isFilterActive, setIsFilterActive] = useState(false);
@@ -199,7 +199,10 @@ const BoardingHouseLists = () => {
                            exclusive
                            onChange={handleChangeGenderFilter}
                         >
-                           <ToggleButton value="All" aria-label="sortbyall">
+                           <ToggleButton
+                              value="Male/Female"
+                              aria-label="sortbyall"
+                           >
                               All
                            </ToggleButton>
                            <ToggleButton value="Male" aria-label="sortbymale">
