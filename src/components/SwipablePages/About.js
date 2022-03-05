@@ -34,7 +34,6 @@ import MiniMap from "../MiniMap";
 import { useEffect, useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
-import useFetch from "../../hooks/useFetch";
 import CancelIcon from "@mui/icons-material/Cancel";
 
 const useStyles = makeStyles({
