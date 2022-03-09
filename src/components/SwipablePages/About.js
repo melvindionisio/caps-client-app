@@ -35,6 +35,8 @@ import { useEffect, useContext } from "react";
 import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import CancelIcon from "@mui/icons-material/Cancel";
+import Linkify from "react-linkify";
+import { SecureLink } from "react-secure-link";
 
 const useStyles = makeStyles({
    avatar: {
@@ -109,6 +111,15 @@ const About = ({ boardinghouse }) => {
    const [reloader, setReloader] = useState(0);
    const [isStarPending, setIsStarPending] = useState(true);
 
+   //const bioToUrl = useRef(null);
+
+   //const urlify = (text) => {
+   //const urlRegex = /(https?:\/\/[^\s]+)/g;
+   //return text.replace(urlRegex, (url) => {
+   //return `<a href="${url}">${url}</a>`;
+   //});
+   //};
+
    //const { data: totalRoom } = useFetch(
    //`${domain}/api/rooms/total/${boardinghouse.id}`
    //);
@@ -136,7 +147,7 @@ const About = ({ boardinghouse }) => {
          setHouseProtocols(houseProtocolsArr);
          setOffers(offersArr);
          setGenderAllowed(genderAllowedArr);
-         //console.log(boardinghouse);
+         //bioToUrl.current.textContent = urlify(boardinghouse.tagline);
       }
    }, [boardinghouse]);
 
@@ -299,8 +310,17 @@ const About = ({ boardinghouse }) => {
                variant="body1"
                color="text.secondary"
                sx={{ mt: 2, fontStyle: "italic" }}
+               align="center"
             >
-               {boardinghouse.tagline}
+               <Linkify
+                  componentDecorator={(decoratedHref, decoratedText, key) => (
+                     <SecureLink href={decoratedHref} key={key}>
+                        {decoratedText}
+                     </SecureLink>
+                  )}
+               >
+                  {boardinghouse.tagline}
+               </Linkify>
             </Typography>
             <Box
                sx={{
