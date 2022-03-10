@@ -91,8 +91,8 @@ const Home = () => {
 
    const {
       data: rooms,
-      isRoomPending,
-      roomError,
+      isPending: isRoomPending,
+      error: roomError,
    } = useFetch(`${domain}/api/rooms`);
    const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
 
