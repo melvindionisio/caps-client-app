@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 //import useFetch from "../../hooks/useFetch";
 import BoardingHouseCard from "../cards/BoardingHouseCard";
 import LoadingState from "../../components/LoadingState";
@@ -9,7 +9,6 @@ import FemaleIcon from "@mui/icons-material/Female";
 //import WcIcon from "@mui/icons-material/Wc";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
-import { domain } from "../../fetch-url/fetchUrl";
 import {
    ToggleButton,
    Button,
@@ -20,16 +19,21 @@ import {
    Zoom,
 } from "@mui/material";
 
-const BoardingHouseLists = () => {
-   const [boardinghouses, setBoardinghouses] = useState([]);
-   const [isEmpty, setIsEmpty] = useState(false);
-   const [isPending, setIsPending] = useState(true);
-   const [error, setError] = useState(null);
-   const [sort, setSort] = useState("bh_popularity");
-   const [sortType, setSortType] = useState("desc");
-   const [genderFilter, setGenderFilter] = useState("Male/Female");
-   const [zoneFilter, setZoneFilter] = useState("All");
-
+const BoardingHouseLists = ({
+   boardinghouses,
+   isPending,
+   isEmpty,
+   setIsEmpty,
+   error,
+   sort,
+   sortType,
+   genderFilter,
+   zoneFilter,
+   setSort,
+   setGenderFilter,
+   setZoneFilter,
+   setSortType,
+}) => {
    const [isFilterActive, setIsFilterActive] = useState(false);
    const [isSortActive, setIsSortActive] = useState(false);
 
@@ -46,47 +50,6 @@ const BoardingHouseLists = () => {
    const handleChangeSortType = (event, newSortType) => {
       setSortType(newSortType);
    };
-
-   useEffect(() => {
-      // will fetch depending in the sort here
-      setIsPending(true);
-      if (sort && sortType) {
-         const abortCont = new AbortController();
-         setBoardinghouses(null);
-         setTimeout(() => {
-            fetch(
-               `${domain}/api/boarding-houses/?sort=${sort}&sortType=${sortType}&gender=${genderFilter}&zone=${zoneFilter}`,
-               { signal: abortCont.signal }
-            )
-               .then((res) => {
-                  if (!res.ok) {
-                     throw Error("Something went wrong!");
-                  }
-                  return res.json();
-               })
-               .then((data) => {
-                  if (data.length <= 0) {
-                     setIsEmpty(true);
-                  }
-                  setBoardinghouses(data);
-                  setIsPending(false);
-                  setError(null);
-               })
-               .catch((err) => {
-                  if (err.name === "AbortError") {
-                     console.log("fetch aborted");
-                  } else {
-                     setIsPending(false);
-                     setError(err.message);
-                     setBoardinghouses(null);
-                  }
-               });
-         }, 0);
-         return () => {
-            abortCont.abort();
-         };
-      }
-   }, [sort, sortType, genderFilter, zoneFilter]);
 
    return (
       <Box sx={{ width: "100%" }}>

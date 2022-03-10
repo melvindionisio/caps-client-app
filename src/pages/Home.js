@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
@@ -89,8 +89,62 @@ const Home = () => {
       setValue(index);
    };
 
-   const { data: rooms, isPending, error } = useFetch(`${domain}/api/rooms`);
+   const {
+      data: rooms,
+      isRoomPending,
+      roomError,
+   } = useFetch(`${domain}/api/rooms`);
    const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
+
+   const [boardinghouses, setBoardinghouses] = useState([]);
+   const [isEmpty, setIsEmpty] = useState(false);
+   const [isPending, setIsPending] = useState(true);
+   const [error, setError] = useState(null);
+   const [sort, setSort] = useState("bh_popularity");
+   const [sortType, setSortType] = useState("desc");
+   const [genderFilter, setGenderFilter] = useState("Male/Female");
+   const [zoneFilter, setZoneFilter] = useState("All");
+
+   useEffect(() => {
+      // will fetch depending in the sort here
+      setIsPending(true);
+      if (sort && sortType) {
+         const abortCont = new AbortController();
+         setBoardinghouses(null);
+         setTimeout(() => {
+            fetch(
+               `${domain}/api/boarding-houses/?sort=${sort}&sortType=${sortType}&gender=${genderFilter}&zone=${zoneFilter}`,
+               { signal: abortCont.signal }
+            )
+               .then((res) => {
+                  if (!res.ok) {
+                     throw Error("Something went wrong!");
+                  }
+                  return res.json();
+               })
+               .then((data) => {
+                  if (data.length <= 0) {
+                     setIsEmpty(true);
+                  }
+                  setBoardinghouses(data);
+                  setIsPending(false);
+                  setError(null);
+               })
+               .catch((err) => {
+                  if (err.name === "AbortError") {
+                     console.log("fetch aborted");
+                  } else {
+                     setIsPending(false);
+                     setError(err.message);
+                     setBoardinghouses(null);
+                  }
+               });
+         }, 0);
+         return () => {
+            abortCont.abort();
+         };
+      }
+   }, [sort, sortType, genderFilter, zoneFilter]);
 
    function NavigationTabs() {
       return (
@@ -147,14 +201,28 @@ const Home = () => {
                         <RoomLists
                            rooms={rooms}
                            totalRooms={totalRooms}
-                           isPending={isPending}
-                           error={error}
+                           isPending={isRoomPending}
+                           error={roomError}
                         />
                      </SwipeableWrapper>
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>
                      <SwipeableWrapper>
-                        <BoardingHouseLists />
+                        <BoardingHouseLists
+                           boardinghouses={boardinghouses}
+                           isPending={isPending}
+                           isEmpty={isEmpty}
+                           setIsEmpty={setIsEmpty}
+                           error={error}
+                           sort={sort}
+                           sortType={sortType}
+                           genderFilter={genderFilter}
+                           zoneFilter={zoneFilter}
+                           setSort={setSort}
+                           setGenderFilter={setGenderFilter}
+                           setZoneFilter={setZoneFilter}
+                           setSortType={setSortType}
+                        />
                      </SwipeableWrapper>
                   </TabPanel>
                </SwipeableViews>
