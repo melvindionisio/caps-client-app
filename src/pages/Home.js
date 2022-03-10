@@ -20,6 +20,8 @@ import HomeNavigation from "../components/Navigations/HomeNavigation";
 import RoomLists from "../components/lists/RoomLists";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
 import useSessionStorage from "../hooks/useSessionStorage";
+import { domain } from "../fetch-url/fetchUrl";
+import useFetch from "../hooks/useFetch";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -87,6 +89,9 @@ const Home = () => {
       setValue(index);
    };
 
+   const { data: rooms, isPending, error } = useFetch(`${domain}/api/rooms`);
+   const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
+
    function NavigationTabs() {
       return (
          <Tabs
@@ -139,7 +144,12 @@ const Home = () => {
                >
                   <TabPanel value={value} index={0} dir={theme.direction}>
                      <SwipeableWrapper>
-                        <RoomLists />
+                        <RoomLists
+                           rooms={rooms}
+                           totalRooms={totalRooms}
+                           isPending={isPending}
+                           error={error}
+                        />
                      </SwipeableWrapper>
                   </TabPanel>
                   <TabPanel value={value} index={1} dir={theme.direction}>

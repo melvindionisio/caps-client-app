@@ -1,17 +1,13 @@
 import React from "react";
 //import Masonry from "@mui/lab/Masonry";
 import SimpleRoomCard from "../cards/SimpleRoomCard";
-import useFetch from "../../hooks/useFetch";
 import Typography from "@mui/material/Typography";
 import LoadingState from "../../components/LoadingState";
 import { green } from "@mui/material/colors";
 import { Box, Grid } from "@mui/material";
-import { domain } from "../../fetch-url/fetchUrl";
 import { useState, useEffect } from "react";
 
-const RoomLists = () => {
-   const { data: rooms, isPending, error } = useFetch(`${domain}/api/rooms`);
-   const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
+const RoomLists = ({ rooms, totalRooms, isPending, error }) => {
    const [thisRooms, setThisRooms] = useState([]);
    const [isRoomsEmpty, setIsRoomsEmpty] = useState(false);
 

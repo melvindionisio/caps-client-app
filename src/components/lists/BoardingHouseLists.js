@@ -21,12 +21,6 @@ import {
 } from "@mui/material";
 
 const BoardingHouseLists = () => {
-   //const {
-   //data: boardinghouses,
-   //isPending,
-   //error,
-   //} = useFetch(`${domain}/api/boarding-houses`);
-
    const [boardinghouses, setBoardinghouses] = useState([]);
    const [isEmpty, setIsEmpty] = useState(false);
    const [isPending, setIsPending] = useState(true);
@@ -250,7 +244,6 @@ const BoardingHouseLists = () => {
                </Typography>
             )}
             {isPending && <LoadingState loadWhat="Boarding Houses" />}
-            {/*<Masonry columns={{ xs: 1, sm: 2, md: 3, lg: 2 }} spacing={2}>*/}
             {boardinghouses &&
                boardinghouses.map((boardinghouse) => (
                   <BoardingHouseCard
@@ -268,7 +261,6 @@ const BoardingHouseLists = () => {
                   {zoneFilter} is Empty!
                </Typography>
             )}
-            {/*</Masonry>*/}
          </Grid>
       </Box>
    );
