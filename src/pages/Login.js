@@ -21,7 +21,7 @@ import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props
 import { amber } from "@mui/material/colors";
 import { LoginContext } from "../contexts/LoginContext";
 import { useContext } from "react";
-import { useHistory } from "react-router";
+import { useHistory, Link } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
 
 const Login = () => {
@@ -334,6 +334,14 @@ const Login = () => {
                      </CardContent>
                   </Card>
                </form>
+               <Box sx={{ display: "flex", justifyContent: "center", p: 2 }}>
+                  <Typography variant="body2">
+                     If you want to register an account you can go to
+                     <Link to="/register">
+                        <span> Register</span>
+                     </Link>
+                  </Typography>
+               </Box>
             </Box>
          </Container>
       </Slide>

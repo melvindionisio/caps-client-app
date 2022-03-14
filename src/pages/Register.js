@@ -13,8 +13,10 @@ import Alert from "@mui/material/Alert";
 import { Link } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
 import LoadingButton from "@mui/lab/LoadingButton";
+import { useHistory } from "react-router-dom";
 
 const Register = () => {
+   const history = useHistory();
    const [username, setUserName] = useState("");
    const [fullName, setFullName] = useState("");
    const [password, setPassword] = useState("");
@@ -63,6 +65,7 @@ const Register = () => {
                      setErrorMessage("Successfully registered!");
                      setErrorLevel("success");
                      setIsPending(false);
+                     history.push("/login");
                   })
                   .catch((err) => {
                      console.log(err);
