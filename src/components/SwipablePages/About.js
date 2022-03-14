@@ -26,7 +26,6 @@ import GradeIcon from "@mui/icons-material/Grade";
 import DetailsCard from "../cards/DetailsCard";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
-import PersonPinIcon from "@mui/icons-material/PersonPin";
 import PhoneOutlinedIcon from "@mui/icons-material/PhoneOutlined";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Link as Nlink } from "@mui/material";
@@ -472,6 +471,7 @@ const About = ({ boardinghouse }) => {
                paddingBottom: "5rem",
             }}
          >
+            {/*
             <DetailsCard title="Owner">
                <InfoItem
                   icon={<PersonPinIcon />}
@@ -479,6 +479,7 @@ const About = ({ boardinghouse }) => {
                   secondaryText={"Owner"}
                />
             </DetailsCard>
+            */}
 
             <DetailsCard title="Contacts">
                <InfoItem
