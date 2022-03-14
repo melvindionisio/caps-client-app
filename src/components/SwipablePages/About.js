@@ -480,6 +480,28 @@ const About = ({ boardinghouse }) => {
                />
             </DetailsCard>
             */}
+            <DetailsCard title="We Offer">
+               <Box
+                  sx={{
+                     py: 1,
+                     fontFamily: "Quicksand",
+                     display: "flex",
+                     flexWrap: "wrap",
+                     gap: 1,
+                  }}
+               >
+                  {offers &&
+                     offers.map((offer, index) => (
+                        <Chip
+                           icon={<CheckCircleIcon />}
+                           label={offer}
+                           color="success"
+                           size="medium"
+                           key={index}
+                        />
+                     ))}
+               </Box>
+            </DetailsCard>
 
             <DetailsCard title="Contacts">
                <InfoItem
@@ -562,29 +584,7 @@ const About = ({ boardinghouse }) => {
                         <Chip
                            icon={<CheckCircleIcon />}
                            label={protocol}
-                           color="primary"
-                           size="medium"
-                           key={index}
-                        />
-                     ))}
-               </Box>
-            </DetailsCard>
-            <DetailsCard title="We Offer">
-               <Box
-                  sx={{
-                     py: 1,
-                     fontFamily: "Quicksand",
-                     display: "flex",
-                     flexWrap: "wrap",
-                     gap: 1,
-                  }}
-               >
-                  {offers &&
-                     offers.map((offer, index) => (
-                        <Chip
-                           icon={<CheckCircleIcon />}
-                           label={offer}
-                           color="primary"
+                           color="warning"
                            size="medium"
                            key={index}
                         />
