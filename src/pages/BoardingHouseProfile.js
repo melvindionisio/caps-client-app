@@ -174,7 +174,7 @@ const BoardingHouseProfile = () => {
                            Boarding house
                         </Typography>
                      </Box>
-                     {isLoggedIn ? (
+                     {isLoggedIn.isLoggedIn ? (
                         <AddBookmarkButton
                            boardinghouseId={boardinghouse.id}
                            boardinghouseName={boardinghouse.name}

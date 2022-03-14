@@ -212,7 +212,7 @@ const RoomProfile = (props) => {
                         </Typography>
                      </Box>
 
-                     {isLoggedIn ? (
+                     {isLoggedIn.isLoggedIn ? (
                         <AddBookmarkButton
                            roomId={room.id}
                            roomName={room.name}
