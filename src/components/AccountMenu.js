@@ -11,7 +11,6 @@ import Tooltip from "@mui/material/Tooltip";
 // import Settings from "@mui/icons-material/Settings";
 import Logout from "@mui/icons-material/Logout";
 import { Login } from "@mui/icons-material";
-import { GoogleLogout } from "react-google-login";
 import { useHistory } from "react-router-dom";
 
 import GoogleLogin from "react-google-login";
@@ -20,6 +19,7 @@ import GoogleIcon from "@mui/icons-material/Google";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import LogoutModal from "./LogoutModal";
 
 import { useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
@@ -43,7 +43,6 @@ export default function AccountMenu({ currentUser }) {
       appId,
       setIsSuccess,
       isLoggedIn,
-      handleLogout,
       setIsLoggedIn,
       setCurrentUser,
    } = useContext(LoginContext);
@@ -114,8 +113,18 @@ export default function AccountMenu({ currentUser }) {
          .catch((err) => console.log(err));
    };
 
+   const [isModalOpen, setIsModalOpen] = React.useState(false);
+   const handleModalClose = () => {
+      setIsModalOpen(false);
+   };
+
    return (
       <React.Fragment>
+         <LogoutModal
+            isModalOpen={isModalOpen}
+            setIsModalOpen={setIsModalOpen}
+            handleModalClose={handleModalClose}
+         />
          <Tooltip title="Profile" TransitionComponent={Zoom} enterDelay={600}>
             <IconButton onClick={handleClick} size="small" sx={{ ml: 1 }}>
                <Avatar
@@ -181,6 +190,13 @@ export default function AccountMenu({ currentUser }) {
                      />
                   </MenuItem>
                   <Divider />
+                  <MenuItem onClick={() => setIsModalOpen(true)}>
+                     <ListItemIcon>
+                        <Logout fontSize="small" />
+                     </ListItemIcon>
+                     Logout
+                  </MenuItem>
+                  {/*
                   {isLoggedIn.loginType === "google-login" ? (
                      <GoogleLogout
                         clientId={clientId}
@@ -207,6 +223,7 @@ export default function AccountMenu({ currentUser }) {
                   ) : (
                      ""
                   )}
+                  */}
                </div>
             ) : (
                <div>
