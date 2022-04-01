@@ -239,7 +239,7 @@ const BoardingHouseLists = () => {
          <Grid container spacing={2}>
             {error && (
                <Typography variant="body1" color="initial" align="center">
-                  {error}
+                  An error occured.
                </Typography>
             )}
             {isPending && <LoadingState loadWhat="Boarding Houses" />}

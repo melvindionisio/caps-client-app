@@ -21,7 +21,7 @@ function LoginContextProvider(props) {
    const appId = "248288863983296";
 
    function handleLogout() {
-      setIsLoggedIn(false);
+      setIsLoggedIn({ isLoggedIn: false, loginType: null });
       setCurrentUser({
          id: null,
          googleId: null,

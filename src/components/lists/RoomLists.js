@@ -58,7 +58,7 @@ const RoomLists = ({ rooms, totalRooms, isPending, error }) => {
          <Grid container spacing={2}>
             {error && (
                <Typography variant="caption" align="center">
-                  Error. {error}
+                  An error occured.
                </Typography>
             )}
             {isPending && <LoadingState loadWhat="rooms" />}

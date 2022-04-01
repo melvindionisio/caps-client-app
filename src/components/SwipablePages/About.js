@@ -480,6 +480,17 @@ const About = ({ boardinghouse }) => {
                />
             </DetailsCard>
             */}
+            <DetailsCard title="Email">
+               <Linkify
+                  componentDecorator={(decoratedHref, decoratedText, key) => (
+                     <SecureLink href={decoratedHref} key={key}>
+                        {decoratedText}
+                     </SecureLink>
+                  )}
+               >
+                  melsio21.md@gmail.com
+               </Linkify>
+            </DetailsCard>
             <DetailsCard title="We Offer">
                <Box
                   sx={{
