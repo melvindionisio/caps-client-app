@@ -94,7 +94,7 @@ const Home = () => {
       isPending: isRoomPending,
       error: roomError,
    } = useFetch(`${domain}/api/rooms`);
-   const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
+   //const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
 
    function NavigationTabs() {
       return (
@@ -150,7 +150,6 @@ const Home = () => {
                      <SwipeableWrapper>
                         <RoomLists
                            rooms={rooms}
-                           totalRooms={totalRooms}
                            isPending={isRoomPending}
                            error={roomError}
                         />

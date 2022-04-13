@@ -4,12 +4,47 @@ import SimpleRoomCard from "../cards/SimpleRoomCard";
 import Typography from "@mui/material/Typography";
 import LoadingState from "../../components/LoadingState";
 import { green } from "@mui/material/colors";
-import { Box, Grid } from "@mui/material";
+import {
+   ToggleButton,
+   ToggleButtonGroup,
+   Zoom,
+   Divider,
+   Button,
+   Box,
+   Grid,
+} from "@mui/material";
 import { useState, useEffect } from "react";
 
-const RoomLists = ({ rooms, totalRooms, isPending, error }) => {
+import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
+import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import MaleIcon from "@mui/icons-material/Male";
+import FemaleIcon from "@mui/icons-material/Female";
+
+const RoomLists = ({ rooms, isPending, error }) => {
    const [thisRooms, setThisRooms] = useState([]);
    const [isRoomsEmpty, setIsRoomsEmpty] = useState(false);
+
+   const [isFilterActive, setIsFilterActive] = useState(false);
+   const [isSortActive, setIsSortActive] = useState(false);
+
+   const [genderFilter, setGenderFilter] = useState("Male/Female");
+   const [zoneFilter, setZoneFilter] = useState("All");
+
+   const [sort, setSort] = useState("room_name");
+   const [sortType, setSortType] = useState("desc");
+
+   const handleChangeZoneFilter = (event, newZoneFilter) => {
+      setZoneFilter(newZoneFilter);
+   };
+   const handleChangeGenderFilter = (event, newGenderFilter) => {
+      setGenderFilter(newGenderFilter);
+   };
+   const handleChangeSort = (event, newSort) => {
+      setSort(newSort);
+   };
+   const handleChangeSortType = (event, newSortType) => {
+      setSortType(newSortType);
+   };
 
    useEffect(() => {
       if (rooms) {
@@ -24,28 +59,186 @@ const RoomLists = ({ rooms, totalRooms, isPending, error }) => {
 
    return (
       <Box sx={{ width: "100%" }}>
-         {totalRooms && (
-            <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
-               <Typography
-                  variant="caption"
-                  color="text.secondary"
-                  component="p"
-                  sx={{
-                     fontWeight: "bold",
-                     border: ` 1px solid ${green[500]}`,
-                     background: green[50],
-                     px: 2,
-                     py: 1,
-                     borderRadius: 1,
-                     display: "inline-block",
-                     mb: 1,
+         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            {rooms && (
+               <Box sx={{ display: "flex" }}>
+                  <Typography
+                     variant="caption"
+                     color="text.secondary"
+                     component="p"
+                     sx={{
+                        fontWeight: "bold",
+                        border: ` 1px solid ${green[500]}`,
+                        background: green[50],
+                        px: 2,
+                        py: 1,
+                        borderRadius: 1,
+                        display: "inline-block",
+                        mb: 1,
+                     }}
+                  >
+                     Total rooms: {"  "}
+                     {rooms.length}
+                  </Typography>
+               </Box>
+            )}
+            <Box
+               sx={{
+                  display: "flex",
+                  gap: 1,
+                  mb: 1,
+               }}
+            >
+               <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={
+                     !isSortActive ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                  onClick={() => {
+                     setIsSortActive(!isSortActive);
+                     setIsFilterActive(false);
                   }}
+                  color={!isSortActive ? "primary" : "secondary"}
+                  disableElevation
                >
-                  Total rooms: {"  "}
-                  {totalRooms.total}
-               </Typography>
+                  Sort
+               </Button>
+               <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => {
+                     setIsFilterActive(!isFilterActive);
+                     setIsSortActive(false);
+                  }}
+                  color={!isFilterActive ? "primary" : "secondary"}
+                  disableElevation
+                  startIcon={
+                     !isFilterActive ? (
+                        <ArrowDropUpIcon />
+                     ) : (
+                        <ArrowDropDownIcon />
+                     )
+                  }
+               >
+                  Filter
+               </Button>
             </Box>
-         )}
+         </Box>
+         <Divider sx={{ mb: 1 }} />
+
+         <Grid container spacing={1}>
+            <Grid item xs={12} sm={12} md={6}>
+               {isSortActive && (
+                  <Zoom in={true}>
+                     <Box
+                        sx={{
+                           display: "flex",
+                           justifyContent: "space-between",
+                           mb: 1,
+                        }}
+                     >
+                        <ToggleButtonGroup
+                           color="primary"
+                           aria-label="sort"
+                           value={sort}
+                           size="small"
+                           exclusive
+                           onChange={handleChangeSort}
+                        >
+                           <ToggleButton
+                              value="room_price"
+                              aria-label="sortbyprice"
+                           >
+                              Price
+                           </ToggleButton>
+                           <ToggleButton
+                              value="room_name"
+                              aria-label="sortbyname"
+                           >
+                              Name
+                           </ToggleButton>
+                        </ToggleButtonGroup>
+                        <ToggleButtonGroup
+                           color="primary"
+                           aria-label="sort"
+                           value={sortType}
+                           size="small"
+                           exclusive
+                           onChange={handleChangeSortType}
+                        >
+                           <ToggleButton value="asc" aria-label="sortbystar">
+                              ASC
+                           </ToggleButton>
+                           <ToggleButton value="desc" aria-label="sortbyname">
+                              DESC
+                           </ToggleButton>
+                        </ToggleButtonGroup>
+                     </Box>
+                  </Zoom>
+               )}
+            </Grid>
+            <Grid item xs={12} sm={12} md={6}>
+               {isFilterActive && (
+                  <Zoom in={true} direction="left">
+                     <Box
+                        sx={{
+                           display: "flex",
+                           justifyContent: "space-between",
+                           mb: 1,
+                        }}
+                     >
+                        <ToggleButtonGroup
+                           color="primary"
+                           aria-label="gender-sort"
+                           value={genderFilter}
+                           size="small"
+                           exclusive
+                           onChange={handleChangeGenderFilter}
+                        >
+                           <ToggleButton
+                              value="Male/Female"
+                              aria-label="sortbyall"
+                           >
+                              All
+                           </ToggleButton>
+                           <ToggleButton value="Male" aria-label="sortbymale">
+                              <MaleIcon />
+                           </ToggleButton>
+                           <ToggleButton
+                              value="Female"
+                              aria-label="sortbyfemale"
+                           >
+                              <FemaleIcon />
+                           </ToggleButton>
+                        </ToggleButtonGroup>
+
+                        <ToggleButtonGroup
+                           color="primary"
+                           aria-label="gender-sort"
+                           value={zoneFilter}
+                           size="small"
+                           exclusive
+                           onChange={handleChangeZoneFilter}
+                        >
+                           <ToggleButton value="All" aria-label="all-zone">
+                              All
+                           </ToggleButton>
+                           <ToggleButton value="Zone 1" aria-label="zone1">
+                              Zone 1
+                           </ToggleButton>
+                           <ToggleButton value="Zone 2" aria-label="zone2">
+                              Zone 2
+                           </ToggleButton>
+                           <ToggleButton value="Zone 3" aria-label="zone3">
+                              Zone 3
+                           </ToggleButton>
+                        </ToggleButtonGroup>
+                     </Box>
+                  </Zoom>
+               )}
+            </Grid>
+         </Grid>
          {isRoomsEmpty && (
             <Typography
                variant="body1"

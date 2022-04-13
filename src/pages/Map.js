@@ -1,5 +1,9 @@
 import mapboxgl from "!mapbox-gl"; // eslint-disable-line import/no-webpack-loader-syntax
 import {
+   MenuItem,
+   FormControl,
+   InputLabel,
+   Select,
    List,
    ListItem,
    ListItemButton,
@@ -14,7 +18,13 @@ import {
 
 import Slide from "@mui/material/Slide";
 import Box from "@mui/material/Box";
-import React, { useRef, useEffect, useState, useContext } from "react";
+import React, {
+   useRef,
+   useEffect,
+   useState,
+   useContext,
+   useCallback,
+} from "react";
 import { LoginContext } from "../contexts/LoginContext";
 import AccountMenu from "../components/AccountMenu";
 import MarkerLogo from "../marker-logo.png";
@@ -36,6 +46,7 @@ const Map = () => {
    const [isShowResult, setIsShowResult] = useState(false);
    const [result, setResult] = useState([]);
    const [query, setQuery] = useState("");
+   const [zoneFilter, setZoneFilter] = useState("All");
 
    const controls = new mapboxgl.NavigationControl();
    const mapContainer = useRef(null);
@@ -44,6 +55,58 @@ const Map = () => {
    const [lat, setLat] = useState(12.5096);
    const [zoom, setZoom] = useState(15.25);
    const [isNotFound, setIsNotFound] = useState(false);
+
+   const [allCurrentMarkers, setAllCurrentMarkers] = useState([]);
+
+   const handleZoneChange = (event) => {
+      setZoneFilter(event.target.value);
+   };
+
+   const renderMarkers = useCallback(
+      (boardingHouseLocations) => {
+         if (allCurrentMarkers) {
+            allCurrentMarkers.forEach((marker) => {
+               marker.remove();
+            });
+         }
+
+         boardingHouseLocations.forEach(function (marker) {
+            const el = document.createElement("div");
+            el.innerHTML = `<img src="${MarkerLogo}"/> <span id="total-rooms">${marker.properties.totalRooms}</span>`;
+            el.className = "marker";
+
+            const singleMarker = new mapboxgl.Marker(el)
+               .setLngLat(marker.geometry.coordinates)
+               .setPopup(
+                  new mapboxgl.Popup({
+                     offset: 20,
+                     closeButton: false,
+                  })
+                     .setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
+            <h5>${marker.properties.description}</h5><a href="/boardinghouse/${marker.properties.id}"><button id="visit-btn">VIEW</button></a>
+           `)
+               )
+               .addTo(map.current);
+            setAllCurrentMarkers((allCurrentMarkers) => [
+               ...allCurrentMarkers,
+               singleMarker,
+            ]);
+         });
+      },
+      [allCurrentMarkers]
+   );
+
+   useEffect(() => {
+      if (zoneFilter === "All") {
+         renderMarkers(boardingHouseLocations);
+      } else {
+         const filteredZones = boardingHouseLocations.filter(
+            (boardingHouseLocation) =>
+               boardingHouseLocation.properties.zoneAddress === zoneFilter
+         );
+         renderMarkers(filteredZones);
+      }
+   }, [boardingHouseLocations, zoneFilter]);
 
    useEffect(() => {
       if (result) {
@@ -156,24 +219,24 @@ const Map = () => {
          })
          .then((data) => {
             setBoardingHouseLocations(data.features);
-            data.features.forEach(function (marker) {
-               const el = document.createElement("div");
-               el.innerHTML = `<img src="${MarkerLogo}"/> <span id="total-rooms">${marker.properties.totalRooms}</span>`;
-               el.className = "marker";
+            //data.features.forEach(function (marker) {
+            //const el = document.createElement("div");
+            //el.innerHTML = `<img src="${MarkerLogo}"/> <span id="total-rooms">${marker.properties.totalRooms}</span>`;
+            //el.className = "marker";
 
-               new mapboxgl.Marker(el)
-                  .setLngLat(marker.geometry.coordinates)
-                  .setPopup(
-                     new mapboxgl.Popup({
-                        offset: 20,
-                        closeButton: false,
-                     })
-                        .setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
-            <h5>${marker.properties.description}</h5><a href="/boardinghouse/${marker.properties.id}"><button id="visit-btn">VIEW</button></a>
-           `)
-                  )
-                  .addTo(map.current);
-            });
+            //new mapboxgl.Marker(el)
+            //.setLngLat(marker.geometry.coordinates)
+            //.setPopup(
+            //new mapboxgl.Popup({
+            //offset: 20,
+            //closeButton: false,
+            //})
+            //.setHTML(`<h6>&#160; &#160;${marker.properties.title}&#160; &#160;</h6>
+            //<h5>${marker.properties.description}</h5><a href="/boardinghouse/${marker.properties.id}"><button id="visit-btn">VIEW</button></a>
+            //`)
+            //)
+            //.addTo(map.current);
+            //});
          })
          .catch((err) => {
             if (err.name === "AbortError") {
@@ -367,70 +430,97 @@ const Map = () => {
                   minWidth: "300px",
                }}
             >
-               <Box
-                  sx={{
-                     position: "relative",
-                     borderRadius: theme.shape.borderRadius,
-                     backdropFilter: "blur(1.5rem)",
-                     backgroundColor: "rgba(255, 255, 255, 0.5)",
-                     "&:hover": {
-                        backgroundColor: "rgba(255, 255, 255, 0.25)",
-                        outline: `1px solid ${lightBlue[500]}`,
-                     },
-                     width: "100%",
-                     [theme.breakpoints.up("sm")]: {
-                        marginLeft: theme.spacing(3),
-                        width: "auto",
-                     },
-                  }}
-               >
+               <Box sx={{ display: "flex", alignItems: "start", gap: 1 }}>
                   <Box
                      sx={{
-                        padding: theme.spacing(0, 2),
-                        height: "100%",
-                        position: "absolute",
-                        pointerEvents: "none",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                     }}
-                  >
-                     <SearchIcon />
-                  </Box>
-                  <InputBase
-                     placeholder="Search boarding house…"
-                     onKeyDown={(e) => {
-                        if (e.keyCode === 8) {
-                           map.current.flyTo({
-                              center: [124.665, 12.5096],
-                              zoom: 15.25,
-                           });
-                        }
-                     }}
-                     onChange={(e) => {
-                        setQuery(e.target.value);
-                        if (e.target.value !== "") {
-                           handleSearch();
-                           setIsShowResult(true);
-                        } else {
-                           setIsShowResult(false);
-                        }
-                     }}
-                     value={query}
-                     sx={{
-                        color: "inherit",
-                        "& .MuiInputBase-input": {
-                           width: "100%",
-                           padding: theme.spacing(1, 1, 1, 0),
-                           // vertical padding + font size from searchIcon
-                           paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-                           transition: theme.transitions.create("width"),
-                           [theme.breakpoints.up("md")]: {
-                              width: "20ch",
-                           },
+                        position: "relative",
+                        borderRadius: theme.shape.borderRadius,
+                        backdropFilter: "blur(1.5rem)",
+                        backgroundColor: "rgba(255, 255, 255, 0.5)",
+                        "&:hover": {
+                           backgroundColor: "rgba(255, 255, 255, 0.25)",
+                           outline: `1px solid ${lightBlue[500]}`,
+                        },
+                        width: "100%",
+                        [theme.breakpoints.up("sm")]: {
+                           marginLeft: theme.spacing(3),
+                           width: "auto",
                         },
                      }}
-                  />
+                  >
+                     <Box
+                        sx={{
+                           padding: theme.spacing(0, 2),
+                           height: "100%",
+                           position: "absolute",
+                           pointerEvents: "none",
+                           display: "flex",
+                           alignItems: "center",
+                           justifyContent: "center",
+                        }}
+                     >
+                        <SearchIcon />
+                     </Box>
+                     <InputBase
+                        placeholder="Search boarding house…"
+                        onKeyDown={(e) => {
+                           if (e.keyCode === 8) {
+                              map.current.flyTo({
+                                 center: [124.665, 12.5096],
+                                 zoom: 15.25,
+                              });
+                           }
+                        }}
+                        onChange={(e) => {
+                           setQuery(e.target.value);
+                           if (e.target.value !== "") {
+                              handleSearch();
+                              setIsShowResult(true);
+                           } else {
+                              setIsShowResult(false);
+                           }
+                        }}
+                        value={query}
+                        sx={{
+                           color: "inherit",
+                           "& .MuiInputBase-input": {
+                              width: "100%",
+                              padding: theme.spacing(1, 1, 1, 0),
+                              // vertical padding + font size from searchIcon
+                              paddingLeft: `calc(1em + ${theme.spacing(4)})`,
+                              transition: theme.transitions.create("width"),
+                              [theme.breakpoints.up("md")]: {
+                                 width: "20ch",
+                              },
+                           },
+                        }}
+                     />
+                  </Box>
+                  <Box
+                     sx={{
+                        width: 100,
+                        borderRadius: 1,
+                        backdropFilter: "blur(1.5rem)",
+                        backgroundColor: "rgba(255, 255, 255, 0.5)",
+                     }}
+                  >
+                     <FormControl fullWidth>
+                        <InputLabel id="zone-select-label">Zone</InputLabel>
+                        <Select
+                           labelId="zone-select-label"
+                           id="zone-select"
+                           value={zoneFilter}
+                           label="Zone"
+                           onChange={handleZoneChange}
+                           size="small"
+                        >
+                           <MenuItem value="All">All</MenuItem>
+                           <MenuItem value="Zone 1">Zone 1</MenuItem>
+                           <MenuItem value="Zone 2">Zone 2</MenuItem>
+                           <MenuItem value="Zone 3">Zone 3</MenuItem>
+                        </Select>
+                     </FormControl>
+                  </Box>
                </Box>
                {isShowResult && (
                   <Box

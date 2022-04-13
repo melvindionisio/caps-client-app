@@ -23,6 +23,7 @@ import {
 } from "@mui/material/colors";
 import { makeStyles } from "@mui/styles";
 import GradeIcon from "@mui/icons-material/Grade";
+import EmailIcon from "@mui/icons-material/Email";
 import DetailsCard from "../cards/DetailsCard";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 import GpsFixedIcon from "@mui/icons-material/GpsFixed";
@@ -480,17 +481,6 @@ const About = ({ boardinghouse }) => {
                />
             </DetailsCard>
             */}
-            <DetailsCard title="Email">
-               <Linkify
-                  componentDecorator={(decoratedHref, decoratedText, key) => (
-                     <SecureLink href={decoratedHref} key={key}>
-                        {decoratedText}
-                     </SecureLink>
-                  )}
-               >
-                  melsio21.md@gmail.com
-               </Linkify>
-            </DetailsCard>
             <DetailsCard title="We Offer">
                <Box
                   sx={{
@@ -527,6 +517,27 @@ const About = ({ boardinghouse }) => {
                      </Nlink>
                   }
                   secondaryText={"Contact Number"}
+               />
+
+               <InfoItem
+                  icon={<EmailIcon />}
+                  primaryText={
+                     <Linkify
+                        componentDecorator={(
+                           decoratedHref,
+                           decoratedText,
+                           key
+                        ) => (
+                           <SecureLink href={decoratedHref} key={key}>
+                              {decoratedText}
+                           </SecureLink>
+                        )}
+                     >
+                        melsio21.md@gmail.com
+                        {boardinghouse.email}
+                     </Linkify>
+                  }
+                  secondaryText={"Email Address"}
                />
             </DetailsCard>
 

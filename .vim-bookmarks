@@ -1,0 +1,3 @@
+let l:bm_file_version = 1
+let l:bm_sessions = {'default': {'D:\CAPSTONE\caps-client-app\src\pages\Map.js': [{'sign_idx': 9500, 'line_nr': 517, 'content': ' '},],}}
+let l:bm_current_session = 'default'

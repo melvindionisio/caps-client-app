@@ -24,7 +24,7 @@ import {
 } from "@mui/material";
 
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { lightBlue, green } from "@mui/material/colors";
+import { lightBlue, red, green, orange } from "@mui/material/colors";
 import AddBookmarkButton from "../components/AddBookmarkButton";
 import LoadingState from "../components/LoadingState";
 import DetailsCard from "../components/cards/DetailsCard";
@@ -247,31 +247,93 @@ const RoomProfile = (props) => {
                            />
                         </CardActionArea>
 
-                        <CardHeader
-                           sx={{
-                              background: "#fff",
-                              borderRadius: 10,
-                              padding: 1,
-                              px: 3,
-                              boxShadow: "2px 2px 8px rgba(0,0,0,0.4)",
-                           }}
+                        <Box
                            style={{
                               position: "absolute",
                               bottom: 10,
                               left: 15,
                            }}
-                           title={
-                              <Typography
-                                 variant="h6"
-                                 sx={{
-                                    textTransform: "uppercase",
-                                    fontFamily: "Quicksand",
+                           sx={{
+                              display: "flex",
+                              gap: 2,
+                           }}
+                        >
+                           <CardHeader
+                              sx={{
+                                 padding: 1,
+                                 pr: 3,
+                                 pl: 2,
+                                 background: "#fff",
+                                 borderRadius: 2,
+                                 boxShadow: "2px 2px 8px rgba(0,0,0,0.4)",
+                              }}
+                              title={
+                                 <Typography
+                                    variant="h6"
+                                    sx={
+                                       room.status.toLowerCase() === "available"
+                                          ? {
+                                               textTransform: "uppercase",
+                                               fontFamily: "Quicksand",
+                                               "&::before": {
+                                                  content: '" "',
+                                                  height: 10,
+                                                  mr: 1.5,
+                                                  mb: 0.3,
+                                                  borderRadius: "50%",
+                                                  display: "inline-block",
+                                                  width: 10,
+                                                  background: green[500],
+                                                  boxShadow: `0px 0px 3px 3px ${green[100]}`,
+                                               },
+                                            }
+                                          : {
+                                               textTransform: "uppercase",
+                                               fontFamily: "Quicksand",
+                                               "&::before": {
+                                                  content: '" "',
+                                                  height: 10,
+                                                  mr: 1.5,
+                                                  mb: 0.3,
+                                                  borderRadius: "50%",
+                                                  display: "inline-block",
+                                                  width: 10,
+                                                  background: red[500],
+                                                  boxShadow: `0px 0px 3px 3px ${red[100]}`,
+                                               },
+                                            }
+                                    }
+                                 >
+                                    {room.name}
+                                 </Typography>
+                              }
+                           />
+
+                           <Box
+                              sx={{
+                                 background: orange[100],
+                                 borderRadius: 10,
+                                 boxShadow: "2px 2px 8px rgba(0,0,0,0.4)",
+                                 px: 2,
+                                 display: "flex",
+                                 justifyContent: "center",
+                                 alignItems: "center",
+                                 color: orange[700],
+                                 fontWeight: "bold",
+                                 fontFamily: "Quicksand",
+                                 fontSize: 18,
+                              }}
+                           >
+                              <span
+                                 style={{
+                                    marginRight: 3,
                                  }}
                               >
-                                 {room.name}
-                              </Typography>
-                           }
-                        />
+                                 ₱
+                              </span>
+                              <span>Price</span>
+                           </Box>
+                        </Box>
                      </Card>
                      <Container
                         maxWidth="sm"
@@ -281,47 +343,28 @@ const RoomProfile = (props) => {
                            paddingBottom: "8rem",
                         }}
                      >
-                        <Typography variant="body1">
-                           STATUS:{" "}
-                           <Typography
-                              variant="caption"
-                              sx={{
-                                 color: green[500],
-                                 fontWeight: "bold",
-                                 fontSize: 16,
-                                 textTransform: "uppercase",
-                              }}
-                           >
-                              {room.status}
-                           </Typography>
-                        </Typography>
-
-                        <Card
-                           sx={{ mb: 1, borderRadius: 2, p: 1 }}
-                           variant="outlined"
+                        <DetailsCard
+                           title="Description "
+                           colors="orange"
+                           sx={{
+                              display: "flex",
+                              flexWrap: "wrap",
+                              gap: 1,
+                              paddingBottom: 6,
+                           }}
                         >
-                           <Box
-                              sx={{
-                                 py: 1,
-                                 fontFamily: "Quicksand",
-                                 display: "flex",
-                                 flexWrap: "wrap",
-                                 gap: 1,
-                              }}
-                           >
-                              {roomDescription &&
-                                 roomDescription.map((description, index) => (
-                                    <Chip
-                                       icon={<CheckCircleIcon />}
-                                       label={description}
-                                       size="medium"
-                                       key={index}
-                                       color="primary"
-                                       variant="outlined"
-                                    />
-                                 ))}
-                           </Box>
-                        </Card>
+                           {roomDescription &&
+                              roomDescription.map((description, index) => (
+                                 <Chip
+                                    icon={<CheckCircleIcon />}
+                                    label={description}
+                                    size="medium"
+                                    key={index}
+                                    color="primary"
+                                    variant="outlined"
+                                 />
+                              ))}
+                        </DetailsCard>
 
                         {isBoardinghousePending && <LoadingState />}
                         {boardinghouse && (

@@ -11,9 +11,14 @@ import { useContext } from "react";
 import { LoginContext } from "../contexts/LoginContext";
 import EditIcon from "@mui/icons-material/Edit";
 import { domain } from "../fetch-url/fetchUrl";
+import { GoogleLogout } from "react-google-login";
+import { useHistory } from "react-router-dom";
 
 import ReusableNavigation from "../components/Navigations/ReusableNavigation";
+import Logout from "@mui/icons-material/Logout";
 import {
+   Tooltip,
+   Zoom,
    IconButton,
    Button,
    CardActions,
@@ -24,7 +29,9 @@ import {
 } from "@mui/material";
 
 const Profile = () => {
-   const { isLoggedIn, currentUser, setCurrentUser } = useContext(LoginContext);
+   const history = useHistory();
+   const { clientId, isLoggedIn, currentUser, setCurrentUser, handleLogout } =
+      useContext(LoginContext);
    const [passwordEditable, setPasswordEditable] = useState(!false);
    const [profileEditable, setProfileEditable] = useState(!false);
 
@@ -136,10 +143,49 @@ const Profile = () => {
             sx={{ minHeight: "100vh", pb: 2 }}
          >
             <Box sx={{ overflowY: "auto", height: "100vh" }}>
-               <ReusableNavigation spaceCenter={true} center={true}>
+               <ReusableNavigation spaceCenter={true}>
                   <Typography variant="body1" align="center">
                      Profile
                   </Typography>
+                  {isLoggedIn.loginType === "google-login" ? (
+                     <GoogleLogout
+                        clientId={clientId}
+                        onLogoutSuccess={() => {
+                           handleLogout();
+                        }}
+                        render={(renderProps) => (
+                           <Tooltip
+                              title="Logout"
+                              TransitionComponent={Zoom}
+                              enterDelay={600}
+                           >
+                              <IconButton
+                                 onClick={renderProps.onClick}
+                                 disabled={renderProps.disabled}
+                              >
+                                 <Logout fontSize="small" />
+                              </IconButton>
+                           </Tooltip>
+                        )}
+                     ></GoogleLogout>
+                  ) : isLoggedIn.loginType === "normal" ? (
+                     <Tooltip
+                        title="Logout"
+                        TransitionComponent={Zoom}
+                        enterDelay={600}
+                     >
+                        <IconButton
+                           onClick={() => {
+                              handleLogout();
+                              history.push("/home");
+                           }}
+                        >
+                           <Logout fontSize="small" />
+                        </IconButton>
+                     </Tooltip>
+                  ) : (
+                     ""
+                  )}
                </ReusableNavigation>
 
                <Container maxWidth="sm">

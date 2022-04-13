@@ -77,7 +77,44 @@ const SimpleRoomCard = ({ room }) => {
                   }}
                >
                   <Box sx={{ p: 1 }}>
-                     <CardActionArea>
+                     <CardActionArea sx={{ position: "relative" }}>
+                        <Box
+                           style={{
+                              position: "absolute",
+                              bottom: 3,
+                              left: 3,
+                           }}
+                        >
+                           <Box
+                              sx={{
+                                 background: "#fff",
+                                 borderRadius: 2,
+                                 px: 1,
+                                 py: 0.5,
+                                 display: "flex",
+                                 alignItems: "center",
+                                 color: green[700],
+                                 fontWeight: "bold",
+                                 fontFamily: "Quicksand",
+                                 fontSize: 18,
+                                 gap: 1,
+                                 width: "max-content",
+                              }}
+                           >
+                              <span>₱</span>
+                              <Typography
+                                 component="span"
+                                 sx={{
+                                    color: red[500],
+                                    fontSize: 18,
+                                    fontFamily: "Quicksand",
+                                    fontWeight: "bold",
+                                 }}
+                              >
+                                 Price
+                              </Typography>
+                           </Box>
+                        </Box>
                         <CardMedia
                            sx={{ borderRadius: 2 }}
                            onClick={() => history.push(`/rooms/${room.id}`)}
@@ -190,6 +227,7 @@ const SimpleRoomCard = ({ room }) => {
                         Available: {`${room.totalSlots - room.occupiedSlots}`}
                      </Typography>
                   </CardContent>
+
                   <CardActions>
                      <Button
                         size="small"

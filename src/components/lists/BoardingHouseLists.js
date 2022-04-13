@@ -8,6 +8,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 //import WcIcon from "@mui/icons-material/Wc";
 import ArrowDropDownIcon from "@mui/icons-material/ArrowDropDown";
 import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
+import { green } from "@mui/material/colors";
 import { domain } from "../../fetch-url/fetchUrl";
 import {
    ToggleButton,
@@ -89,39 +90,72 @@ const BoardingHouseLists = () => {
 
    return (
       <Box sx={{ width: "100%" }}>
-         <Box
-            sx={{ display: "flex", gap: 1, mb: 1, justifyContent: "flex-end" }}
-         >
-            <Button
-               variant="outlined"
-               size="small"
-               startIcon={
-                  !isSortActive ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-               }
-               onClick={() => {
-                  setIsSortActive(!isSortActive);
-                  setIsFilterActive(false);
+         <Box sx={{ display: "flex", justifyContent: "space-between" }}>
+            {boardinghouses && (
+               <Box sx={{ display: "flex" }}>
+                  <Typography
+                     variant="caption"
+                     color="text.secondary"
+                     component="p"
+                     sx={{
+                        fontWeight: "bold",
+                        border: ` 1px solid ${green[500]}`,
+                        background: green[50],
+                        px: 2,
+                        py: 1,
+                        borderRadius: 1,
+                        display: "inline-block",
+                        mb: 1,
+                     }}
+                  >
+                     Total boardinghouses: {"  "}
+                     {boardinghouses.length}
+                  </Typography>
+               </Box>
+            )}
+            <Box
+               sx={{
+                  display: "flex",
+                  gap: 1,
+                  mb: 1,
+                  justifyContent: "flex-end",
                }}
-               color={!isSortActive ? "primary" : "secondary"}
-               disableElevation
             >
-               Sort
-            </Button>
-            <Button
-               variant="outlined"
-               size="small"
-               onClick={() => {
-                  setIsFilterActive(!isFilterActive);
-                  setIsSortActive(false);
-               }}
-               color={!isFilterActive ? "primary" : "secondary"}
-               disableElevation
-               startIcon={
-                  !isFilterActive ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
-               }
-            >
-               Filter
-            </Button>
+               <Button
+                  variant="outlined"
+                  size="small"
+                  startIcon={
+                     !isSortActive ? <ArrowDropUpIcon /> : <ArrowDropDownIcon />
+                  }
+                  onClick={() => {
+                     setIsSortActive(!isSortActive);
+                     setIsFilterActive(false);
+                  }}
+                  color={!isSortActive ? "primary" : "secondary"}
+                  disableElevation
+               >
+                  Sort
+               </Button>
+               <Button
+                  variant="outlined"
+                  size="small"
+                  onClick={() => {
+                     setIsFilterActive(!isFilterActive);
+                     setIsSortActive(false);
+                  }}
+                  color={!isFilterActive ? "primary" : "secondary"}
+                  disableElevation
+                  startIcon={
+                     !isFilterActive ? (
+                        <ArrowDropUpIcon />
+                     ) : (
+                        <ArrowDropDownIcon />
+                     )
+                  }
+               >
+                  Filter
+               </Button>
+            </Box>
          </Box>
          <Grid container spacing={1}>
             <Grid item xs={12} sm={12} md={6}>
