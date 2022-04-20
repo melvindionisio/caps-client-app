@@ -326,12 +326,33 @@ const RoomProfile = (props) => {
                            >
                               <span
                                  style={{
-                                    marginRight: 3,
+                                    marginRight: 8,
                                  }}
                               >
                                  ₱
                               </span>
-                              <span>Price</span>
+                              <span>{room.price || 0}</span>
+                           </Box>
+
+                           <Box
+                              sx={{
+                                 py: 1,
+                                 fontFamily: "Quicksand",
+                                 display: "flex",
+                                 flexWrap: "wrap",
+                                 gap: 1,
+                              }}
+                           >
+                              {genderAllowed &&
+                                 genderAllowed.map((gender, index) => (
+                                    <Chip
+                                       icon={<CheckCircleIcon />}
+                                       label={gender}
+                                       color="primary"
+                                       size="large"
+                                       key={index}
+                                    />
+                                 ))}
                            </Box>
                         </Box>
                      </Card>
@@ -362,6 +383,7 @@ const RoomProfile = (props) => {
                                     key={index}
                                     color="primary"
                                     variant="outlined"
+                                    sx={{ mr: 1 }}
                                  />
                               ))}
                         </DetailsCard>
@@ -441,28 +463,6 @@ const RoomProfile = (props) => {
                                     primaryText={room.type}
                                     icon={<BedroomParentIcon />}
                                  />
-                              </DetailsCard>
-                              <DetailsCard title="Gender Allowed">
-                                 <Box
-                                    sx={{
-                                       py: 1,
-                                       fontFamily: "Quicksand",
-                                       display: "flex",
-                                       flexWrap: "wrap",
-                                       gap: 1,
-                                    }}
-                                 >
-                                    {genderAllowed &&
-                                       genderAllowed.map((gender, index) => (
-                                          <Chip
-                                             icon={<CheckCircleIcon />}
-                                             label={gender}
-                                             color="primary"
-                                             size="medium"
-                                             key={index}
-                                          />
-                                       ))}
-                                 </Box>
                               </DetailsCard>
                            </>
                         )}

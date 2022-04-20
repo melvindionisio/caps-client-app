@@ -533,8 +533,7 @@ const About = ({ boardinghouse }) => {
                            </SecureLink>
                         )}
                      >
-                        melsio21.md@gmail.com
-                        {boardinghouse.email}
+                        {boardinghouse.email || "No email set."}
                      </Linkify>
                   }
                   secondaryText={"Email Address"}

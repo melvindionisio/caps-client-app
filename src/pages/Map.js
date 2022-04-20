@@ -498,7 +498,7 @@ const Map = () => {
                   </Box>
                   <Box
                      sx={{
-                        width: 100,
+                        width: 130,
                         borderRadius: 1,
                         backdropFilter: "blur(1.5rem)",
                         backgroundColor: "rgba(255, 255, 255, 0.5)",
@@ -515,9 +515,9 @@ const Map = () => {
                            size="small"
                         >
                            <MenuItem value="All">All</MenuItem>
-                           <MenuItem value="Zone 1">Zone 1</MenuItem>
-                           <MenuItem value="Zone 2">Zone 2</MenuItem>
-                           <MenuItem value="Zone 3">Zone 3</MenuItem>
+                           <MenuItem value="Zone 1">Zone 1 only</MenuItem>
+                           <MenuItem value="Zone 2">Zone 2 only</MenuItem>
+                           <MenuItem value="Zone 3">Zone 3 only</MenuItem>
                         </Select>
                      </FormControl>
                   </Box>

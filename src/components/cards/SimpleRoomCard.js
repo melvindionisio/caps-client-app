@@ -111,7 +111,7 @@ const SimpleRoomCard = ({ room }) => {
                                     fontWeight: "bold",
                                  }}
                               >
-                                 Price
+                                 {room.price || 0}
                               </Typography>
                            </Box>
                         </Box>
