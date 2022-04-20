@@ -14,9 +14,7 @@ import CardHeader from "@mui/material/CardHeader";
 import LoadingButton from "@mui/lab/LoadingButton";
 
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 
 import { amber } from "@mui/material/colors";
 import { LoginContext } from "../contexts/LoginContext";
@@ -25,7 +23,7 @@ import { useHistory, Link } from "react-router-dom";
 import { domain } from "../fetch-url/fetchUrl";
 
 const Login = () => {
-   const { clientId, appId, setIsSuccess, setIsLoggedIn, setCurrentUser } =
+   const { clientId, setIsSuccess, setIsLoggedIn, setCurrentUser } =
       useContext(LoginContext);
 
    const [username, setUsername] = useState("");
@@ -111,42 +109,9 @@ const Login = () => {
             setCurrentUser({
                id: data.id,
                googleId: response.profileObj.googleId,
-               facebookId: null,
                name: response.profileObj.name,
                username: response.profileObj.email,
                picture: response.profileObj.imageUrl,
-            });
-            setIsSuccess(true);
-            history.push("/home");
-         })
-         .catch((err) => console.log(err));
-   };
-
-   const handleLoginFacebook = (response) => {
-      //CHECK IF FACEBOOK ALREADY IN THE DATABASE
-      fetch(`${domain}/api/seekers/facebook-signin`, {
-         method: "POST",
-         body: JSON.stringify({
-            facebookId: response.id,
-            name: response.name,
-            email: response.email,
-         }),
-         headers: {
-            "Content-Type": "application/json",
-         },
-      })
-         .then((res) => {
-            return res.json();
-         })
-         .then((data) => {
-            setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
-            setCurrentUser({
-               id: data.id,
-               googleId: null,
-               facebookId: response.id,
-               name: response.name,
-               username: response.email,
-               picture: response.picture.data.url,
             });
             setIsSuccess(true);
             history.push("/home");
@@ -297,38 +262,6 @@ const Login = () => {
                               }}
                               cookiePolicy={"single_host_origin"}
                               isSignedIn={true}
-                           />
-                        </Box>
-                        <Box>
-                           <FacebookLogin
-                              appId={appId}
-                              autoLoad={false}
-                              fields="name,email,picture"
-                              callback={handleLoginFacebook}
-                              render={(renderProps) => (
-                                 <Box
-                                    style={{
-                                       display: "flex",
-                                       justifyContent: "center",
-                                       alignItems: "center",
-                                       flexDirection: "column",
-                                    }}
-                                 >
-                                    <IconButton
-                                       color="primary"
-                                       size="large"
-                                       onClick={renderProps.onClick}
-                                       disabled={renderProps.disabled}
-                                    >
-                                       <FacebookIcon fontSize="large" />
-                                    </IconButton>
-                                    <Typography as="label">Facebook</Typography>
-                                 </Box>
-                              )}
-                              onFailure={(response) => {
-                                 console.log("Facebook login failed.");
-                                 console.log(response);
-                              }}
                            />
                         </Box>
                      </CardContent>

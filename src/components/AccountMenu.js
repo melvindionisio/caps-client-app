@@ -14,9 +14,7 @@ import { Login } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
 
 import GoogleLogin from "react-google-login";
-import FacebookLogin from "react-facebook-login/dist/facebook-login-render-props";
 import GoogleIcon from "@mui/icons-material/Google";
-import FacebookIcon from "@mui/icons-material/Facebook";
 import PersonAddIcon from "@mui/icons-material/PersonAdd";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 //import LogoutModal from "./LogoutModal";
@@ -41,7 +39,6 @@ export default function AccountMenu({ currentUser }) {
 
    const {
       clientId,
-      appId,
       setIsSuccess,
       isLoggedIn,
       setIsLoggedIn,
@@ -71,43 +68,9 @@ export default function AccountMenu({ currentUser }) {
             setCurrentUser({
                id: data.id,
                googleId: response.profileObj.googleId,
-               facebookId: null,
                name: response.profileObj.name,
                username: response.profileObj.email,
                picture: response.profileObj.imageUrl,
-            });
-            setIsSuccess(true);
-            history.push("/home");
-         })
-         .catch((err) => console.log(err));
-   };
-
-   const handleLoginFacebook = (response) => {
-      //CHECK IF FACEBOOK ALREADY IN THE DATABASE
-      fetch(`${domain}/api/seekers/facebook-signin`, {
-         method: "POST",
-         body: JSON.stringify({
-            facebookId: response.id,
-            name: response.name,
-            email: response.email,
-         }),
-         headers: {
-            "Content-Type": "application/json",
-         },
-      })
-         .then((res) => {
-            return res.json();
-         })
-         .then((data) => {
-            console.log(data.message);
-            setIsLoggedIn({ isLoggedIn: true, loginType: "facebook-login" });
-            setCurrentUser({
-               id: data.id,
-               googleId: null,
-               facebookId: response.id,
-               name: response.name,
-               username: response.email,
-               picture: response.picture.data.url,
             });
             setIsSuccess(true);
             history.push("/home");
@@ -268,28 +231,6 @@ export default function AccountMenu({ currentUser }) {
                      onFailure={() => console.log("Gmail login failed.")}
                      cookiePolicy={"single_host_origin"}
                      isSignedIn={true}
-                  />
-
-                  <FacebookLogin
-                     appId={appId}
-                     autoLoad={false}
-                     fields="name,email,picture"
-                     callback={handleLoginFacebook}
-                     render={(renderProps) => (
-                        <MenuItem
-                           onClick={renderProps.onClick}
-                           disabled={renderProps.disabled}
-                        >
-                           <ListItemIcon>
-                              <FacebookIcon fontSize="small" color="primary" />
-                           </ListItemIcon>
-                           Continue with Facebook
-                        </MenuItem>
-                     )}
-                     onFailure={(response) => {
-                        console.log("Facebook login failed.");
-                        console.log(response);
-                     }}
                   />
                </div>
             )}
