@@ -20,6 +20,7 @@ import { LoginContext } from "../../contexts/LoginContext";
 import { domain } from "../../fetch-url/fetchUrl";
 import LoadingState from "../LoadingState";
 import ReviewList from "../lists/ReviewList";
+import Notification from "../Notification";
 
 const Reviews = () => {
    const { currentUser, isLoggedIn } = useContext(LoginContext);
@@ -35,7 +36,9 @@ const Reviews = () => {
    const [isSendingReview, setIsSendingReview] = useState(false);
    const [isDeleteReview, setIsDeleteReview] = useState(false);
 
-   //const [rating, setRating] = useState(0);
+   const [message, setMessage] = useState("");
+   const [showMessage, setShowMessage] = useState(false);
+   const [messageSeverity, setMessageSeverity] = useState("");
 
    const [showBadwordPromptMessage, setShowBadwordPromptMessage] =
       useState(false);
@@ -176,7 +179,7 @@ const Reviews = () => {
                   reviewDate: dateTime,
                   reviewerName: currentUser.name,
                   reviewText: reviewText,
-                  //rating: rating,
+                  reviewStatus: "pending",
                }),
                headers: {
                   "Content-Type": "application/json",
@@ -187,11 +190,19 @@ const Reviews = () => {
                })
                .then((data) => {
                   //window.location.reload(false);
+
+                  setMessage(data.message);
+                  setMessageSeverity("success");
+                  setShowMessage(true);
+
                   console.log(data.message);
                   setIsSendingReview(false);
                   setIsModalOpen(false);
                   setIsPending(true);
                   setReviewText("");
+
+                  console.log(message, messageSeverity, showMessage);
+
                   fetch(`${domain}/api/reviews/bh/${bhId}`)
                      .then((res) => {
                         if (!res.ok) {
@@ -300,6 +311,12 @@ const Reviews = () => {
             position: "relative",
          }}
       >
+         <Notification
+            showMessage={showMessage}
+            setShowMessage={setShowMessage}
+            messageSeverity={messageSeverity}
+            message={message}
+         />
          <Modal
             closeAfterTransition
             BackdropComponent={Backdrop}
@@ -445,18 +462,21 @@ const Reviews = () => {
                }}
             >
                {reviews &&
-                  //review.filter(review=>review.text.toLowerCase().includes() )
-                  reviews.map((review) => (
-                     <ReviewList
-                        key={review.id}
-                        review={review}
-                        isCurrentUserReview={
-                           review.reviewerId === currentUser.id ? true : false
-                        }
-                        handleDeleteReview={handleDeleteReview}
-                        isDeleteReview={isDeleteReview}
-                     />
-                  ))}
+                  reviews
+                     .filter((review) => review.status === "approved")
+                     .map((review) => (
+                        <ReviewList
+                           key={review.id}
+                           review={review}
+                           isCurrentUserReview={
+                              review.reviewerId === currentUser.id
+                                 ? true
+                                 : false
+                           }
+                           handleDeleteReview={handleDeleteReview}
+                           isDeleteReview={isDeleteReview}
+                        />
+                     ))}
             </List>
 
             {isEmpty && (

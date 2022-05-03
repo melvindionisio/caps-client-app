@@ -20,22 +20,24 @@ import ArrowDropUpIcon from "@mui/icons-material/ArrowDropUp";
 import MaleIcon from "@mui/icons-material/Male";
 import FemaleIcon from "@mui/icons-material/Female";
 
-const RoomLists = ({ rooms, isPending, error }) => {
+const RoomLists = ({
+   rooms,
+   isPending,
+   error,
+   isEmpty,
+   setIsEmpty,
+   sort,
+   setSort,
+   sortType,
+   setSortType,
+   genderFilter,
+   setGenderFilter,
+}) => {
    const [thisRooms, setThisRooms] = useState([]);
-   const [isRoomsEmpty, setIsRoomsEmpty] = useState(false);
 
    const [isFilterActive, setIsFilterActive] = useState(false);
    const [isSortActive, setIsSortActive] = useState(false);
 
-   const [genderFilter, setGenderFilter] = useState("Male/Female");
-   const [zoneFilter, setZoneFilter] = useState("All");
-
-   const [sort, setSort] = useState("room_name");
-   const [sortType, setSortType] = useState("desc");
-
-   const handleChangeZoneFilter = (event, newZoneFilter) => {
-      setZoneFilter(newZoneFilter);
-   };
    const handleChangeGenderFilter = (event, newGenderFilter) => {
       setGenderFilter(newGenderFilter);
    };
@@ -48,15 +50,9 @@ const RoomLists = ({ rooms, isPending, error }) => {
 
    useEffect(() => {
       if (rooms) {
-         if (rooms.length <= 0) {
-            setIsRoomsEmpty(true);
-         } else {
-            setIsRoomsEmpty(false);
-            setThisRooms(rooms);
-         }
+         setThisRooms(rooms);
       }
    }, [rooms]);
-
    return (
       <Box sx={{ width: "100%" }}>
          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -146,10 +142,7 @@ const RoomLists = ({ rooms, isPending, error }) => {
                            exclusive
                            onChange={handleChangeSort}
                         >
-                           <ToggleButton
-                              value="room_price"
-                              aria-label="sortbyprice"
-                           >
+                           <ToggleButton value="price" aria-label="sortbyprice">
                               Price
                            </ToggleButton>
                            <ToggleButton
@@ -212,34 +205,12 @@ const RoomLists = ({ rooms, isPending, error }) => {
                               <FemaleIcon />
                            </ToggleButton>
                         </ToggleButtonGroup>
-
-                        <ToggleButtonGroup
-                           color="primary"
-                           aria-label="gender-sort"
-                           value={zoneFilter}
-                           size="small"
-                           exclusive
-                           onChange={handleChangeZoneFilter}
-                        >
-                           <ToggleButton value="All" aria-label="all-zone">
-                              All
-                           </ToggleButton>
-                           <ToggleButton value="Zone 1" aria-label="zone1">
-                              Zone 1
-                           </ToggleButton>
-                           <ToggleButton value="Zone 2" aria-label="zone2">
-                              Zone 2
-                           </ToggleButton>
-                           <ToggleButton value="Zone 3" aria-label="zone3">
-                              Zone 3
-                           </ToggleButton>
-                        </ToggleButtonGroup>
                      </Box>
                   </Zoom>
                )}
             </Grid>
          </Grid>
-         {isRoomsEmpty && (
+         {isEmpty && (
             <Typography
                variant="body1"
                align="center"

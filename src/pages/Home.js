@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
@@ -21,7 +21,6 @@ import RoomLists from "../components/lists/RoomLists";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
 import useSessionStorage from "../hooks/useSessionStorage";
 import { domain } from "../fetch-url/fetchUrl";
-import useFetch from "../hooks/useFetch";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -89,12 +88,57 @@ const Home = () => {
       setValue(index);
    };
 
-   const {
-      data: rooms,
-      isPending: isRoomPending,
-      error: roomError,
-   } = useFetch(`${domain}/api/rooms`);
-   //const { data: totalRooms } = useFetch(`${domain}/api/rooms/total-rooms`);
+   const [rooms, setRooms] = useState([]);
+
+   const [isPending, setIsPending] = useState(false);
+   const [genderFilter, setGenderFilter] = useState("Male/Female");
+
+   const [sort, setSort] = useState("room_name");
+   const [sortType, setSortType] = useState("desc");
+
+   const [error, setError] = useState(null);
+   const [isEmpty, setIsEmpty] = useState(false);
+
+   useEffect(() => {
+      // will fetch depending in the sort here
+      setIsPending(true);
+      if (sort && sortType) {
+         const abortCont = new AbortController();
+         setRooms(null);
+         setTimeout(() => {
+            fetch(
+               `${domain}/api/rooms/?sort=${sort}&sortType=${sortType}&gender=${genderFilter}`,
+               { signal: abortCont.signal }
+            )
+               .then((res) => {
+                  if (!res.ok) {
+                     throw Error("Something went wrong!");
+                  }
+                  return res.json();
+               })
+               .then((data) => {
+                  if (data.length <= 0) {
+                     setIsEmpty(true);
+                  }
+                  setRooms(data);
+                  setIsPending(false);
+                  setError(null);
+               })
+               .catch((err) => {
+                  if (err.name === "AbortError") {
+                     console.log("fetch aborted");
+                  } else {
+                     setIsPending(false);
+                     setError(err.message);
+                     setRooms(null);
+                  }
+               });
+         }, 0);
+         return () => {
+            abortCont.abort();
+         };
+      }
+   }, [sort, sortType, genderFilter]);
 
    function NavigationTabs() {
       return (
@@ -150,8 +194,17 @@ const Home = () => {
                      <SwipeableWrapper>
                         <RoomLists
                            rooms={rooms}
-                           isPending={isRoomPending}
-                           error={roomError}
+                           isPending={isPending}
+                           setIsPending={setIsPending}
+                           isEmpty={isEmpty}
+                           setIsEmpty={setIsEmpty}
+                           error={error}
+                           sort={sort}
+                           setSort={setSort}
+                           sortType={sortType}
+                           setSortType={setSortType}
+                           genderFilter={genderFilter}
+                           setGenderFilter={setGenderFilter}
                         />
                      </SwipeableWrapper>
                   </TabPanel>
