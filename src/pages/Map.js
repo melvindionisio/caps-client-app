@@ -62,6 +62,11 @@ const Map = () => {
       setZoneFilter(event.target.value);
    };
 
+   const BOUNDS = [
+      [124.2389, 11.8762], // southwest coordinates
+      [125.368, 12.9979], //northeast coordinates
+   ];
+
    const renderMarkers = useCallback(
       (boardingHouseLocations) => {
          if (allCurrentMarkers) {
@@ -74,6 +79,11 @@ const Map = () => {
             const el = document.createElement("div");
             el.innerHTML = `<img src="${MarkerLogo}"/> <span id="total-rooms">${marker.properties.totalRooms}</span>`;
             el.className = "marker";
+
+            //const BOUNDS = [
+            //[124.2389, 11.8762], // southwest coordinates
+            //[125.368, 12.9979], //northeast coordinates
+            //];
 
             const singleMarker = new mapboxgl.Marker(el)
                .setLngLat(marker.geometry.coordinates)
@@ -164,11 +174,6 @@ const Map = () => {
          setIsShowResult(false);
       }
    };
-
-   const BOUNDS = [
-      [124.2389, 11.8762], // southwest coordinates
-      [125.368, 12.9979], //northeast coordinates
-   ];
 
    const geocoder = new MapboxGeocoder({
       // Initialize the geocoder
