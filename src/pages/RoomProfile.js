@@ -255,7 +255,8 @@ const RoomProfile = (props) => {
                            }}
                            sx={{
                               display: "flex",
-                              gap: 2,
+                              flexWrap: "wrap",
+                              gap: 1,
                            }}
                         >
                            <CardHeader
