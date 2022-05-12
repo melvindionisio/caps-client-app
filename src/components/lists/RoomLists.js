@@ -12,6 +12,10 @@ import {
    Button,
    Box,
    Grid,
+   MenuItem,
+   FormControl,
+   InputLabel,
+   Select,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 
@@ -38,6 +42,82 @@ const RoomLists = ({
    const [isFilterActive, setIsFilterActive] = useState(false);
    const [isSortActive, setIsSortActive] = useState(false);
 
+   // const prices = [];
+
+   const expectedPrices = [
+      {
+         price: 300,
+      },
+      {
+         price: 400,
+      },
+      {
+         price: 500,
+      },
+
+      {
+         price: 600,
+      },
+      {
+         price: 700,
+      },
+      {
+         price: 800,
+      },
+
+      {
+         price: 900,
+      },
+      {
+         price: 1000,
+      },
+      {
+         price: 1100,
+      },
+      {
+         price: 1200,
+      },
+      {
+         price: 1300,
+      },
+      {
+         price: 1400,
+      },
+      {
+         price: 1500,
+      },
+      {
+         price: 1600,
+      },
+      {
+         price: 1700,
+      },
+      {
+         price: 1800,
+      },
+      {
+         price: 1900,
+      },
+      {
+         price: 2000,
+      },
+      {
+         price: 2100,
+      },
+      {
+         price: 2200,
+      },
+      {
+         price: 2300,
+      },
+      {
+         price: 2400,
+      },
+      {
+         price: 2500,
+      },
+   ];
+
    const handleChangeGenderFilter = (event, newGenderFilter) => {
       setGenderFilter(newGenderFilter);
    };
@@ -51,8 +131,31 @@ const RoomLists = ({
    useEffect(() => {
       if (rooms) {
          setThisRooms(rooms);
+         // rooms.map((room) => {
+         //    if (room.price !== null) {
+         //       prices.push(room.price);
+         //    }
+         // });
+         // setPriceTo(() => Math.max(...prices));
       }
    }, [rooms]);
+
+   const [priceFrom, setPriceFrom] = useState(0);
+   const [priceTo, setPriceTo] = useState(2500);
+
+   const handlePriceFromChange = (event) => {
+      setPriceFrom(event.target.value);
+   };
+
+   const handlePriceToChange = (event) => {
+      setPriceTo(event.target.value);
+   };
+
+   useEffect(() => {
+      console.log(priceFrom, priceTo);
+      //filter the setThisRooms
+   }, [priceFrom, priceTo]);
+
    return (
       <Box sx={{ width: "100%" }}>
          <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -178,33 +281,128 @@ const RoomLists = ({
                         sx={{
                            display: "flex",
                            justifyContent: "space-between",
+                           alignItems: "center",
                            mb: 1,
                         }}
                      >
-                        <ToggleButtonGroup
-                           color="primary"
-                           aria-label="gender-sort"
-                           value={genderFilter}
-                           size="small"
-                           exclusive
-                           onChange={handleChangeGenderFilter}
-                        >
-                           <ToggleButton
-                              value="Male/Female"
-                              aria-label="sortbyall"
+                        <Box>
+                           <ToggleButtonGroup
+                              color="primary"
+                              aria-label="gender-sort"
+                              value={genderFilter}
+                              size="small"
+                              exclusive
+                              onChange={handleChangeGenderFilter}
                            >
-                              All
-                           </ToggleButton>
-                           <ToggleButton value="Male" aria-label="sortbymale">
-                              <MaleIcon />
-                           </ToggleButton>
-                           <ToggleButton
-                              value="Female"
-                              aria-label="sortbyfemale"
-                           >
-                              <FemaleIcon />
-                           </ToggleButton>
-                        </ToggleButtonGroup>
+                              <ToggleButton
+                                 value="Male/Female"
+                                 aria-label="sortbyall"
+                              >
+                                 All
+                              </ToggleButton>
+                              <ToggleButton
+                                 value="Male"
+                                 aria-label="sortbymale"
+                              >
+                                 <MaleIcon />
+                              </ToggleButton>
+                              <ToggleButton
+                                 value="Female"
+                                 aria-label="sortbyfemale"
+                              >
+                                 <FemaleIcon />
+                              </ToggleButton>
+                           </ToggleButtonGroup>
+                        </Box>
+                        <Box>
+                           <FormControl sx={{ m: 1, minWidth: 120 }}>
+                              <InputLabel id="price-from-label">
+                                 From
+                              </InputLabel>
+                              <Select
+                                 labelId="price-from-label"
+                                 id="price-from"
+                                 value={priceFrom}
+                                 label="From"
+                                 onChange={handlePriceFromChange}
+                                 size="small"
+                              >
+                                 <MenuItem
+                                    dense={true}
+                                    value={priceFrom}
+                                    sx={{ display: "flex", gap: 0.5 }}
+                                 >
+                                    <span>₱</span>
+                                    <span>{priceFrom}</span>
+                                 </MenuItem>
+                                 {expectedPrices.map((item) => (
+                                    <MenuItem
+                                       key={item.price}
+                                       dense={true}
+                                       value={item.price}
+                                       sx={{ display: "flex", gap: 0.5 }}
+                                    >
+                                       <span>₱</span>
+                                       <span>{item.price}</span>
+                                    </MenuItem>
+                                 ))}
+                              </Select>
+                           </FormControl>
+                           <FormControl sx={{ m: 1, minWidth: 120 }}>
+                              <InputLabel id="price-to-label">To</InputLabel>
+                              <Select
+                                 labelId="price-to-label"
+                                 id="price-to"
+                                 value={priceTo}
+                                 label="To"
+                                 onChange={handlePriceToChange}
+                                 size="small"
+                              >
+                                 <MenuItem
+                                    dense={true}
+                                    value={priceTo}
+                                    sx={{ display: "flex", gap: 0.5 }}
+                                 >
+                                    <span>₱</span>
+                                    <span>{priceTo}</span>
+                                 </MenuItem>
+                                 {expectedPrices.map((item) => (
+                                    <MenuItem
+                                       key={item.price}
+                                       dense={true}
+                                       value={item.price}
+                                       sx={{ display: "flex", gap: 0.5 }}
+                                    >
+                                       <span>₱</span>
+                                       <span>{item.price}</span>
+                                    </MenuItem>
+                                 ))}
+                              </Select>
+                           </FormControl>
+                        </Box>
+                        {/* <PopupState variant="popover" popupId="demo-popup-menu">
+                           {(popupState) => (
+                              <React.Fragment>
+                                 <Button
+                                    variant="contained"
+                                    {...bindTrigger(popupState)}
+                                 >
+                                    Dashboard
+                                 </Button>
+                                 <Menu {...bindMenu(popupState)}>
+                                    <MenuItem onClick={popupState.close}>
+                                       Profile
+                                    </MenuItem>
+                                    <MenuItem onClick={popupState.close}>
+                                       My account
+                                    </MenuItem>
+                                    <MenuItem onClick={popupState.close}>
+                                       Logout
+                                    </MenuItem>
+                                 </Menu>
+                              </React.Fragment>
+                           )}
+                        </PopupState> */}
                      </Box>
                   </Zoom>
                )}

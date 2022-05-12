@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
@@ -21,9 +21,11 @@ import RoomLists from "../components/lists/RoomLists";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
 import useSessionStorage from "../hooks/useSessionStorage";
 import { domain } from "../fetch-url/fetchUrl";
+import useOnlineStatus from "../hooks/useOnlineStatus";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
+
    return (
       <div
          role="tabpanel"
@@ -75,7 +77,11 @@ const SwipeableWrapper = ({ children }) => {
    );
 };
 
-const Home = () => {
+const Home = ({
+   setShowStatusMessage,
+   setStatusMessage,
+   setStatusMessageSeverity,
+}) => {
    const classes = useStyles();
    const [value, setValue] = useSessionStorage("home-tab", 0);
    const theme = useTheme();
@@ -104,7 +110,7 @@ const Home = () => {
       setIsPending(true);
       if (sort && sortType) {
          const abortCont = new AbortController();
-         setRooms(null);
+         setRooms([]);
          setTimeout(() => {
             fetch(
                `${domain}/api/rooms/?sort=${sort}&sortType=${sortType}&gender=${genderFilter}`,
@@ -130,7 +136,7 @@ const Home = () => {
                   } else {
                      setIsPending(false);
                      setError(err.message);
-                     setRooms(null);
+                     setRooms([]);
                   }
                });
          }, 0);
@@ -139,6 +145,33 @@ const Home = () => {
          };
       }
    }, [sort, sortType, genderFilter]);
+
+   const isOnline = useOnlineStatus();
+   const handleOnline = useCallback(() => {
+      setShowStatusMessage(() => setShowStatusMessage(true));
+      setStatusMessage(() => setStatusMessage("You are now online"));
+      setStatusMessageSeverity(() => setStatusMessageSeverity("success"));
+   }, [setShowStatusMessage, setStatusMessage, setStatusMessageSeverity]);
+
+   const handleOffline = useCallback(() => {
+      setShowStatusMessage(() => setShowStatusMessage(true));
+      setStatusMessage(() =>
+         setStatusMessage(
+            "You are now either offline or your connection is unstable."
+         )
+      );
+      setStatusMessageSeverity(() => setStatusMessageSeverity("warning"));
+   }, [setShowStatusMessage, setStatusMessage, setStatusMessageSeverity]);
+
+   useEffect(() => {
+      console.log(isOnline ? "online" : "offline");
+
+      if (isOnline) {
+         handleOnline();
+      } else {
+         handleOffline();
+      }
+   }, [isOnline, handleOnline, handleOffline]);
 
    function NavigationTabs() {
       return (

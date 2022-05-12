@@ -11,6 +11,7 @@ const Notification = ({
    setShowMessage,
    messageSeverity,
    message,
+   duration,
 }) => {
    const handleClose = (event, reason) => {
       if (reason === "clickaway") {
@@ -21,7 +22,7 @@ const Notification = ({
    return (
       <Snackbar
          open={showMessage}
-         autoHideDuration={2000}
+         autoHideDuration={duration || 2500}
          onClose={handleClose}
          anchorOrigin={{
             vertical: "bottom",

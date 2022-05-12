@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
    BrowserRouter as Router,
    Switch,
@@ -29,6 +29,8 @@ import DeskPageNavigation from "./components/Navigations/DeskPageNavigation";
 
 import LoginContextProvider from "./contexts/LoginContext";
 import useAddToHomescreenPrompt from "./hooks/useAddToHomescreenPrompt";
+import Notification from "./components/Notification";
+import { OnlineStatusProvider } from "./hooks/useOnlineStatus";
 
 const theme = createTheme({
    palette: {
@@ -97,24 +99,35 @@ const App = () => {
    // const onInstallPrompt = async () => {
    //   console.log("Installing");
    // };
+   const [message, setStatusMessage] = useState("");
+   const [showMessage, setShowStatusMessage] = useState(false);
+   const [messageSeverity, setStatusMessageSeverity] = useState("");
 
    return (
       <ThemeProvider theme={theme}>
-         <LoginContextProvider>
-            <Container
-               disableGutters
-               className={classes.page}
-               sx={{
-                  display: "flex",
-                  height: "100vh",
-                  width: "100vw",
-                  // bgColor: "background.default",
-               }}
-               maxWidth="xl"
-            >
-               {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
-               <Router>
-                  {/*
+         <OnlineStatusProvider>
+            <LoginContextProvider>
+               <Container
+                  disableGutters
+                  className={classes.page}
+                  sx={{
+                     display: "flex",
+                     height: "100vh",
+                     width: "100vw",
+                     // bgColor: "background.default",
+                  }}
+                  maxWidth="xl"
+               >
+                  <Notification
+                     showMessage={showMessage}
+                     setShowMessage={setShowStatusMessage}
+                     messageSeverity={messageSeverity}
+                     message={message}
+                     duration={3000}
+                  />
+                  {/* <Box style={{ minHeight: "100vh", width: "100%", overflowY: "auto" }}> */}
+                  <Router>
+                     {/*
                   <Hidden lgDown>
 
                      <Drawer
@@ -128,7 +141,7 @@ const App = () => {
                      >
                             */}
 
-                  {/* <Typography>BookMarks</Typography>
+                     {/* <Typography>BookMarks</Typography>
               <Hidden lgDown>
                 <Typography>LG</Typography>
               </Hidden>
@@ -136,71 +149,80 @@ const App = () => {
                 <Typography>MD</Typography>
               </Hidden> */}
 
-                  {/*
+                     {/*
                         <Map />
                      </Drawer>
                   </Hidden>
 
                             */}
-                  <Switch>
-                     <Route exact path="/">
-                        <Redirect to="/home" />
-                     </Route>
-                     <Route path="/home">
-                        <Home />
-                     </Route>
-                     <Route path="/map">
-                        <Map />
-                     </Route>
-                     <Route path="/help">
-                        <Help />
-                     </Route>
-                     <Route path="/login">
-                        <Login />
-                     </Route>
-                     <Route path="/register">
-                        <Register />
-                     </Route>
-                     <Route path="/search">
-                        <Search />
-                     </Route>
-                     <Route path="/profile">
-                        <Profile />
-                     </Route>
-                     <Route path="/bookmarks">
-                        <Bookmarks />
-                     </Route>
+                     <Switch>
+                        <Route exact path="/">
+                           <Redirect to="/home" />
+                        </Route>
+                        <Route path="/home">
+                           <Home
+                              setShowStatusMessage={setShowStatusMessage}
+                              setStatusMessage={setStatusMessage}
+                              setStatusMessageSeverity={
+                                 setStatusMessageSeverity
+                              }
+                           />
+                        </Route>
+                        <Route path="/map">
+                           <Map />
+                        </Route>
+                        <Route path="/help">
+                           <Help />
+                        </Route>
+                        <Route path="/login">
+                           <Login />
+                        </Route>
+                        <Route path="/register">
+                           <Register />
+                        </Route>
+                        <Route path="/search">
+                           <Search />
+                        </Route>
+                        <Route path="/profile">
+                           <Profile />
+                        </Route>
+                        <Route path="/bookmarks">
+                           <Bookmarks />
+                        </Route>
 
-                     <Route path="/about">
-                        <AboutApp />
-                     </Route>
-                     <Route path="/boardinghouse/:bhId">
-                        <BoardingHouseProfile />
-                     </Route>
-                     <Route path="/rooms/:roomId">
-                        <RoomProfile />
-                     </Route>
-                     <Route path="*">
-                        <Container maxWidth="sm">
-                           <Typography variant="h6" align="center">
-                              Error 404 page not found.
-                           </Typography>
-                        </Container>
-                     </Route>
-                  </Switch>
-                  <Hidden lgUp>
-                     <MobilePageNavigation className={classes.mainNavigation} />
-                  </Hidden>
-                  <Hidden lgDown>
-                     <DeskPageNavigation />
-                  </Hidden>
-               </Router>
-               {/* </Box> */}
-               {/* <Hidden xlDown>
+                        <Route path="/about">
+                           <AboutApp />
+                        </Route>
+                        <Route path="/boardinghouse/:bhId">
+                           <BoardingHouseProfile />
+                        </Route>
+                        <Route path="/rooms/:roomId">
+                           <RoomProfile />
+                        </Route>
+                        <Route path="*">
+                           <Container maxWidth="sm">
+                              <Typography variant="h6" align="center">
+                                 Error 404 page not found.
+                              </Typography>
+                           </Container>
+                        </Route>
+                     </Switch>
+                     <Hidden lgUp>
+                        <MobilePageNavigation
+                           className={classes.mainNavigation}
+                        />
+                     </Hidden>
+                     <Hidden lgDown>
+                        <DeskPageNavigation />
+                     </Hidden>
+                  </Router>
+                  {/* </Box> */}
+                  {/* <Hidden xlDown>
             <Map />
           </Hidden> */}
-            </Container>
-         </LoginContextProvider>
+               </Container>
+            </LoginContextProvider>
+         </OnlineStatusProvider>
       </ThemeProvider>
    );
 };
