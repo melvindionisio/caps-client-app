@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import SwipeableViews from "react-swipeable-views";
 
@@ -21,7 +21,6 @@ import RoomLists from "../components/lists/RoomLists";
 import BoardingHouseLists from "../components/lists/BoardingHouseLists";
 import useSessionStorage from "../hooks/useSessionStorage";
 import { domain } from "../fetch-url/fetchUrl";
-import useOnlineStatus from "../hooks/useOnlineStatus";
 
 function TabPanel(props) {
    const { children, value, index, ...other } = props;
@@ -145,33 +144,6 @@ const Home = ({
          };
       }
    }, [sort, sortType, genderFilter]);
-
-   const isOnline = useOnlineStatus();
-   const handleOnline = useCallback(() => {
-      setShowStatusMessage(() => setShowStatusMessage(true));
-      setStatusMessage(() => setStatusMessage("You are now online"));
-      setStatusMessageSeverity(() => setStatusMessageSeverity("success"));
-   }, [setShowStatusMessage, setStatusMessage, setStatusMessageSeverity]);
-
-   const handleOffline = useCallback(() => {
-      setShowStatusMessage(() => setShowStatusMessage(true));
-      setStatusMessage(() =>
-         setStatusMessage(
-            "You are now either offline or your connection is unstable."
-         )
-      );
-      setStatusMessageSeverity(() => setStatusMessageSeverity("warning"));
-   }, [setShowStatusMessage, setStatusMessage, setStatusMessageSeverity]);
-
-   useEffect(() => {
-      console.log(isOnline ? "online" : "offline");
-
-      if (isOnline) {
-         handleOnline();
-      } else {
-         handleOffline();
-      }
-   }, [isOnline, handleOnline, handleOffline]);
 
    function NavigationTabs() {
       return (
