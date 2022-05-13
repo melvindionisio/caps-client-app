@@ -154,7 +154,13 @@ const RoomLists = ({
    useEffect(() => {
       console.log(priceFrom, priceTo);
       //filter the setThisRooms
-   }, [priceFrom, priceTo]);
+      // WORK HERE YOU NIGGA
+      setThisRooms(
+         thisRooms.filter((room) => {
+            return room.price >= priceFrom && room.price <= priceTo;
+         })
+      );
+   }, [thisRooms, priceFrom, priceTo]);
 
    return (
       <Box sx={{ width: "100%" }}>
@@ -177,7 +183,7 @@ const RoomLists = ({
                      }}
                   >
                      Total rooms: {"  "}
-                     {rooms.length}
+                     {thisRooms.length}
                   </Typography>
                </Box>
             )}
@@ -317,7 +323,7 @@ const RoomLists = ({
                         <Box>
                            <FormControl sx={{ m: 1, minWidth: 120 }}>
                               <InputLabel id="price-from-label">
-                                 From
+                                 Price From
                               </InputLabel>
                               <Select
                                  labelId="price-from-label"
@@ -349,7 +355,9 @@ const RoomLists = ({
                               </Select>
                            </FormControl>
                            <FormControl sx={{ m: 1, minWidth: 120 }}>
-                              <InputLabel id="price-to-label">To</InputLabel>
+                              <InputLabel id="price-to-label">
+                                 Price To
+                              </InputLabel>
                               <Select
                                  labelId="price-to-label"
                                  id="price-to"
