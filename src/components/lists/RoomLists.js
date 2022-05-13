@@ -155,12 +155,12 @@ const RoomLists = ({
       console.log(priceFrom, priceTo);
       //filter the setThisRooms
       // WORK HERE YOU NIGGA
-      setThisRooms(
-         thisRooms.filter((room) => {
-            return room.price >= priceFrom && room.price <= priceTo;
-         })
+      setThisRooms((thisRooms) =>
+         thisRooms.filter(
+            (room) => room.price >= priceFrom && room.price <= priceTo
+         )
       );
-   }, [thisRooms, priceFrom, priceTo]);
+   }, [priceFrom, priceTo]);
 
    return (
       <Box sx={{ width: "100%" }}>
