@@ -35,20 +35,21 @@ code {
 
 .college-marker {
    cursor: pointer;
-   background: rgb(28, 33, 30);
+   background: #00c853;
    backdrop-filter: blur(3px);
    border-radius: 50%;
-   height: 1.9rem;
-   width: 1.9rem;
+   height: 1.7rem;
+   width: 1.7rem;
    display: grid;
    place-items: center;
    /*border:  .2rem solid white;*/
    /*position:  relative;*/
+   box-shadow: 1px 1px 5px 0px rgba(0, 0, 0, 0.4);
    z-index: 0;
 }
 .college-marker > * {
-   height: 1.1rem;
-   width: 1.1rem;
+   height: 1rem;
+   width: 1rem;
    filter: brightness(1.2) invert(80);
    pointer-events: none;
 }
@@ -111,7 +112,6 @@ code {
 
 .mapboxgl-popup-content h4 {
    background: white;
-   border: 1px solid lightskyblue;
    color: #444;
    margin: 0;
    display: block;
