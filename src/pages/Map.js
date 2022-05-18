@@ -28,6 +28,7 @@ import React, {
 import { LoginContext } from "../contexts/LoginContext";
 import AccountMenu from "../components/AccountMenu";
 import MarkerLogo from "../marker-logo.png";
+import CollegeMarker from "../college-marker.png";
 import { domain } from "../fetch-url/fetchUrl";
 //import * as MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
@@ -57,6 +58,123 @@ const Map = () => {
    const [isNotFound, setIsNotFound] = useState(false);
 
    const [allCurrentMarkers, setAllCurrentMarkers] = useState([]);
+
+   const collegeMarkers = {
+      type: "FeatureCollections",
+      features: [
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6651, 12.5082],
+            },
+            properties: {
+               id: 0,
+               collegename: "College of Science",
+               description: "college description ",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6662, 12.5082],
+            },
+            properties: {
+               id: 1,
+               collegename: "College of Nursing",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6663, 12.5097],
+            },
+            properties: {
+               id: 2,
+               collegename: "College of Law",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.664, 12.5102],
+            },
+            properties: {
+               id: 3,
+               collegename: "College of Education",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6637, 12.5106],
+            },
+            properties: {
+               id: 4,
+               collegename: "College of Business Administration",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6638, 12.5083],
+            },
+            properties: {
+               id: 5,
+               collegename: "College of Agriculture",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6633, 12.5092],
+            },
+
+            properties: {
+               id: 6,
+               collegename: "College of Engineering",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.6634, 12.5105],
+            },
+
+            properties: {
+               id: 7,
+               collegename: "College of Arts and Communication",
+               description: "college description",
+            },
+         },
+         {
+            type: "feature",
+            geometry: {
+               type: "point",
+               coordinates: [124.668, 12.5089],
+            },
+
+            properties: {
+               id: 7,
+               collegename: "College of Veterinary Medicine",
+               description: "college description",
+            },
+         },
+      ],
+   };
 
    const handleZoneChange = (event) => {
       setZoneFilter(event.target.value);
@@ -116,6 +234,7 @@ const Map = () => {
          );
          renderMarkers(filteredZones);
       }
+      console.log(boardingHouseLocations);
    }, [boardingHouseLocations, zoneFilter]);
 
    useEffect(() => {
@@ -344,6 +463,24 @@ const Map = () => {
       );
 
       //map.current.addControl(geocoder);
+
+      collegeMarkers.features.forEach(function (marker) {
+         const newEl = document.createElement("div");
+         newEl.innerHTML = `<img src="${CollegeMarker}"/> `;
+         newEl.className = "college-marker";
+
+         new mapboxgl.Marker(newEl)
+            .setLngLat(marker.geometry.coordinates)
+            .setPopup(
+               new mapboxgl.Popup({
+                  offset: 20,
+                  closeButton: false,
+               }).setHTML(
+                  `<h4>&#160; &#160;${marker.properties.collegename}&#160; &#160;</h4>`
+               )
+            )
+            .addTo(map.current);
+      });
 
       map.current.addControl(
          new mapboxgl.FullscreenControl({

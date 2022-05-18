@@ -151,10 +151,9 @@ const RoomLists = ({
       setPriceTo(event.target.value);
    };
 
+   // filter the rooms every change in roo price range
    useEffect(() => {
-      console.log(priceFrom, priceTo);
       //filter the setThisRooms
-      // WORK HERE YOU NIGGA
       setThisRooms((thisRooms) =>
          thisRooms.filter(
             (room) => room.price >= priceFrom && room.price <= priceTo
