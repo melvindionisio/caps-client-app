@@ -319,8 +319,15 @@ const RoomLists = ({
                               </ToggleButton>
                            </ToggleButtonGroup>
                         </Box>
-                        <Box>
-                           <FormControl sx={{ m: 1, minWidth: 120 }}>
+                        <Box
+                           sx={{
+                              display: "flex",
+                              alignItems: "end",
+                              gap: 1,
+                              ml: 1,
+                           }}
+                        >
+                           <FormControl sx={{ minWidth: 100 }}>
                               <InputLabel id="price-from-label">
                                  Price From
                               </InputLabel>
@@ -353,7 +360,7 @@ const RoomLists = ({
                                  ))}
                               </Select>
                            </FormControl>
-                           <FormControl sx={{ m: 1, minWidth: 120 }}>
+                           <FormControl sx={{ minWidth: 100 }}>
                               <InputLabel id="price-to-label">
                                  Price To
                               </InputLabel>
