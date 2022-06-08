@@ -291,7 +291,7 @@ const BoardingHouseLists = () => {
                   align="center"
                   sx={{ width: "100%", mt: 4 }}
                >
-                  {zoneFilter} is Empty!
+                  Empty
                </Typography>
             )}
          </Grid>
